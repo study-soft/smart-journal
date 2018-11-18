@@ -1,0 +1,38 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.studysoft.smartjournal",
+      "nativeLanguage": "ua"
+    },
+    "jhipsterVersion": "5.7.0",
+    "applicationType": "monolith",
+    "baseName": "smartjournal",
+    "packageName": "com.studysoft.smartjournal",
+    "packageFolder": "com/studysoft/smartjournal",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "no",
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "postgresql",
+    "prodDatabaseType": "postgresql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "MWU0YWEzOTExY2YwOGU0NjE0MDcxYTliZmJkMTUwYjRmY2ZmZDlmZmJlOTBiYzdhNmJlZDY0YTFmZDdjZGI0MWUyMjBkNDhhNzA3ZDM5NGI0ZDlkY2VlMzAxZGE5NGVjNDg4NjFhMTNlMzk5NWVmMjJlNmUzNTRhNzY2ZGVhMDY=",
+    "clientFramework": "angularX",
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "otherModules": [],
+    "enableTranslation": true,
+    "nativeLanguage": "ua",
+    "languages": [
+      "ua",
+      "en"
+    ]
+  }
+}
