@@ -1,0 +1,26 @@
+{
+    "smartjournalApp": {
+        "student": {
+            "home": {
+                "title": "Students",
+                "createLabel": "Створити новий Student",
+                "createOrEditLabel": "Створити чи редагувати Student"
+            },
+            "created": "Новий Student створений з ідентифікатором {{ param }}",
+            "updated": "Student оновлений з ідентифікатором {{ param }}",
+            "deleted": "Student видалений з ідентифікатором {{ param }}",
+            "delete": {
+                "question": "Ви впевнені, що хочете видалити Student {{ id }}?"
+            },
+            "detail": {
+                "title": "Student"
+            },
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "middleName": "Middle Name",
+            "rating": "Rating",
+            "day": "Day",
+            "board": "Board"
+        }
+    }
+}

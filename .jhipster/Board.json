@@ -1,0 +1,69 @@
+{
+    "name": "Board",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "created",
+            "fieldType": "Instant",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "updated",
+            "fieldType": "Instant",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "party",
+            "otherEntityName": "party",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "board"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "subject",
+            "otherEntityName": "subject",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "board"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "student",
+            "otherEntityName": "student",
+            "otherEntityRelationshipName": "board"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "dayType",
+            "otherEntityName": "dayType",
+            "otherEntityRelationshipName": "board"
+        }
+    ],
+    "changelogDate": "20181120181959",
+    "entityTableName": "board",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

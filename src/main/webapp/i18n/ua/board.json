@@ -1,0 +1,28 @@
+{
+    "smartjournalApp": {
+        "board": {
+            "home": {
+                "title": "Boards",
+                "createLabel": "Створити новий Board",
+                "createOrEditLabel": "Створити чи редагувати Board"
+            },
+            "created": "Новий Board створений з ідентифікатором {{ param }}",
+            "updated": "Board оновлений з ідентифікатором {{ param }}",
+            "deleted": "Board видалений з ідентифікатором {{ param }}",
+            "delete": {
+                "question": "Ви впевнені, що хочете видалити Board {{ id }}?"
+            },
+            "detail": {
+                "title": "Board"
+            },
+            "name": "Name",
+            "description": "Description",
+            "created": "Created",
+            "updated": "Updated",
+            "party": "Party",
+            "subject": "Subject",
+            "student": "Student",
+            "dayType": "Day Type"
+        }
+    }
+}

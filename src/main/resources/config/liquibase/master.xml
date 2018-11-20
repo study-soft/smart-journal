@@ -5,6 +5,17 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181120181954_added_entity_Party.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181120181955_added_entity_Subject.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181120181956_added_entity_Student.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181120181957_added_entity_Day.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181120181958_added_entity_DayType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181120181959_added_entity_Board.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20181120181954_added_entity_constraints_Party.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181120181956_added_entity_constraints_Student.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181120181957_added_entity_constraints_Day.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181120181958_added_entity_constraints_DayType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181120181959_added_entity_constraints_Board.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

@@ -1,0 +1,26 @@
+{
+    "smartjournalApp": {
+        "dayType": {
+            "home": {
+                "title": "Day Types",
+                "createLabel": "Create a new Day Type",
+                "createOrEditLabel": "Create or edit a Day Type"
+            },
+            "created": "A new Day Type is created with identifier {{ param }}",
+            "updated": "A Day Type is updated with identifier {{ param }}",
+            "deleted": "A Day Type is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Day Type {{ id }}?"
+            },
+            "detail": {
+                "title": "Day Type"
+            },
+            "type": "Type",
+            "score": "Score",
+            "description": "Description",
+            "created": "Created",
+            "updated": "Updated",
+            "board": "Board"
+        }
+    }
+}

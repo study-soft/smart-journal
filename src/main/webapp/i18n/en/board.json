@@ -1,0 +1,28 @@
+{
+    "smartjournalApp": {
+        "board": {
+            "home": {
+                "title": "Boards",
+                "createLabel": "Create a new Board",
+                "createOrEditLabel": "Create or edit a Board"
+            },
+            "created": "A new Board is created with identifier {{ param }}",
+            "updated": "A Board is updated with identifier {{ param }}",
+            "deleted": "A Board is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Board {{ id }}?"
+            },
+            "detail": {
+                "title": "Board"
+            },
+            "name": "Name",
+            "description": "Description",
+            "created": "Created",
+            "updated": "Updated",
+            "party": "Party",
+            "subject": "Subject",
+            "student": "Student",
+            "dayType": "Day Type"
+        }
+    }
+}

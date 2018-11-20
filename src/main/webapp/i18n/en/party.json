@@ -1,0 +1,25 @@
+{
+    "smartjournalApp": {
+        "party": {
+            "home": {
+                "title": "Parties",
+                "createLabel": "Create a new Party",
+                "createOrEditLabel": "Create or edit a Party"
+            },
+            "created": "A new Party is created with identifier {{ param }}",
+            "updated": "A Party is updated with identifier {{ param }}",
+            "deleted": "A Party is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Party {{ id }}?"
+            },
+            "detail": {
+                "title": "Party"
+            },
+            "name": "Name",
+            "description": "Description",
+            "created": "Created",
+            "updated": "Updated",
+            "subject": "Subject"
+        }
+    }
+}

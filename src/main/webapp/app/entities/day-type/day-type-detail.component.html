@@ -1,0 +1,49 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="dayType">
+            <h2><span jhiTranslate="smartjournalApp.dayType.detail.title">Day Type</span> {{dayType.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="smartjournalApp.dayType.type">Type</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'smartjournalApp.Type.' + dayType.type}}">{{dayType.type}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartjournalApp.dayType.score">Score</span></dt>
+                <dd>
+                    <span>{{dayType.score}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartjournalApp.dayType.description">Description</span></dt>
+                <dd>
+                    <span>{{dayType.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartjournalApp.dayType.created">Created</span></dt>
+                <dd>
+                    <span>{{dayType.created}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartjournalApp.dayType.updated">Updated</span></dt>
+                <dd>
+                    <span>{{dayType.updated}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartjournalApp.dayType.board">Board</span></dt>
+                <dd>
+                    <div *ngIf="dayType.board">
+                        <a [routerLink]="['/board', dayType.board?.id, 'view']">{{dayType.board?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/day-type', dayType.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

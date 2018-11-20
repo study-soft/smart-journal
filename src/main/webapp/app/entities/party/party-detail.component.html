@@ -1,0 +1,45 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="party">
+            <h2><span jhiTranslate="smartjournalApp.party.detail.title">Party</span> {{party.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="smartjournalApp.party.name">Name</span></dt>
+                <dd>
+                    <span>{{party.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartjournalApp.party.description">Description</span></dt>
+                <dd>
+                    <span>{{party.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartjournalApp.party.created">Created</span></dt>
+                <dd>
+                    <span>{{party.created}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartjournalApp.party.updated">Updated</span></dt>
+                <dd>
+                    <span>{{party.updated}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartjournalApp.party.subject">Subject</span></dt>
+                <dd>
+                    <span *ngFor="let subject of party.subjects; let last = last">
+                        <a [routerLink]="['/subject', subject?.id, 'view' ]">{{subject.id}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/party', party.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

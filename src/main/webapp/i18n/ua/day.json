@@ -1,0 +1,24 @@
+{
+    "smartjournalApp": {
+        "day": {
+            "home": {
+                "title": "Days",
+                "createLabel": "Створити новий Day",
+                "createOrEditLabel": "Створити чи редагувати Day"
+            },
+            "created": "Новий Day створений з ідентифікатором {{ param }}",
+            "updated": "Day оновлений з ідентифікатором {{ param }}",
+            "deleted": "Day видалений з ідентифікатором {{ param }}",
+            "delete": {
+                "question": "Ви впевнені, що хочете видалити Day {{ id }}?"
+            },
+            "detail": {
+                "title": "Day"
+            },
+            "date": "Date",
+            "result": "Result",
+            "student": "Student",
+            "dayType": "Day Type"
+        }
+    }
+}

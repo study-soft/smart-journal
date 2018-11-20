@@ -1,0 +1,101 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-day-type-heading" jhiTranslate="smartjournalApp.dayType.home.createOrEditLabel">Create or edit a Day Type</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!dayType.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="dayType.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartjournalApp.dayType.type" for="field_type">Type</label>
+                    <select class="form-control" name="type" [(ngModel)]="dayType.type" id="field_type"  required>
+                        <option value="SIMPLE">{{'smartjournalApp.Type.SIMPLE' | translate}}</option>
+                        <option value="LAB">{{'smartjournalApp.Type.LAB' | translate}}</option>
+                        <option value="MODULE">{{'smartjournalApp.Type.MODULE' | translate}}</option>
+                        <option value="EXAM">{{'smartjournalApp.Type.EXAM' | translate}}</option>
+                        <option value="TEST">{{'smartjournalApp.Type.TEST' | translate}}</option>
+                    </select>
+                    <div [hidden]="!(editForm.controls.type?.dirty && editForm.controls.type?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.type?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartjournalApp.dayType.score" for="field_score">Score</label>
+                    <input type="number" class="form-control" name="score" id="field_score"
+                        [(ngModel)]="dayType.score" required/>
+                    <div [hidden]="!(editForm.controls.score?.dirty && editForm.controls.score?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.score?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.score?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartjournalApp.dayType.description" for="field_description">Description</label>
+                    <input type="text" class="form-control" name="description" id="field_description"
+                        [(ngModel)]="dayType.description" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartjournalApp.dayType.created" for="field_created">Created</label>
+                    <div class="d-flex">
+                        <input id="field_created" type="datetime-local" class="form-control" name="created" [(ngModel)]="created"
+                        required/>
+                    </div>
+                    <div [hidden]="!(editForm.controls.created?.dirty && editForm.controls.created?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.created?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.created?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
+                            This field should be a date and time.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartjournalApp.dayType.updated" for="field_updated">Updated</label>
+                    <div class="d-flex">
+                        <input id="field_updated" type="datetime-local" class="form-control" name="updated" [(ngModel)]="updated"
+                        required/>
+                    </div>
+                    <div [hidden]="!(editForm.controls.updated?.dirty && editForm.controls.updated?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.updated?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.updated?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
+                            This field should be a date and time.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartjournalApp.dayType.board" for="field_board">Board</label>
+                    <select class="form-control" id="field_board" name="board" [(ngModel)]="dayType.board" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="boardOption.id === dayType.board?.id ? dayType.board : boardOption" *ngFor="let boardOption of boards; trackBy: trackBoardById">{{boardOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

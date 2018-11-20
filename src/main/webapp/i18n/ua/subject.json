@@ -1,0 +1,25 @@
+{
+    "smartjournalApp": {
+        "subject": {
+            "home": {
+                "title": "Subjects",
+                "createLabel": "Створити новий Subject",
+                "createOrEditLabel": "Створити чи редагувати Subject"
+            },
+            "created": "Новий Subject створений з ідентифікатором {{ param }}",
+            "updated": "Subject оновлений з ідентифікатором {{ param }}",
+            "deleted": "Subject видалений з ідентифікатором {{ param }}",
+            "delete": {
+                "question": "Ви впевнені, що хочете видалити Subject {{ id }}?"
+            },
+            "detail": {
+                "title": "Subject"
+            },
+            "name": "Name",
+            "description": "Description",
+            "created": "Created",
+            "updated": "Updated",
+            "group": "Group"
+        }
+    }
+}

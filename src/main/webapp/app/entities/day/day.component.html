@@ -1,0 +1,68 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="smartjournalApp.day.home.title">Days</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-day" [routerLink]="['/day/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="smartjournalApp.day.home.createLabel">
+            Create new Day
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="days">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="smartjournalApp.day.date">Date</span></th>
+            <th><span jhiTranslate="smartjournalApp.day.result">Result</span></th>
+            <th><span jhiTranslate="smartjournalApp.day.student">Student</span></th>
+            <th><span jhiTranslate="smartjournalApp.day.dayType">Day Type</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let day of days ;trackBy: trackId">
+                <td><a [routerLink]="['/day', day.id, 'view' ]">{{day.id}}</a></td>
+                <td>{{day.date | date:'medium'}}</td>
+                <td>{{day.result}}</td>
+                <td>
+                    <div *ngIf="day.student">
+                        <a [routerLink]="['../student', day.student?.id, 'view' ]" >{{day.student?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="day.dayType">
+                        <a [routerLink]="['../day-type', day.dayType?.id, 'view' ]" >{{day.dayType?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/day', day.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/day', day.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'day/'+ day.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

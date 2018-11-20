@@ -1,0 +1,62 @@
+
+entity Party {
+	name String required
+    description String
+    created Instant required
+    updated Instant required
+}
+
+entity Subject {
+	name String required
+    description String
+    created Instant required
+    updated Instant required
+}
+
+entity Student {
+	firstName String required
+    lastName String required
+    middleName String
+    rating Double
+}
+
+entity Day {
+	date Instant required
+    result Double
+}
+
+entity DayType {
+	type Type required
+	score Double required
+    description String
+    created Instant required
+    updated Instant required
+}
+
+entity Board {
+	name String required
+    description String
+    created Instant required
+    updated Instant required
+}
+
+enum Type {
+	SIMPLE, LAB, MODULE, EXAM, TEST
+}
+
+relationship OneToOne {
+	Board{party} to Party,
+	Board{subject} to Subject,
+	Day{dayType} to DayType
+}
+
+relationship OneToMany {
+	Board{student} to Student,
+	Board{dayType} to DayType,
+	Student{day} to Day
+}
+
+relationship ManyToMany {
+	Party{subject} to Subject{group}
+}
+

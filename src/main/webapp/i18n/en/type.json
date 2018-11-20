@@ -1,0 +1,12 @@
+{
+    "smartjournalApp": {
+        "Type": {
+            "null": "",
+            "SIMPLE": "SIMPLE",
+            "LAB": "LAB",
+            "MODULE": "MODULE",
+            "EXAM": "EXAM",
+            "TEST": "TEST"
+        }
+    }
+}

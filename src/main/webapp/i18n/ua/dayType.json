@@ -1,0 +1,26 @@
+{
+    "smartjournalApp": {
+        "dayType": {
+            "home": {
+                "title": "Day Types",
+                "createLabel": "Створити новий Day Type",
+                "createOrEditLabel": "Створити чи редагувати Day Type"
+            },
+            "created": "Новий Day Type створений з ідентифікатором {{ param }}",
+            "updated": "Day Type оновлений з ідентифікатором {{ param }}",
+            "deleted": "Day Type видалений з ідентифікатором {{ param }}",
+            "delete": {
+                "question": "Ви впевнені, що хочете видалити Day Type {{ id }}?"
+            },
+            "detail": {
+                "title": "Day Type"
+            },
+            "type": "Type",
+            "score": "Score",
+            "description": "Description",
+            "created": "Created",
+            "updated": "Updated",
+            "board": "Board"
+        }
+    }
+}

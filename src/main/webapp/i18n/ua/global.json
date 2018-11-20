@@ -1,13 +1,18 @@
 {
     "global": {
         "title": "Smartjournal",
-        "browsehappy":
-            "Ваш браузер <strong>застарів</strong>. Будь ласка, <a href=\"http://browsehappy.com/?locale=ru\">оновіть ваш браузер</a>.",
+        "browsehappy": "Ваш браузер <strong>застарів</strong>. Будь ласка, <a href=\"http://browsehappy.com/?locale=ru\">оновіть ваш браузер</a>.",
         "menu": {
             "home": "Головна",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Сутності",
+                "party": "Party",
+                "subject": "Subject",
+                "student": "Student",
+                "day": "Day",
+                "dayType": "Day Type",
+                "board": "Board",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
@@ -49,8 +54,7 @@
                 "authenticated": {
                     "prefix": "Якщо ви хочете",
                     "link": "авторизуватися",
-                    "suffix":
-                        ", ви можете спробувати облікові записи за замовчуванням:<br/>- Адмiністратор (логін=\"admin\" і пароль=\"admin\") <br/>- Користувач (логін=\"user\" і пароль=\"user\")."
+                    "suffix": ", ви можете спробувати облікові записи за замовчуванням:<br/>- Адмiністратор (логін=\"admin\" і пароль=\"admin\") <br/>- Користувач (логін=\"user\" і пароль=\"user\")."
                 },
                 "register": {
                     "noaccount": "У вас немає облікового запису?",
