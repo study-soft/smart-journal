@@ -24,7 +24,7 @@ public class Day implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "jhi_date", nullable = false)
+    @Column(name = "date", nullable = false)
     private Instant date;
 
     @Column(name = "result")

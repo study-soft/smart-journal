@@ -27,7 +27,7 @@ public class DayType implements Serializable {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "jhi_type", nullable = false)
+    @Column(name = "type", nullable = false)
     private Type type;
 
     @NotNull
