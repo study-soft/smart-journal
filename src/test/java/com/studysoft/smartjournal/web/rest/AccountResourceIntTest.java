@@ -26,7 +26,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -82,7 +81,6 @@ public class AccountResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        doNothing().when(mockMailService).sendActivationEmail(any());
         AccountResource accountResource =
             new AccountResource(userRepository, userService, mockMailService);
 
@@ -468,7 +466,6 @@ public class AccountResourceIntTest {
 
     @Test
     @Transactional
-    @WithMockUser("save-account")
     public void testSaveAccount() throws Exception {
         User user = new User();
         user.setLogin("save-account");
@@ -507,7 +504,6 @@ public class AccountResourceIntTest {
 
     @Test
     @Transactional
-    @WithMockUser("save-invalid-email")
     public void testSaveInvalidEmail() throws Exception {
         User user = new User();
         user.setLogin("save-invalid-email");
@@ -538,7 +534,6 @@ public class AccountResourceIntTest {
 
     @Test
     @Transactional
-    @WithMockUser("save-existing-email")
     public void testSaveExistingEmail() throws Exception {
         User user = new User();
         user.setLogin("save-existing-email");
@@ -578,7 +573,6 @@ public class AccountResourceIntTest {
 
     @Test
     @Transactional
-    @WithMockUser("save-existing-email-and-login")
     public void testSaveExistingEmailAndLogin() throws Exception {
         User user = new User();
         user.setLogin("save-existing-email-and-login");
@@ -610,7 +604,6 @@ public class AccountResourceIntTest {
 
     @Test
     @Transactional
-    @WithMockUser("change-password-wrong-existing-password")
     public void testChangePasswordWrongExistingPassword() throws Exception {
         User user = new User();
         String currentPassword = RandomStringUtils.random(60);
@@ -631,7 +624,6 @@ public class AccountResourceIntTest {
 
     @Test
     @Transactional
-    @WithMockUser("change-password")
     public void testChangePassword() throws Exception {
         User user = new User();
         String currentPassword = RandomStringUtils.random(60);
@@ -651,7 +643,6 @@ public class AccountResourceIntTest {
 
     @Test
     @Transactional
-    @WithMockUser("change-password-too-small")
     public void testChangePasswordTooSmall() throws Exception {
         User user = new User();
         String currentPassword = RandomStringUtils.random(60);
@@ -671,7 +662,6 @@ public class AccountResourceIntTest {
 
     @Test
     @Transactional
-    @WithMockUser("change-password-too-long")
     public void testChangePasswordTooLong() throws Exception {
         User user = new User();
         String currentPassword = RandomStringUtils.random(60);
@@ -691,7 +681,6 @@ public class AccountResourceIntTest {
 
     @Test
     @Transactional
-    @WithMockUser("change-password-empty")
     public void testChangePasswordEmpty() throws Exception {
         User user = new User();
         user.setPassword(RandomStringUtils.random(60));

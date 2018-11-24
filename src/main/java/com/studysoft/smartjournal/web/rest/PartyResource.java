@@ -1,6 +1,5 @@
 package com.studysoft.smartjournal.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
 import com.studysoft.smartjournal.domain.Party;
 import com.studysoft.smartjournal.repository.PartyRepository;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
@@ -43,7 +42,6 @@ public class PartyResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/parties")
-    @Timed
     public ResponseEntity<Party> createParty(@Valid @RequestBody Party party) throws URISyntaxException {
         log.debug("REST request to save Party : {}", party);
         if (party.getId() != null) {
@@ -65,7 +63,6 @@ public class PartyResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/parties")
-    @Timed
     public ResponseEntity<Party> updateParty(@Valid @RequestBody Party party) throws URISyntaxException {
         log.debug("REST request to update Party : {}", party);
         if (party.getId() == null) {
@@ -84,7 +81,6 @@ public class PartyResource {
      * @return the ResponseEntity with status 200 (OK) and the list of parties in body
      */
     @GetMapping("/parties")
-    @Timed
     public List<Party> getAllParties(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Parties");
         return partyRepository.findAllWithEagerRelationships();
@@ -97,7 +93,6 @@ public class PartyResource {
      * @return the ResponseEntity with status 200 (OK) and with body the party, or with status 404 (Not Found)
      */
     @GetMapping("/parties/{id}")
-    @Timed
     public ResponseEntity<Party> getParty(@PathVariable Long id) {
         log.debug("REST request to get Party : {}", id);
         Optional<Party> party = partyRepository.findOneWithEagerRelationships(id);
@@ -111,7 +106,6 @@ public class PartyResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/parties/{id}")
-    @Timed
     public ResponseEntity<Void> deleteParty(@PathVariable Long id) {
         log.debug("REST request to delete Party : {}", id);
 

@@ -1,6 +1,5 @@
 package com.studysoft.smartjournal.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
 import com.studysoft.smartjournal.domain.Subject;
 import com.studysoft.smartjournal.repository.SubjectRepository;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
@@ -43,7 +42,6 @@ public class SubjectResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/subjects")
-    @Timed
     public ResponseEntity<Subject> createSubject(@Valid @RequestBody Subject subject) throws URISyntaxException {
         log.debug("REST request to save Subject : {}", subject);
         if (subject.getId() != null) {
@@ -65,7 +63,6 @@ public class SubjectResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/subjects")
-    @Timed
     public ResponseEntity<Subject> updateSubject(@Valid @RequestBody Subject subject) throws URISyntaxException {
         log.debug("REST request to update Subject : {}", subject);
         if (subject.getId() == null) {
@@ -83,7 +80,6 @@ public class SubjectResource {
      * @return the ResponseEntity with status 200 (OK) and the list of subjects in body
      */
     @GetMapping("/subjects")
-    @Timed
     public List<Subject> getAllSubjects() {
         log.debug("REST request to get all Subjects");
         return subjectRepository.findAll();
@@ -96,7 +92,6 @@ public class SubjectResource {
      * @return the ResponseEntity with status 200 (OK) and with body the subject, or with status 404 (Not Found)
      */
     @GetMapping("/subjects/{id}")
-    @Timed
     public ResponseEntity<Subject> getSubject(@PathVariable Long id) {
         log.debug("REST request to get Subject : {}", id);
         Optional<Subject> subject = subjectRepository.findById(id);
@@ -110,7 +105,6 @@ public class SubjectResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/subjects/{id}")
-    @Timed
     public ResponseEntity<Void> deleteSubject(@PathVariable Long id) {
         log.debug("REST request to delete Subject : {}", id);
 

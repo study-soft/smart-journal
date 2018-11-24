@@ -1,6 +1,5 @@
 package com.studysoft.smartjournal.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
 import com.studysoft.smartjournal.domain.Board;
 import com.studysoft.smartjournal.repository.BoardRepository;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
@@ -43,7 +42,6 @@ public class BoardResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/boards")
-    @Timed
     public ResponseEntity<Board> createBoard(@Valid @RequestBody Board board) throws URISyntaxException {
         log.debug("REST request to save Board : {}", board);
         if (board.getId() != null) {
@@ -65,7 +63,6 @@ public class BoardResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/boards")
-    @Timed
     public ResponseEntity<Board> updateBoard(@Valid @RequestBody Board board) throws URISyntaxException {
         log.debug("REST request to update Board : {}", board);
         if (board.getId() == null) {
@@ -83,7 +80,6 @@ public class BoardResource {
      * @return the ResponseEntity with status 200 (OK) and the list of boards in body
      */
     @GetMapping("/boards")
-    @Timed
     public List<Board> getAllBoards() {
         log.debug("REST request to get all Boards");
         return boardRepository.findAll();
@@ -96,7 +92,6 @@ public class BoardResource {
      * @return the ResponseEntity with status 200 (OK) and with body the board, or with status 404 (Not Found)
      */
     @GetMapping("/boards/{id}")
-    @Timed
     public ResponseEntity<Board> getBoard(@PathVariable Long id) {
         log.debug("REST request to get Board : {}", id);
         Optional<Board> board = boardRepository.findById(id);
@@ -110,7 +105,6 @@ public class BoardResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/boards/{id}")
-    @Timed
     public ResponseEntity<Void> deleteBoard(@PathVariable Long id) {
         log.debug("REST request to delete Board : {}", id);
 
