@@ -1,18 +1,3 @@
-# ===================================================================
-# Spring Boot configuration for the "dev" profile.
-#
-# This configuration overrides the application.yml file.
-#
-# More information on profiles: https://www.jhipster.tech/profiles/
-# More information on configuration properties: https://www.jhipster.tech/common-application-properties/
-# ===================================================================
-
-# ===================================================================
-# Standard Spring Boot properties.
-# Full reference is available at:
-# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
-# ===================================================================
-
 logging:
     level:
         ROOT: DEBUG
@@ -88,6 +73,7 @@ jhipster:
             jwt:
                 # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
                 base64-secret: MWU0YWEzOTExY2YwOGU0NjE0MDcxYTliZmJkMTUwYjRmY2ZmZDlmZmJlOTBiYzdhNmJlZDY0YTFmZDdjZGI0MWUyMjBkNDhhNzA3ZDM5NGI0ZDlkY2VlMzAxZGE5NGVjNDg4NjFhMTNlMzk5NWVmMjJlNmUzNTRhNzY2ZGVhMDY=
+#                base64-secret: TVdVMFlXRXpPVEV4WTJZd09HVTBOakUwTURjeFlUbGlabUprTVRVd1lqUm1ZMlptWkRsbVptSmxPVEJpWXpkaE5tSmxaRFkwWVRGbVpEZGpaR0kwTVdVeU1qQmtORGhoTnpBM1pETTVOR0kwWkRsa1kyVmxNekF4WkdFNU5HVmpORGc0TmpGaE1UTmxNems1TldWbU1qSmxObVV6TlRSaE56WTJaR1ZoTURZPQ==
                 # Token is valid 24 hours
                 token-validity-in-seconds: 86400
                 token-validity-in-seconds-for-remember-me: 2592000

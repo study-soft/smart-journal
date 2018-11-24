@@ -51,7 +51,7 @@ public class TokenProvider {
         } else {
             log.debug("Using a Base64-encoded JWT secret key");
             // так было, но мавен ругался, что нет такого метода getJwt().getBase64Secret(), поэтому заменил на getSecret()
-            keyBytes = Decoders.BASE64.decode(jHipsterProperties.getSecurity().getAuthentication().getJwt().getSecret());
+            keyBytes = Decoders.BASE64.decode(jHipsterProperties.getSecurity().getAuthentication().getJwt().getBase64Secret());
         }
         this.key = Keys.hmacShaKeyFor(keyBytes);
         this.tokenValidityInMilliseconds =
