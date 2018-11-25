@@ -1,6 +1,5 @@
 package com.studysoft.smartjournal.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
 import com.studysoft.smartjournal.domain.Day;
 import com.studysoft.smartjournal.repository.DayRepository;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
@@ -43,7 +42,6 @@ public class DayResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/days")
-    @Timed
     public ResponseEntity<Day> createDay(@Valid @RequestBody Day day) throws URISyntaxException {
         log.debug("REST request to save Day : {}", day);
         if (day.getId() != null) {
@@ -65,7 +63,6 @@ public class DayResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/days")
-    @Timed
     public ResponseEntity<Day> updateDay(@Valid @RequestBody Day day) throws URISyntaxException {
         log.debug("REST request to update Day : {}", day);
         if (day.getId() == null) {
@@ -83,7 +80,6 @@ public class DayResource {
      * @return the ResponseEntity with status 200 (OK) and the list of days in body
      */
     @GetMapping("/days")
-    @Timed
     public List<Day> getAllDays() {
         log.debug("REST request to get all Days");
         return dayRepository.findAll();
@@ -96,7 +92,6 @@ public class DayResource {
      * @return the ResponseEntity with status 200 (OK) and with body the day, or with status 404 (Not Found)
      */
     @GetMapping("/days/{id}")
-    @Timed
     public ResponseEntity<Day> getDay(@PathVariable Long id) {
         log.debug("REST request to get Day : {}", id);
         Optional<Day> day = dayRepository.findById(id);
@@ -110,7 +105,6 @@ public class DayResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/days/{id}")
-    @Timed
     public ResponseEntity<Void> deleteDay(@PathVariable Long id) {
         log.debug("REST request to delete Day : {}", id);
 

@@ -1,6 +1,5 @@
 package com.studysoft.smartjournal.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
 import com.studysoft.smartjournal.domain.Student;
 import com.studysoft.smartjournal.repository.StudentRepository;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
@@ -43,7 +42,6 @@ public class StudentResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/students")
-    @Timed
     public ResponseEntity<Student> createStudent(@Valid @RequestBody Student student) throws URISyntaxException {
         log.debug("REST request to save Student : {}", student);
         if (student.getId() != null) {
@@ -65,7 +63,6 @@ public class StudentResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/students")
-    @Timed
     public ResponseEntity<Student> updateStudent(@Valid @RequestBody Student student) throws URISyntaxException {
         log.debug("REST request to update Student : {}", student);
         if (student.getId() == null) {
@@ -83,7 +80,6 @@ public class StudentResource {
      * @return the ResponseEntity with status 200 (OK) and the list of students in body
      */
     @GetMapping("/students")
-    @Timed
     public List<Student> getAllStudents() {
         log.debug("REST request to get all Students");
         return studentRepository.findAll();
@@ -96,7 +92,6 @@ public class StudentResource {
      * @return the ResponseEntity with status 200 (OK) and with body the student, or with status 404 (Not Found)
      */
     @GetMapping("/students/{id}")
-    @Timed
     public ResponseEntity<Student> getStudent(@PathVariable Long id) {
         log.debug("REST request to get Student : {}", id);
         Optional<Student> student = studentRepository.findById(id);
@@ -110,7 +105,6 @@ public class StudentResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/students/{id}")
-    @Timed
     public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
         log.debug("REST request to delete Student : {}", id);
 

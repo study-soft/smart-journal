@@ -1,6 +1,5 @@
 package com.studysoft.smartjournal.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
 import com.studysoft.smartjournal.domain.DayType;
 import com.studysoft.smartjournal.repository.DayTypeRepository;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
@@ -43,7 +42,6 @@ public class DayTypeResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/day-types")
-    @Timed
     public ResponseEntity<DayType> createDayType(@Valid @RequestBody DayType dayType) throws URISyntaxException {
         log.debug("REST request to save DayType : {}", dayType);
         if (dayType.getId() != null) {
@@ -65,7 +63,6 @@ public class DayTypeResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/day-types")
-    @Timed
     public ResponseEntity<DayType> updateDayType(@Valid @RequestBody DayType dayType) throws URISyntaxException {
         log.debug("REST request to update DayType : {}", dayType);
         if (dayType.getId() == null) {
@@ -83,7 +80,6 @@ public class DayTypeResource {
      * @return the ResponseEntity with status 200 (OK) and the list of dayTypes in body
      */
     @GetMapping("/day-types")
-    @Timed
     public List<DayType> getAllDayTypes() {
         log.debug("REST request to get all DayTypes");
         return dayTypeRepository.findAll();
@@ -96,7 +92,6 @@ public class DayTypeResource {
      * @return the ResponseEntity with status 200 (OK) and with body the dayType, or with status 404 (Not Found)
      */
     @GetMapping("/day-types/{id}")
-    @Timed
     public ResponseEntity<DayType> getDayType(@PathVariable Long id) {
         log.debug("REST request to get DayType : {}", id);
         Optional<DayType> dayType = dayTypeRepository.findById(id);
@@ -110,7 +105,6 @@ public class DayTypeResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/day-types/{id}")
-    @Timed
     public ResponseEntity<Void> deleteDayType(@PathVariable Long id) {
         log.debug("REST request to delete DayType : {}", id);
 
