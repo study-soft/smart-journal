@@ -79,34 +79,34 @@ CREATE TABLE day (
     student_id BIGINT NOT NULL,
     day_type_id BIGINT NOT NULL
 );
--- jhi_authority
-DROP TABLE IF EXISTS jhi_authority CASCADE;
-CREATE TABLE jhi_authority (
+-- authority
+DROP TABLE IF EXISTS authority CASCADE;
+CREATE TABLE authority (
     name VARCHAR(50) PRIMARY KEY
 );
 
--- jhi_persistent_audit_event
-DROP TABLE IF EXISTS jhi_persistent_audit_event CASCADE;
-DROP SEQUENCE IF EXISTS jhi_persistent_audit_event_event_id_seq CASCADE;
-CREATE TABLE jhi_persistent_audit_event (
+-- persistent_audit_event
+DROP TABLE IF EXISTS persistent_audit_event CASCADE;
+DROP SEQUENCE IF EXISTS persistent_audit_event_event_id_seq CASCADE;
+CREATE TABLE persistent_audit_event (
     event_id BIGSERIAL PRIMARY KEY,
     principal VARCHAR(50) NOT NULL,
     event_date TIMESTAMP,
     event_type VARCHAR(255)
 );
 
--- jhi_persistent_audit_evt_data
-DROP TABLE IF EXISTS jhi_persistent_audit_evt_data CASCADE;
-CREATE TABLE jhi_persistent_audit_evt_data (
+-- persistent_audit_evt_data
+DROP TABLE IF EXISTS persistent_audit_evt_data CASCADE;
+CREATE TABLE persistent_audit_evt_data (
     event_id BIGINT NOT NULL,
     name VARCHAR(150) NOT NULL,
     value VARCHAR(255)
 );
 
--- jhi_user
-DROP TABLE IF EXISTS jhi_user CASCADE;
-DROP SEQUENCE IF EXISTS jhi_user_id_seq CASCADE;
-CREATE TABLE jhi_user (
+-- user
+DROP TABLE IF EXISTS "user" CASCADE;
+DROP SEQUENCE IF EXISTS user_id_seq CASCADE;
+CREATE TABLE "user" (
     id BIGSERIAL PRIMARY KEY,
     login VARCHAR(50) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
@@ -125,9 +125,9 @@ CREATE TABLE jhi_user (
     last_modified_date TIMESTAMP
 );
 
--- jhi_user_authority
-DROP TABLE IF EXISTS jhi_user_authority CASCADE;
-CREATE TABLE jhi_user_authority (
+-- user_authority
+DROP TABLE IF EXISTS user_authority CASCADE;
+CREATE TABLE user_authority (
     user_id BIGINT NOT NULL,
     authority_name VARCHAR(50) NOT NULL
 );
@@ -148,15 +148,15 @@ CREATE UNIQUE INDEX pk_student ON student (id ASC);
 CREATE UNIQUE INDEX pk_day ON day (id ASC);
 CREATE INDEX ux_day_day_type_id ON day (day_type_id ASC);
 
-CREATE UNIQUE INDEX pk_jhi_authority ON jhi_authority (name ASC);
-CREATE INDEX idx_persistent_audit_event ON jhi_persistent_audit_event (principal ASC, event_date ASC);
-CREATE UNIQUE INDEX pk_jhi_persistent_audit_event ON jhi_persistent_audit_event (event_id ASC);
-CREATE INDEX idx_persistent_audit_evt_data ON jhi_persistent_audit_evt_data (event_id ASC);
-CREATE UNIQUE INDEX pk_jhi_persistent_audit_evt_data ON jhi_persistent_audit_evt_data (event_id ASC, name ASC);
-CREATE UNIQUE INDEX pk_jhi_user ON jhi_user (id ASC);
-CREATE UNIQUE INDEX ux_user_email ON jhi_user (email ASC);
-CREATE UNIQUE INDEX ux_user_login ON jhi_user (login ASC);
-CREATE UNIQUE INDEX pk_jhi_user_authority ON jhi_user_authority (user_id ASC, authority_name ASC);
+CREATE UNIQUE INDEX pk_authority ON authority (name ASC);
+CREATE INDEX idx_persistent_audit_event ON persistent_audit_event (principal ASC, event_date ASC);
+CREATE UNIQUE INDEX pk_persistent_audit_event ON persistent_audit_event (event_id ASC);
+CREATE INDEX idx_persistent_audit_evt_data ON persistent_audit_evt_data (event_id ASC);
+CREATE UNIQUE INDEX pk_persistent_audit_evt_data ON persistent_audit_evt_data (event_id ASC, name ASC);
+CREATE UNIQUE INDEX pk_user ON "user" (id ASC);
+CREATE UNIQUE INDEX ux_user_email ON "user" (email ASC);
+CREATE UNIQUE INDEX ux_user_login ON "user" (login ASC);
+CREATE UNIQUE INDEX pk_user_authority ON user_authority (user_id ASC, authority_name ASC);
 
 ------------------------- KEYS -------------------------
 
@@ -174,15 +174,15 @@ ALTER TABLE student ADD CONSTRAINT fk_student_board_id FOREIGN KEY (board_id) RE
 ALTER TABLE day ADD CONSTRAINT fk_day_day_type_id FOREIGN KEY (day_type_id) REFERENCES day_type (id);
 ALTER TABLE day ADD CONSTRAINT fk_day_student_id FOREIGN KEY (student_id) REFERENCES student (id);
 
--- jhi_persistent_audit_evt_data
-ALTER TABLE jhi_persistent_audit_evt_data ADD CONSTRAINT pkey_jhi_persistent_audit_evt_data PRIMARY KEY (event_id, name);
-ALTER TABLE jhi_persistent_audit_evt_data ADD CONSTRAINT fk_evt_pers_audit_evt_data FOREIGN KEY (event_id)
-REFERENCES jhi_persistent_audit_event (event_id);
+-- persistent_audit_evt_data
+ALTER TABLE persistent_audit_evt_data ADD CONSTRAINT pkey_persistent_audit_evt_data PRIMARY KEY (event_id, name);
+ALTER TABLE persistent_audit_evt_data ADD CONSTRAINT fk_evt_pers_audit_evt_data FOREIGN KEY (event_id)
+REFERENCES persistent_audit_event (event_id);
 
--- jhi_user_authority
-ALTER TABLE jhi_user_authority ADD CONSTRAINT pkey_jhi_user_authority PRIMARY KEY (user_id, authority_name);
-ALTER TABLE jhi_user_authority ADD CONSTRAINT fk_authority_name FOREIGN KEY (authority_name) REFERENCES jhi_authority (name);
-ALTER TABLE jhi_user_authority ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES jhi_user (id);
+-- user_authority
+ALTER TABLE user_authority ADD CONSTRAINT pkey_user_authority PRIMARY KEY (user_id, authority_name);
+ALTER TABLE user_authority ADD CONSTRAINT fk_authority_name FOREIGN KEY (authority_name) REFERENCES authority (name);
+ALTER TABLE user_authority ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES "user" (id);
 
 ------------------------- INSERT DATA -------------------------
 -- party
@@ -239,18 +239,18 @@ INSERT INTO day (date, result, student_id, day_type_id) VALUES
     (CURRENT_TIMESTAMP, 2.0, 3, 5),
     (CURRENT_TIMESTAMP, 3.0, 4, 5);
 
--- jhi_authority
-INSERT INTO jhi_authority (name) VALUES
+-- authority
+INSERT INTO authority (name) VALUES
     ('ROLE_ADMIN'), ('ROLE_USER');
 
--- jhi_user
-INSERT INTO jhi_user (login, password_hash, first_name, last_name, email, image_url, activated, lang_key, activation_key, reset_key, created_by, created_date, reset_date, last_modified_by, last_modified_date) VALUES
+-- user
+INSERT INTO "user" (login, password_hash, first_name, last_name, email, image_url, activated, lang_key, activation_key, reset_key, created_by, created_date, reset_date, last_modified_by, last_modified_date) VALUES
     ('system', '$2a$10$mE.qmcV0mFU5NcKh73TZx.z4ueI/.bDWbj0T1BYyqP481kGGarKLG', 'System', 'System', 'system@localhost', '', TRUE, 'ua', NULL, NULL, 'system', NULL, NULL, 'system', NULL),
     ('anonymoususer', '$2a$10$j8S5d7Sr7.8VTOYNviDPOeWX8KcYILUVJBsYV83Y5NtECayypx9lO', 'Anonymous', 'System', 'anonymous@localhost', '', TRUE, 'ua', NULL, NULL, 'system', NULL, NULL, 'system', NULL),
     ('admin', '$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC', 'System', 'Administrator', 'admin@localhost', '', TRUE, 'ua', NULL, NULL, 'system', NULL, NULL, 'system', NULL),
     ('user', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'System', 'User', 'user@localhost', '', TRUE, 'ua', NULL, NULL, 'system', NULL, NULL, 'system', NULL);
 
--- jhi_user_authority
-INSERT INTO jhi_user_authority (user_id, authority_name) VALUES
+-- user_authority
+INSERT INTO user_authority (user_id, authority_name) VALUES
     (1, 'ROLE_ADMIN'), (1, 'ROLE_USER'), (3, 'ROLE_ADMIN'), (3, 'ROLE_USER'), (4, 'ROLE_USER');
 
