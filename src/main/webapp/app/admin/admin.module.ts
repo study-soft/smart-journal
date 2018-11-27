@@ -13,8 +13,6 @@ import {
     UserMgmtUpdateComponent,
     UserMgmtDeleteDialogComponent,
     LogsComponent,
-    JhiHealthModalComponent,
-    JhiHealthCheckComponent,
     JhiConfigurationComponent,
     JhiDocsComponent
 } from './';
@@ -33,12 +31,10 @@ import {
         UserMgmtDeleteDialogComponent,
         LogsComponent,
         JhiConfigurationComponent,
-        JhiHealthCheckComponent,
-        JhiHealthModalComponent,
         JhiDocsComponent
     ],
     providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
-    entryComponents: [UserMgmtDeleteDialogComponent, JhiHealthModalComponent],
+    entryComponents: [UserMgmtDeleteDialogComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SmartjournalAdminModule {
