@@ -12,7 +12,6 @@ import {
     UserMgmtDetailComponent,
     UserMgmtUpdateComponent,
     UserMgmtDeleteDialogComponent,
-    JhiConfigurationComponent,
     JhiDocsComponent
 } from './';
 
@@ -28,7 +27,6 @@ import {
         UserMgmtDetailComponent,
         UserMgmtUpdateComponent,
         UserMgmtDeleteDialogComponent,
-        JhiConfigurationComponent,
         JhiDocsComponent
     ],
     providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
