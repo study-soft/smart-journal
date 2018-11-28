@@ -7,7 +7,6 @@ import { SmartjournalSharedModule } from 'app/shared';
 
 import {
     adminState,
-    AuditsComponent,
     UserMgmtComponent,
     UserMgmtDetailComponent,
     UserMgmtUpdateComponent,
@@ -21,14 +20,7 @@ import {
         RouterModule.forChild(adminState)
         /* jhipster-needle-add-admin-module - JHipster will add admin modules here */
     ],
-    declarations: [
-        AuditsComponent,
-        UserMgmtComponent,
-        UserMgmtDetailComponent,
-        UserMgmtUpdateComponent,
-        UserMgmtDeleteDialogComponent,
-        JhiDocsComponent
-    ],
+    declarations: [UserMgmtComponent, UserMgmtDetailComponent, UserMgmtUpdateComponent, UserMgmtDeleteDialogComponent, JhiDocsComponent],
     providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
     entryComponents: [UserMgmtDeleteDialogComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
