@@ -85,24 +85,6 @@ CREATE TABLE authority (
     name VARCHAR(50) PRIMARY KEY
 );
 
--- persistent_audit_event
-DROP TABLE IF EXISTS persistent_audit_event CASCADE;
-DROP SEQUENCE IF EXISTS persistent_audit_event_event_id_seq CASCADE;
-CREATE TABLE persistent_audit_event (
-    event_id BIGSERIAL PRIMARY KEY,
-    principal VARCHAR(50) NOT NULL,
-    event_date TIMESTAMP,
-    event_type VARCHAR(255)
-);
-
--- persistent_audit_evt_data
-DROP TABLE IF EXISTS persistent_audit_evt_data CASCADE;
-CREATE TABLE persistent_audit_evt_data (
-    event_id BIGINT NOT NULL,
-    name VARCHAR(150) NOT NULL,
-    value VARCHAR(255)
-);
-
 -- user
 DROP TABLE IF EXISTS "user" CASCADE;
 DROP SEQUENCE IF EXISTS user_id_seq CASCADE;
@@ -149,10 +131,6 @@ CREATE UNIQUE INDEX pk_day ON day (id ASC);
 CREATE INDEX ux_day_day_type_id ON day (day_type_id ASC);
 
 CREATE UNIQUE INDEX pk_authority ON authority (name ASC);
-CREATE INDEX idx_persistent_audit_event ON persistent_audit_event (principal ASC, event_date ASC);
-CREATE UNIQUE INDEX pk_persistent_audit_event ON persistent_audit_event (event_id ASC);
-CREATE INDEX idx_persistent_audit_evt_data ON persistent_audit_evt_data (event_id ASC);
-CREATE UNIQUE INDEX pk_persistent_audit_evt_data ON persistent_audit_evt_data (event_id ASC, name ASC);
 CREATE UNIQUE INDEX pk_user ON "user" (id ASC);
 CREATE UNIQUE INDEX ux_user_email ON "user" (email ASC);
 CREATE UNIQUE INDEX ux_user_login ON "user" (login ASC);
@@ -173,11 +151,6 @@ ALTER TABLE student ADD CONSTRAINT fk_student_board_id FOREIGN KEY (board_id) RE
 -- day
 ALTER TABLE day ADD CONSTRAINT fk_day_day_type_id FOREIGN KEY (day_type_id) REFERENCES day_type (id);
 ALTER TABLE day ADD CONSTRAINT fk_day_student_id FOREIGN KEY (student_id) REFERENCES student (id);
-
--- persistent_audit_evt_data
-ALTER TABLE persistent_audit_evt_data ADD CONSTRAINT pkey_persistent_audit_evt_data PRIMARY KEY (event_id, name);
-ALTER TABLE persistent_audit_evt_data ADD CONSTRAINT fk_evt_pers_audit_evt_data FOREIGN KEY (event_id)
-REFERENCES persistent_audit_event (event_id);
 
 -- user_authority
 ALTER TABLE user_authority ADD CONSTRAINT pkey_user_authority PRIMARY KEY (user_id, authority_name);

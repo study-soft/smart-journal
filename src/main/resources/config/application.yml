@@ -1,21 +1,3 @@
-management:
-    endpoints:
-        web:
-            base-path: /management
-            exposure:
-                include: ["configprops", "env", "health", "info", "threaddump", "logfile" ]
-    endpoint:
-        health:
-            show-details: when-authorized
-    info:
-        git:
-            mode: full
-    health:
-        mail:
-            enabled: false # When using the MailService, configure an SMTP server and set this to true
-    metrics:
-        enabled: false # http://micrometer.io/ is disabled by default, as we use http://metrics.dropwizard.io/ instead
-
 spring:
     application:
         name: smartjournal
