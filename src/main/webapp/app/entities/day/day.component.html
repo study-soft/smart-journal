@@ -25,7 +25,7 @@
             <tbody>
             <tr *ngFor="let day of days ;trackBy: trackId">
                 <td><a [routerLink]="['/day', day.id, 'view' ]">{{day.id}}</a></td>
-                <td>{{day.date | date:'medium'}}</td>
+                <td>{{day.date | date:'mediumDate'}}</td>
                 <td>{{day.result}}</td>
                 <td>
                     <div *ngIf="day.student">

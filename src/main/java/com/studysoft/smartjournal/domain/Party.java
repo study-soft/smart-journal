@@ -31,14 +31,6 @@ public class Party implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @NotNull
-    @Column(name = "created", nullable = false)
-    private Instant created;
-
-    @NotNull
-    @Column(name = "updated", nullable = false)
-    private Instant updated;
-
     @ManyToMany
     @JoinTable(name = "party_subject",
                joinColumns = @JoinColumn(name = "parties_id", referencedColumnName = "id"),
@@ -78,32 +70,6 @@ public class Party implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Instant getCreated() {
-        return created;
-    }
-
-    public Party created(Instant created) {
-        this.created = created;
-        return this;
-    }
-
-    public void setCreated(Instant created) {
-        this.created = created;
-    }
-
-    public Instant getUpdated() {
-        return updated;
-    }
-
-    public Party updated(Instant updated) {
-        this.updated = updated;
-        return this;
-    }
-
-    public void setUpdated(Instant updated) {
-        this.updated = updated;
     }
 
     public Set<Subject> getSubjects() {
@@ -158,8 +124,6 @@ public class Party implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
-            ", created='" + getCreated() + "'" +
-            ", updated='" + getUpdated() + "'" +
             "}";
     }
 }

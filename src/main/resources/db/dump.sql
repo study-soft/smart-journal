@@ -7,8 +7,10 @@ CREATE TABLE party (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) UNIQUE NOT NULL,
     description VARCHAR(65535),
-    created TIMESTAMP NOT NULL,
-    updated TIMESTAMP NOT NULL
+    created_by VARCHAR(50) NOT NULL,
+    created_date TIMESTAMP,
+    last_modified_by VARCHAR(50),
+    last_modified_date TIMESTAMP
 );
 
 -- subject
@@ -18,8 +20,10 @@ CREATE TABLE subject (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) UNIQUE NOT NULL,
     description VARCHAR(65535),
-    created TIMESTAMP NOT NULL,
-    updated TIMESTAMP NOT NULL
+    created_by VARCHAR(50) NOT NULL,
+    created_date TIMESTAMP,
+    last_modified_by VARCHAR(50),
+    last_modified_date TIMESTAMP
 );
 
 -- party_subject
@@ -36,8 +40,10 @@ CREATE TABLE board (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) UNIQUE NOT NULL,
     description VARCHAR(65535),
-    created TIMESTAMP NOT NULL,
-    updated TIMESTAMP NOT NULL,
+    created_by VARCHAR(50) NOT NULL,
+    created_date TIMESTAMP,
+    last_modified_by VARCHAR(50),
+    last_modified_date TIMESTAMP,
     party_id BIGINT NOT NULL,
     subject_id BIGINT NOT NULL
 );
@@ -50,8 +56,10 @@ CREATE TABLE day_type (
     type VARCHAR(255) NOT NULL,
     score DOUBLE PRECISION NOT NULL CHECK(score >= 0),
     description VARCHAR(65535) NULL,
-    created TIMESTAMP NOT NULL,
-    updated TIMESTAMP NOT NULL,
+    created_by VARCHAR(50) NOT NULL,
+    created_date TIMESTAMP,
+    last_modified_by VARCHAR(50),
+    last_modified_date TIMESTAMP,
     board_id BIGINT NOT NULL
 );
 
@@ -64,8 +72,6 @@ CREATE TABLE student (
     last_name VARCHAR(255) NOT NULL,
     middle_name VARCHAR(255),
     rating DOUBLE PRECISION CHECK(rating >= 0),
-    created TIMESTAMP NOT NULL,
-    updated TIMESTAMP NOT NULL,
     board_id BIGINT NOT NULL
 );
 
@@ -74,7 +80,7 @@ DROP TABLE IF EXISTS day CASCADE;
 DROP SEQUENCE IF EXISTS day_id_seq CASCADE;
 CREATE TABLE day (
     id BIGSERIAL PRIMARY KEY,
-    date TIMESTAMP NOT NULL,
+    date DATE NOT NULL,
     result DOUBLE PRECISION CHECK(result >= 0),
     student_id BIGINT NOT NULL,
     day_type_id BIGINT NOT NULL
@@ -85,10 +91,10 @@ CREATE TABLE authority (
     name VARCHAR(50) PRIMARY KEY
 );
 
--- user
-DROP TABLE IF EXISTS "user" CASCADE;
-DROP SEQUENCE IF EXISTS user_id_seq CASCADE;
-CREATE TABLE "user" (
+-- teacher
+DROP TABLE IF EXISTS teacher CASCADE;
+DROP SEQUENCE IF EXISTS teacher_id_seq CASCADE;
+CREATE TABLE teacher (
     id BIGSERIAL PRIMARY KEY,
     login VARCHAR(50) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
@@ -131,10 +137,10 @@ CREATE UNIQUE INDEX pk_day ON day (id ASC);
 CREATE INDEX ux_day_day_type_id ON day (day_type_id ASC);
 
 CREATE UNIQUE INDEX pk_authority ON authority (name ASC);
-CREATE UNIQUE INDEX pk_user ON "user" (id ASC);
-CREATE UNIQUE INDEX ux_user_email ON "user" (email ASC);
-CREATE UNIQUE INDEX ux_user_login ON "user" (login ASC);
-CREATE UNIQUE INDEX pk_user_authority ON user_authority (user_id ASC, authority_name ASC);
+CREATE UNIQUE INDEX pk_teacher ON teacher (id ASC);
+CREATE UNIQUE INDEX ux_teacher_email ON teacher (email ASC);
+CREATE UNIQUE INDEX ux_teacher_login ON teacher (login ASC);
+CREATE UNIQUE INDEX pk_teacher_authority ON user_authority (user_id ASC, authority_name ASC);
 
 ------------------------- KEYS -------------------------
 
@@ -159,65 +165,69 @@ ALTER TABLE user_authority ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFER
 
 ------------------------- INSERT DATA -------------------------
 -- party
-INSERT INTO party (name, description, created, updated) VALUES
-    ('Інформатики', 'Тестова група для перевірки роботи розумного журналу. Пишу багато символів в описі, щоб перевірити, як це буде виглядати на сторінці. Ліміт сиволів - 65535, тому в мене ще є великий запас. Бла-бла-бла...', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO party (name, description, created_by, created_date, last_modified_by, last_modified_date) VALUES
+    ('Інформатики', 'Тестова група для перевірки роботи розумного журналу. Пишу багато символів в описі, щоб перевірити, як це буде виглядати на сторінці. Ліміт сиволів - 65535, тому в мене ще є великий запас. Бла-бла-бла...', 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP);
 
 -- subject
-INSERT INTO subject (name, description, created, updated) VALUES
-    ('Комп’ютерні мережі', NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO subject (name, description, created_by, created_date, last_modified_by, last_modified_date) VALUES
+    ('Комп’ютерні мережі', NULL, 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP);
 
 -- party_subject
 INSERT INTO party_subject (subjects_id, parties_id) VALUES
     (1, 1);
 
 -- board
-INSERT INTO board (name, description, created, updated, party_id, subject_id) VALUES
-    ('Інформатики. Комп’ютерні мережі', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 1);
+INSERT INTO board (name, description, created_by, created_date, last_modified_by, last_modified_date, party_id, subject_id) VALUES
+    ('Інформатики. Комп’ютерні мережі', '', 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1, 1);
 
 -- day_type
-INSERT INTO day_type (type, score, description, created, updated, board_id) VALUES
-    ('SIMPLE', 1.0, 'Звичайна пара', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1),
-    ('LAB', 5.0, 'Лабараторна робота', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1),
-    ('MODULE', 10.0, 'Модуль', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1),
-    ('EXAM', 20.0, 'Екзамен', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1),
-    ('TEST', 3.0, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1);
+INSERT INTO day_type (type, score, description, created_by, created_date, last_modified_by, last_modified_date, board_id) VALUES
+    ('SIMPLE', 1.0, 'Звичайна пара', 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1),
+    ('LAB', 5.0, 'Лабараторна робота', 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1),
+    ('MODULE', 10.0, 'Модуль', 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1),
+    ('EXAM', 20.0, 'Екзамен', 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1),
+    ('TEST', 3.0, NULL, 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1);
 
 -- student
-INSERT INTO student (first_name, last_name, middle_name, rating, created, updated, board_id) VALUES
-    ('Антон', 'Яковенко', 'Сергійович', NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1),
-    ('Артем', 'Яковенко', 'Сергійович', NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1),
-    ('Джейсон', 'Стетхем', NULL, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1),
-    ('Довге-довге-довге ім’я', 'Довге-довге-довге прізвище', 'Довге-довге-довге ім’я по-батькові', 44, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1);
+INSERT INTO student (first_name, last_name, middle_name, rating, board_id) VALUES
+    ('Антон', 'Яковенко', 'Сергійович', NULL, 1),
+    ('Артем', 'Яковенко', 'Сергійович', NULL, 1),
+    ('Джейсон', 'Стетхем', NULL, NULL, 1),
+    ('Довге-довге-довге ім’я', 'Довге-довге прізвище', 'Довге-довге ім’я по-батькові', 44.0, 1);
 
 -- day
 INSERT INTO day (date, result, student_id, day_type_id) VALUES
-    (CURRENT_TIMESTAMP, 0.0, 1, 1),
-    (CURRENT_TIMESTAMP, 1.0, 2, 1),
-    (CURRENT_TIMESTAMP, 0.0, 3, 1),
-    (CURRENT_TIMESTAMP, 1.0, 4, 1),
-    (CURRENT_TIMESTAMP, 1.0, 1, 2),
-    (CURRENT_TIMESTAMP, 2.0, 2, 2),
-    (CURRENT_TIMESTAMP, 3.0, 3, 2),
-    (CURRENT_TIMESTAMP, 4.0, 4, 2),
-    (CURRENT_TIMESTAMP, 0.0, 1, 3),
-    (CURRENT_TIMESTAMP, 2.0, 2, 3),
-    (CURRENT_TIMESTAMP, 4.0, 3, 3),
-    (CURRENT_TIMESTAMP, 6.0, 4, 3),
-    (CURRENT_TIMESTAMP, 4.0, 1, 4),
-    (CURRENT_TIMESTAMP, 8.0, 2, 4),
-    (CURRENT_TIMESTAMP, 12.0, 3, 4),
-    (CURRENT_TIMESTAMP, 16.0, 4, 4),
-    (CURRENT_TIMESTAMP, 0.0, 1, 5),
-    (CURRENT_TIMESTAMP, 1.0, 2, 5),
-    (CURRENT_TIMESTAMP, 2.0, 3, 5),
-    (CURRENT_TIMESTAMP, 3.0, 4, 5);
+    (CURRENT_DATE - integer '28', 0.0, 1, 1),
+    (CURRENT_DATE - integer '28', 1.0, 2, 1),
+    (CURRENT_DATE - integer '28', 0.0, 3, 1),
+    (CURRENT_DATE - integer '28', 1.0, 4, 1),
+    (CURRENT_DATE - integer '21', 1.0, 1, 2),
+    (CURRENT_DATE - integer '21', 2.0, 2, 2),
+    (CURRENT_DATE - integer '21', 3.0, 3, 2),
+    (CURRENT_DATE - integer '21', 4.0, 4, 2),
+    (CURRENT_DATE - integer '14', 0.0, 1, 3),
+    (CURRENT_DATE - integer '14', 2.0, 2, 3),
+    (CURRENT_DATE - integer '14', 4.0, 3, 3),
+    (CURRENT_DATE - integer '14', 6.0, 4, 3),
+    (CURRENT_DATE - integer '7', 4.0, 1, 4),
+    (CURRENT_DATE - integer '7', 8.0, 2, 4),
+    (CURRENT_DATE - integer '7', 12.0, 3, 4),
+    (CURRENT_DATE - integer '7', 16.0, 4, 4),
+    (CURRENT_DATE, 0.0, 1, 5),
+    (CURRENT_DATE, 1.0, 2, 5),
+    (CURRENT_DATE, 2.0, 3, 5),
+    (CURRENT_DATE, 3.0, 4, 5),
+    (CURRENT_DATE + integer '7', NULL, 1, 1),
+    (CURRENT_DATE + integer '7', NULL, 2, 1),
+    (CURRENT_DATE + integer '7', NULL, 3, 1),
+    (CURRENT_DATE + integer '7', NULL, 4, 1);
 
 -- authority
 INSERT INTO authority (name) VALUES
     ('ROLE_ADMIN'), ('ROLE_USER');
 
--- user
-INSERT INTO "user" (login, password_hash, first_name, last_name, email, image_url, activated, lang_key, activation_key, reset_key, created_by, created_date, reset_date, last_modified_by, last_modified_date) VALUES
+-- teacher
+INSERT INTO teacher (login, password_hash, first_name, last_name, email, image_url, activated, lang_key, activation_key, reset_key, created_by, created_date, reset_date, last_modified_by, last_modified_date) VALUES
     ('system', '$2a$10$mE.qmcV0mFU5NcKh73TZx.z4ueI/.bDWbj0T1BYyqP481kGGarKLG', 'System', 'System', 'system@localhost', '', TRUE, 'ua', NULL, NULL, 'system', NULL, NULL, 'system', NULL),
     ('anonymoususer', '$2a$10$j8S5d7Sr7.8VTOYNviDPOeWX8KcYILUVJBsYV83Y5NtECayypx9lO', 'Anonymous', 'System', 'anonymous@localhost', '', TRUE, 'ua', NULL, NULL, 'system', NULL, NULL, 'system', NULL),
     ('admin', '$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC', 'System', 'Administrator', 'admin@localhost', '', TRUE, 'ua', NULL, NULL, 'system', NULL, NULL, 'system', NULL),

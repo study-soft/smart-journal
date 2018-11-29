@@ -16,7 +16,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "subject")
-public class Subject implements Serializable {
+public class Subject extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -31,14 +31,6 @@ public class Subject implements Serializable {
 
     @Column(name = "description")
     private String description;
-
-    @NotNull
-    @Column(name = "created", nullable = false)
-    private Instant created;
-
-    @NotNull
-    @Column(name = "updated", nullable = false)
-    private Instant updated;
 
     @ManyToMany(mappedBy = "subjects")
     @JsonIgnore
@@ -77,32 +69,6 @@ public class Subject implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Instant getCreated() {
-        return created;
-    }
-
-    public Subject created(Instant created) {
-        this.created = created;
-        return this;
-    }
-
-    public void setCreated(Instant created) {
-        this.created = created;
-    }
-
-    public Instant getUpdated() {
-        return updated;
-    }
-
-    public Subject updated(Instant updated) {
-        this.updated = updated;
-        return this;
-    }
-
-    public void setUpdated(Instant updated) {
-        this.updated = updated;
     }
 
     public Set<Party> getGroups() {
@@ -157,8 +123,6 @@ public class Subject implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
-            ", created='" + getCreated() + "'" +
-            ", updated='" + getUpdated() + "'" +
             "}";
     }
 }

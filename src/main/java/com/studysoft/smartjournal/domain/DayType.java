@@ -16,7 +16,7 @@ import com.studysoft.smartjournal.domain.enumeration.Type;
  */
 @Entity
 @Table(name = "day_type")
-public class DayType implements Serializable {
+public class DayType extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -36,14 +36,6 @@ public class DayType implements Serializable {
 
     @Column(name = "description")
     private String description;
-
-    @NotNull
-    @Column(name = "created", nullable = false)
-    private Instant created;
-
-    @NotNull
-    @Column(name = "updated", nullable = false)
-    private Instant updated;
 
     @ManyToOne
     @JsonIgnoreProperties("dayTypes")
@@ -97,32 +89,6 @@ public class DayType implements Serializable {
         this.description = description;
     }
 
-    public Instant getCreated() {
-        return created;
-    }
-
-    public DayType created(Instant created) {
-        this.created = created;
-        return this;
-    }
-
-    public void setCreated(Instant created) {
-        this.created = created;
-    }
-
-    public Instant getUpdated() {
-        return updated;
-    }
-
-    public DayType updated(Instant updated) {
-        this.updated = updated;
-        return this;
-    }
-
-    public void setUpdated(Instant updated) {
-        this.updated = updated;
-    }
-
     public Board getBoard() {
         return board;
     }
@@ -164,8 +130,6 @@ public class DayType implements Serializable {
             ", type='" + getType() + "'" +
             ", score=" + getScore() +
             ", description='" + getDescription() + "'" +
-            ", created='" + getCreated() + "'" +
-            ", updated='" + getUpdated() + "'" +
             "}";
     }
 }

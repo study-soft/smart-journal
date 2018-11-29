@@ -1,22 +1,19 @@
 package com.studysoft.smartjournal.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Board.
  */
 @Entity
 @Table(name = "board")
-public class Board implements Serializable {
+public class Board extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -31,14 +28,6 @@ public class Board implements Serializable {
 
     @Column(name = "description")
     private String description;
-
-    @NotNull
-    @Column(name = "created", nullable = false)
-    private Instant created;
-
-    @NotNull
-    @Column(name = "updated", nullable = false)
-    private Instant updated;
 
     @OneToOne    @JoinColumn(unique = true)
     private Party party;
@@ -83,32 +72,6 @@ public class Board implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Instant getCreated() {
-        return created;
-    }
-
-    public Board created(Instant created) {
-        this.created = created;
-        return this;
-    }
-
-    public void setCreated(Instant created) {
-        this.created = created;
-    }
-
-    public Instant getUpdated() {
-        return updated;
-    }
-
-    public Board updated(Instant updated) {
-        this.updated = updated;
-        return this;
-    }
-
-    public void setUpdated(Instant updated) {
-        this.updated = updated;
     }
 
     public Party getParty() {
@@ -214,8 +177,6 @@ public class Board implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
-            ", created='" + getCreated() + "'" +
-            ", updated='" + getUpdated() + "'" +
             "}";
     }
 }
