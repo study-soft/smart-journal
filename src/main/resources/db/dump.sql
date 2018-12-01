@@ -54,8 +54,9 @@ DROP SEQUENCE IF EXISTS day_type_id_seq CASCADE;
 CREATE TABLE day_type (
     id BIGSERIAL PRIMARY KEY,
     type VARCHAR(255) NOT NULL,
-    score DOUBLE PRECISION NOT NULL CHECK(score >= 0),
-    description VARCHAR(65535) NULL,
+    score DOUBLE PRECISION NOT NULL,
+    description VARCHAR(65535),
+    expiry INT,
     created_by VARCHAR(50) NOT NULL,
     created_date TIMESTAMP,
     last_modified_by VARCHAR(50),
@@ -71,7 +72,7 @@ CREATE TABLE student (
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
     middle_name VARCHAR(255),
-    rating DOUBLE PRECISION CHECK(rating >= 0),
+    rating DOUBLE PRECISION,
     board_id BIGINT NOT NULL
 );
 
@@ -81,7 +82,7 @@ DROP SEQUENCE IF EXISTS day_id_seq CASCADE;
 CREATE TABLE day (
     id BIGSERIAL PRIMARY KEY,
     date DATE NOT NULL,
-    result DOUBLE PRECISION CHECK(result >= 0),
+    result DOUBLE PRECISION,
     student_id BIGINT NOT NULL,
     day_type_id BIGINT NOT NULL
 );
@@ -181,19 +182,19 @@ INSERT INTO board (name, description, created_by, created_date, last_modified_by
     ('Інформатики. Комп’ютерні мережі', '', 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1, 1);
 
 -- day_type
-INSERT INTO day_type (type, score, description, created_by, created_date, last_modified_by, last_modified_date, board_id) VALUES
-    ('SIMPLE', 1.0, 'Звичайна пара', 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1),
-    ('LAB', 5.0, 'Лабараторна робота', 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1),
-    ('MODULE', 10.0, 'Модуль', 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1),
-    ('EXAM', 20.0, 'Екзамен', 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1),
-    ('TEST', 3.0, NULL, 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1);
+INSERT INTO day_type (type, score, description, expiry, created_by, created_date, last_modified_by, last_modified_date, board_id) VALUES
+    ('SIMPLE', 1.0, 'Звичайна пара', NULL, 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1),
+    ('LAB', 5.0, 'Лабараторна робота', 3, 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1),
+    ('MODULE', 10.0, 'Модуль', NULL, 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1),
+    ('EXAM', 20.0, 'Екзамен', NULL, 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1),
+    ('TEST', 3.0, NULL, NULL, 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1);
 
 -- student
 INSERT INTO student (first_name, last_name, middle_name, rating, board_id) VALUES
     ('Антон', 'Яковенко', 'Сергійович', NULL, 1),
     ('Артем', 'Яковенко', 'Сергійович', NULL, 1),
     ('Джейсон', 'Стетхем', NULL, NULL, 1),
-    ('Довге-довге-довге ім’я', 'Довге-довге прізвище', 'Довге-довге ім’я по-батькові', 44.0, 1);
+    ('Довге-довге ім’я', 'Довге-довге прізвище', 'Довге-довге ім’я по-батькові', 44.0, 1);
 
 -- day
 INSERT INTO day (date, result, student_id, day_type_id) VALUES

@@ -14,6 +14,7 @@ export interface IDayType {
     type?: Type;
     score?: number;
     description?: string;
+    expiry?: number;
     created?: Moment;
     updated?: Moment;
     board?: IBoard;
@@ -25,6 +26,7 @@ export class DayType implements IDayType {
         public type?: Type,
         public score?: number,
         public description?: string,
+        public expiry?: number,
         public created?: Moment,
         public updated?: Moment,
         public board?: IBoard

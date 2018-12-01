@@ -18,6 +18,7 @@
             <th><span jhiTranslate="smartjournalApp.dayType.type">Type</span></th>
             <th><span jhiTranslate="smartjournalApp.dayType.score">Score</span></th>
             <th><span jhiTranslate="smartjournalApp.dayType.description">Description</span></th>
+            <th><span jhiTranslate="smartjournalApp.dayType.expiry">Expiry</span></th>
             <th><span jhiTranslate="smartjournalApp.dayType.created">Created</span></th>
             <th><span jhiTranslate="smartjournalApp.dayType.updated">Updated</span></th>
             <th><span jhiTranslate="smartjournalApp.dayType.board">Board</span></th>
@@ -30,6 +31,7 @@
                 <td jhiTranslate="{{'smartjournalApp.Type.' + dayType.type}}">{{dayType.type}}</td>
                 <td>{{dayType.score}}</td>
                 <td>{{dayType.description}}</td>
+                <td>{{dayType.expiry}}</td>
                 <td>{{dayType.created | date:'medium'}}</td>
                 <td>{{dayType.updated | date:'medium'}}</td>
                 <td>

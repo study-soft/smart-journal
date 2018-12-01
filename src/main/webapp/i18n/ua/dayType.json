@@ -18,6 +18,7 @@
             "type": "Type",
             "score": "Score",
             "description": "Description",
+            "expiry": "Expiry",
             "created": "Created",
             "updated": "Updated",
             "board": "Board"

@@ -46,6 +46,17 @@
                         [(ngModel)]="dayType.description" />
                 </div>
                 <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartjournalApp.dayType.expiry" for="field_expiry">Expiry</label>
+                    <input type="text" class="form-control" name="expiry" id="field_expiry"
+                           [(ngModel)]="dayType.expiry" />
+                    <div [hidden]="!(editForm.controls.expiry?.dirty && editForm.controls.expiry?.invalid)">
+                        <small class="form-text text-danger"
+                               [hidden]="!editForm.controls.expiry?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="smartjournalApp.dayType.created" for="field_created">Created</label>
                     <div class="d-flex">
                         <input id="field_created" type="datetime-local" class="form-control" name="created" [(ngModel)]="created"

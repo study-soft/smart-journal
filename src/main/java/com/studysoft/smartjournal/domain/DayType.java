@@ -37,6 +37,9 @@ public class DayType extends AbstractAuditingEntity implements Serializable {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "expiry")
+    private Integer expiry;
+
     @ManyToOne
     @JsonIgnoreProperties("dayTypes")
     private Board board;
@@ -89,6 +92,19 @@ public class DayType extends AbstractAuditingEntity implements Serializable {
         this.description = description;
     }
 
+    public Integer getExpiry() {
+        return expiry;
+    }
+
+    public DayType expiry(Integer expiry) {
+        this.expiry = expiry;
+        return this;
+    }
+
+    public void setExpiry(Integer expiry) {
+        this.expiry = expiry;
+    }
+
     public Board getBoard() {
         return board;
     }
@@ -130,6 +146,7 @@ public class DayType extends AbstractAuditingEntity implements Serializable {
             ", type='" + getType() + "'" +
             ", score=" + getScore() +
             ", description='" + getDescription() + "'" +
+            ", expiry='" + getExpiry() + "'" +
             "}";
     }
 }

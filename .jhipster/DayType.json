@@ -21,6 +21,10 @@
             "fieldType": "String"
         },
         {
+            "fieldName": "expiry",
+            "fieldType": "Integer"
+        },
+        {
             "fieldName": "created",
             "fieldType": "Instant",
             "fieldValidateRules": [
