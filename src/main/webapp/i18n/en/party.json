@@ -17,8 +17,8 @@
             },
             "name": "Name",
             "description": "Description",
-            "created": "Created",
-            "updated": "Updated",
+            "createdDate": "Created",
+            "updatedDate": "Updated",
             "subject": "Subject"
         }
     }

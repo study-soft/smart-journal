@@ -127,10 +127,10 @@ CREATE UNIQUE INDEX pk_party ON party (id ASC);
 CREATE UNIQUE INDEX pk_subject ON subject (id ASC);
 CREATE UNIQUE INDEX pk_party_subject ON party_subject (subjects_id ASC, parties_id ASC);
 CREATE UNIQUE INDEX pk_board ON board (id ASC);
-CREATE UNIQUE INDEX ux_board_party_id ON board (party_id ASC);
-CREATE UNIQUE INDEX ux_board_subject_id ON board (subject_id ASC);
+CREATE INDEX ux_board_party_id ON board (party_id ASC);
+CREATE INDEX ux_board_subject_id ON board (subject_id ASC);
 CREATE UNIQUE INDEX pk_day_type ON day_type (id ASC);
-CREATE UNIQUE INDEX pk_student ON student (id ASC);
+CREATE UNIQUE INDEГX pk_student ON student (id ASC);
 CREATE UNIQUE INDEX pk_day ON day (id ASC);
 CREATE INDEX ux_day_day_type_id ON day (day_type_id ASC);
 

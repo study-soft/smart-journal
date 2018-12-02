@@ -19,8 +19,8 @@
             "score": "Score",
             "description": "Description",
             "expiry": "Expiry",
-            "created": "Created",
-            "updated": "Updated",
+            "createdDate": "Created",
+            "updatedDate": "Updated",
             "board": "Board"
         }
     }
