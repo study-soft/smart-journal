@@ -15,14 +15,14 @@ import com.studysoft.smartjournal.domain.enumeration.Type;
  * A DayType.
  */
 @Entity
-@Table(name = "day_type")
+@Table(name = "day_types")
 public class DayType extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dayTypeSequence")
-    @SequenceGenerator(name = "dayTypeSequence", sequenceName = "day_type_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dayTypesSeq")
+    @SequenceGenerator(name = "dayTypesSeq", sequenceName = "day_types_id_seq", allocationSize = 1)
     private Long id;
 
     @NotNull

@@ -15,7 +15,6 @@ import java.util.Optional;
 /**
  * Spring Data  repository for the Subject entity.
  */
-@SuppressWarnings("unused")
 @Repository
 public interface SubjectRepository extends JpaRepository<Subject, Long> {
 

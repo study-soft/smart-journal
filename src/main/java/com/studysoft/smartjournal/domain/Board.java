@@ -3,7 +3,6 @@ package com.studysoft.smartjournal.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -12,14 +11,14 @@ import java.util.Set;
  * A Board.
  */
 @Entity
-@Table(name = "board")
+@Table(name = "boards")
 public class Board extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "boardSequence")
-    @SequenceGenerator(name = "boardSequence", sequenceName = "board_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "boardsSeq")
+    @SequenceGenerator(name = "boardsSeq", sequenceName = "boards_id_seq", allocationSize = 1)
     private Long id;
 
     @NotNull
@@ -30,7 +29,7 @@ public class Board extends AbstractAuditingEntity implements Serializable {
     private String description;
 
     @OneToOne    @JoinColumn(unique = true)
-    private Party party;
+    private Group group;
 
     @OneToOne    @JoinColumn(unique = true)
     private Subject subject;
@@ -74,17 +73,17 @@ public class Board extends AbstractAuditingEntity implements Serializable {
         this.description = description;
     }
 
-    public Party getParty() {
-        return party;
+    public Group getGroup() {
+        return group;
     }
 
-    public Board party(Party party) {
-        this.party = party;
+    public Board party(Group group) {
+        this.group = group;
         return this;
     }
 
-    public void setParty(Party party) {
-        this.party = party;
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     public Subject getSubject() {

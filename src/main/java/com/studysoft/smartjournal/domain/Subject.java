@@ -11,14 +11,14 @@ import java.util.Set;
  * A Subject.
  */
 @Entity
-@Table(name = "subject")
+@Table(name = "subjects")
 public class Subject extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "subjectSequence")
-    @SequenceGenerator(name = "subjectSequence", sequenceName = "subject_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "subjectsSeq")
+    @SequenceGenerator(name = "subjectsSeq", sequenceName = "subjects_id_seq", allocationSize = 1)
     private Long id;
 
     @NotNull
@@ -29,10 +29,10 @@ public class Subject extends AbstractAuditingEntity implements Serializable {
     private String description;
 
     @ManyToMany
-    @JoinTable(name = "party_subject",
+    @JoinTable(name = "groups_subjects",
         joinColumns = @JoinColumn(name = "subjects_id", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "parties_id", referencedColumnName = "id"))
-    private Set<Party> groups = new HashSet<>();
+        inverseJoinColumns = @JoinColumn(name = "groups_id", referencedColumnName = "id"))
+    private Set<Group> groups = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -69,28 +69,28 @@ public class Subject extends AbstractAuditingEntity implements Serializable {
         this.description = description;
     }
 
-    public Set<Party> getGroups() {
+    public Set<Group> getGroups() {
         return groups;
     }
 
-    public Subject groups(Set<Party> parties) {
+    public Subject groups(Set<Group> parties) {
         this.groups = parties;
         return this;
     }
 
-    public Subject addGroup(Party party) {
-        this.groups.add(party);
-        party.getSubjects().add(this);
+    public Subject addGroup(Group group) {
+        this.groups.add(group);
+        group.getSubjects().add(this);
         return this;
     }
 
-    public Subject removeGroup(Party party) {
-        this.groups.remove(party);
-        party.getSubjects().remove(this);
+    public Subject removeGroup(Group group) {
+        this.groups.remove(group);
+        group.getSubjects().remove(this);
         return this;
     }
 
-    public void setGroups(Set<Party> parties) {
+    public void setGroups(Set<Group> parties) {
         this.groups = parties;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove

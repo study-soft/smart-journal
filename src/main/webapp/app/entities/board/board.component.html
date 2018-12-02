@@ -19,7 +19,7 @@
             <th><span jhiTranslate="smartjournalApp.board.description">Description</span></th>
             <th><span jhiTranslate="smartjournalApp.board.createdDate">Created</span></th>
             <th><span jhiTranslate="smartjournalApp.board.updatedDate">Updated</span></th>
-            <th><span jhiTranslate="smartjournalApp.board.party">Party</span></th>
+            <th><span jhiTranslate="smartjournalApp.board.group">Party</span></th>
             <th><span jhiTranslate="smartjournalApp.board.subject">Subject</span></th>
             <th></th>
             </tr>
@@ -32,8 +32,8 @@
                 <td>{{board.created | date:'medium'}}</td>
                 <td>{{board.updated | date:'medium'}}</td>
                 <td>
-                    <div *ngIf="board.party">
-                        <a [routerLink]="['../party', board.party?.id, 'view' ]" >{{board.party?.id}}</a>
+                    <div *ngIf="board.group">
+                        <a [routerLink]="['../group', board.group?.id, 'view' ]" >{{board.group?.id}}</a>
                     </div>
                 </td>
                 <td>

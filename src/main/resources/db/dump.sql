@@ -1,9 +1,9 @@
 ------------------------- TABLES -------------------------
 
--- party
-DROP TABLE IF EXISTS party CASCADE;
-DROP SEQUENCE IF EXISTS party_id_seq CASCADE;
-CREATE TABLE party (
+-- _groups
+DROP TABLE IF EXISTS _groups CASCADE;
+DROP SEQUENCE IF EXISTS groups_id_seq CASCADE;
+CREATE TABLE _groups (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) UNIQUE NOT NULL,
     description VARCHAR(65535),
@@ -13,10 +13,10 @@ CREATE TABLE party (
     updated TIMESTAMP
 );
 
--- subject
-DROP TABLE IF EXISTS subject CASCADE;
-DROP SEQUENCE IF EXISTS subject_id_seq CASCADE;
-CREATE TABLE subject (
+-- subjects
+DROP TABLE IF EXISTS subjects CASCADE;
+DROP SEQUENCE IF EXISTS subjects_id_seq CASCADE;
+CREATE TABLE subjects (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) UNIQUE NOT NULL,
     description VARCHAR(65535),
@@ -26,17 +26,17 @@ CREATE TABLE subject (
     updated TIMESTAMP
 );
 
--- party_subject
-DROP TABLE IF EXISTS party_subject CASCADE;
-CREATE TABLE party_subject (
-    subjects_id BIGINT NOT NULL,
-    parties_id BIGINT NOT NULL
+-- groups_subjects
+DROP TABLE IF EXISTS groups_subjects CASCADE;
+CREATE TABLE groups_subjects (
+    groups_id BIGINT NOT NULL,
+    subjects_id BIGINT NOT NULL
 );
 
--- board
-DROP TABLE IF EXISTS board CASCADE;
-DROP SEQUENCE IF EXISTS board_id_seq CASCADE;
-CREATE TABLE board (
+-- boards
+DROP TABLE IF EXISTS boards CASCADE;
+DROP SEQUENCE IF EXISTS boards_id_seq CASCADE;
+CREATE TABLE boards (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) UNIQUE NOT NULL,
     description VARCHAR(65535),
@@ -44,14 +44,15 @@ CREATE TABLE board (
     created TIMESTAMP,
     updated_by VARCHAR(50),
     updated TIMESTAMP,
-    party_id BIGINT NOT NULL,
-    subject_id BIGINT NOT NULL
+    group_id BIGINT NOT NULL,
+    subject_id BIGINT NOT NULL,
+    user_id BIGINT NOT NULL
 );
 
--- day_type
-DROP TABLE IF EXISTS day_type CASCADE;
-DROP SEQUENCE IF EXISTS day_type_id_seq CASCADE;
-CREATE TABLE day_type (
+-- day_types
+DROP TABLE IF EXISTS day_types CASCADE;
+DROP SEQUENCE IF EXISTS day_types_id_seq CASCADE;
+CREATE TABLE day_types (
     id BIGSERIAL PRIMARY KEY,
     type VARCHAR(255) NOT NULL,
     score DOUBLE PRECISION NOT NULL,
@@ -64,10 +65,10 @@ CREATE TABLE day_type (
     board_id BIGINT NOT NULL
 );
 
--- student
-DROP TABLE IF EXISTS student CASCADE;
-DROP SEQUENCE IF EXISTS student_id_seq CASCADE;
-CREATE TABLE student (
+-- students
+DROP TABLE IF EXISTS students CASCADE;
+DROP SEQUENCE IF EXISTS students_id_seq CASCADE;
+CREATE TABLE students (
     id BIGSERIAL PRIMARY KEY,
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
@@ -76,26 +77,26 @@ CREATE TABLE student (
     board_id BIGINT NOT NULL
 );
 
--- day
-DROP TABLE IF EXISTS day CASCADE;
-DROP SEQUENCE IF EXISTS day_id_seq CASCADE;
-CREATE TABLE day (
+-- days
+DROP TABLE IF EXISTS days CASCADE;
+DROP SEQUENCE IF EXISTS days_id_seq CASCADE;
+CREATE TABLE days (
     id BIGSERIAL PRIMARY KEY,
     date DATE NOT NULL,
     result DOUBLE PRECISION,
     student_id BIGINT NOT NULL,
     day_type_id BIGINT NOT NULL
 );
--- authority
-DROP TABLE IF EXISTS authority CASCADE;
-CREATE TABLE authority (
+-- authorities
+DROP TABLE IF EXISTS authorities CASCADE;
+CREATE TABLE authorities (
     name VARCHAR(50) PRIMARY KEY
 );
 
--- app_user
-DROP TABLE IF EXISTS app_user CASCADE;
-DROP SEQUENCE IF EXISTS app_user_id_seq CASCADE;
-CREATE TABLE app_user (
+-- users
+DROP TABLE IF EXISTS users CASCADE;
+DROP SEQUENCE IF EXISTS users_id_seq CASCADE;
+CREATE TABLE users (
     id BIGSERIAL PRIMARY KEY,
     login VARCHAR(50) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
@@ -114,87 +115,133 @@ CREATE TABLE app_user (
     updated TIMESTAMP
 );
 
--- app_user_authority
-DROP TABLE IF EXISTS app_user_authority CASCADE;
-CREATE TABLE app_user_authority (
+-- users_authorities
+DROP TABLE IF EXISTS users_authorities CASCADE;
+CREATE TABLE users_authorities (
     user_id BIGINT NOT NULL,
     authority_name VARCHAR(50) NOT NULL
 );
 
 ------------------------- INDICES -------------------------
 
-CREATE UNIQUE INDEX pk_party ON party (id ASC);
-CREATE UNIQUE INDEX pk_subject ON subject (id ASC);
-CREATE UNIQUE INDEX pk_party_subject ON party_subject (subjects_id ASC, parties_id ASC);
-CREATE UNIQUE INDEX pk_board ON board (id ASC);
-CREATE INDEX ux_board_party_id ON board (party_id ASC);
-CREATE INDEX ux_board_subject_id ON board (subject_id ASC);
-CREATE UNIQUE INDEX pk_day_type ON day_type (id ASC);
-CREATE UNIQUE INDEX pk_student ON student (id ASC);
-CREATE UNIQUE INDEX pk_day ON day (id ASC);
-CREATE INDEX ux_day_day_type_id ON day (day_type_id ASC);
+CREATE UNIQUE INDEX pk_groups ON _groups (id ASC);
+CREATE UNIQUE INDEX pk_subjects ON subjects (id ASC);
+CREATE UNIQUE INDEX pk_groups_subjects ON groups_subjects (subjects_id ASC, groups_id ASC);
+CREATE UNIQUE INDEX pk_boards ON boards (id ASC);
+CREATE INDEX ux_boards_groups_id ON boards (group_id ASC);
+CREATE INDEX ux_boards_subjects_id ON boards (subject_id ASC);
+CREATE INDEX ux_boards_teachers_id ON boards (user_id ASC);
+CREATE UNIQUE INDEX pk_day_types ON day_types (id ASC);
+CREATE UNIQUE INDEX pk_students ON students (id ASC);
+CREATE UNIQUE INDEX pk_days ON days (id ASC);
+CREATE INDEX ux_days_day_types_id ON days (day_type_id ASC);
 
-CREATE UNIQUE INDEX pk_authority ON authority (name ASC);
-CREATE UNIQUE INDEX pk_app_user ON app_user (id ASC);
-CREATE UNIQUE INDEX ux_app_user_email ON app_user (email ASC);
-CREATE UNIQUE INDEX ux_app_user_login ON app_user (login ASC);
-CREATE UNIQUE INDEX pk_app_user_authority ON app_user_authority (user_id ASC, authority_name ASC);
+CREATE UNIQUE INDEX pk_authorities ON authorities (name ASC);
+CREATE UNIQUE INDEX pk_users ON users (id ASC);
+CREATE UNIQUE INDEX ux_users_email ON users (email ASC);
+CREATE UNIQUE INDEX ux_users_login ON users (login ASC);
+CREATE UNIQUE INDEX pk_users_authorities ON users_authorities (user_id ASC, authority_name ASC);
 
 ------------------------- CONSTRAINTS -------------------------
 
--- board
-ALTER TABLE board ADD CONSTRAINT fk_board_party_id FOREIGN KEY (party_id) REFERENCES party (id);
-ALTER TABLE board ADD CONSTRAINT fk_board_subject_id FOREIGN KEY (subject_id) REFERENCES subject (id);
+-- boards
+ALTER TABLE boards ADD CONSTRAINT fk_boards_group_id FOREIGN KEY (group_id) REFERENCES _groups (id);
+ALTER TABLE boards ADD CONSTRAINT fk_boards_subject_id FOREIGN KEY (subject_id) REFERENCES subjects (id);
+ALTER TABLE boards ADD CONSTRAINT fk_boards_user_id FOREIGN KEY (user_id) REFERENCES users (id);
 
--- day_type
-ALTER TABLE day_type ADD CONSTRAINT fk_day_type_board_id FOREIGN KEY (board_id) REFERENCES board (id);
+-- day_types
+ALTER TABLE day_types ADD CONSTRAINT fk_day_types_board_id FOREIGN KEY (board_id) REFERENCES boards (id);
 
--- student
-ALTER TABLE student ADD CONSTRAINT fk_student_board_id FOREIGN KEY (board_id) REFERENCES board (id);
+-- students
+ALTER TABLE students ADD CONSTRAINT fk_students_board_id FOREIGN KEY (board_id) REFERENCES boards (id);
 
--- day
-ALTER TABLE day ADD CONSTRAINT fk_day_day_type_id FOREIGN KEY (day_type_id) REFERENCES day_type (id);
-ALTER TABLE day ADD CONSTRAINT fk_day_student_id FOREIGN KEY (student_id) REFERENCES student (id);
+-- days
+ALTER TABLE days ADD CONSTRAINT fk_days_day_type_id FOREIGN KEY (day_type_id) REFERENCES day_types (id);
+ALTER TABLE days ADD CONSTRAINT fk_days_student_id FOREIGN KEY (student_id) REFERENCES students (id);
 
--- app_user_authority
-ALTER TABLE app_user_authority ADD CONSTRAINT pkey_app_user_authority PRIMARY KEY (user_id, authority_name);
-ALTER TABLE app_user_authority ADD CONSTRAINT fk_authority_name FOREIGN KEY (authority_name) REFERENCES authority (name);
-ALTER TABLE app_user_authority ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES app_user (id);
+-- users_authorities
+ALTER TABLE users_authorities ADD CONSTRAINT pkey_users_authorities PRIMARY KEY (user_id, authority_name);
+ALTER TABLE users_authorities ADD CONSTRAINT fk_authority_name FOREIGN KEY (authority_name) REFERENCES authorities (name);
+ALTER TABLE users_authorities ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (id);
 
 ------------------------- INSERT DATA -------------------------
--- party
-INSERT INTO party (name, description, created_by, created, updated_by, updated) VALUES
-    ('Інформатики', 'Тестова група для перевірки роботи розумного журналу. Пишу багато символів в описі, щоб перевірити, як це буде виглядати на сторінці. Ліміт сиволів - 65535, тому в мене ще є великий запас. Бла-бла-бла...', 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP);
 
--- subject
-INSERT INTO subject (name, description, created_by, created, updated_by, updated) VALUES
-    ('Комп’ютерні мережі', NULL, 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP);
+-- users
+INSERT INTO users (login, password_hash, first_name, last_name, email, image_url, activated, lang_key, activation_key, reset_key, created_by, created, reset_date, updated_by, updated) VALUES
+    ('system', '$2a$10$mE.qmcV0mFU5NcKh73TZx.z4ueI/.bDWbj0T1BYyqP481kGGarKLG', 'System', 'System', 'system@localhost', '', TRUE, 'ua', NULL, NULL, 'system', NULL, NULL, 'system', NULL),
+    ('anonymoususer', '$2a$10$j8S5d7Sr7.8VTOYNviDPOeWX8KcYILUVJBsYV83Y5NtECayypx9lO', 'Anonymous', 'System', 'anonymous@localhost', '', TRUE, 'ua', NULL, NULL, 'system', NULL, NULL, 'system', NULL),
+    ('admin', '$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC', 'System', 'Administrator', 'admin@localhost', '', TRUE, 'ua', NULL, NULL, 'system', NULL, NULL, 'system', NULL),
+    ('user', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'System', 'User', 'user@localhost', '', TRUE, 'ua', NULL, NULL, 'system', NULL, NULL, 'system', NULL);
 
--- party_subject
-INSERT INTO party_subject (subjects_id, parties_id) VALUES
-    (1, 1);
+-- authorities
+INSERT INTO authorities (name) VALUES
+    ('ROLE_ADMIN'), ('ROLE_USER');
 
--- board
-INSERT INTO board (name, description, created_by, created, updated_by, updated, party_id, subject_id) VALUES
-    ('Інформатики. Комп’ютерні мережі', '', 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1, 1);
+-- users_authorities
+INSERT INTO users_authorities (user_id, authority_name) VALUES
+    (1, 'ROLE_ADMIN'), (1, 'ROLE_USER'), (3, 'ROLE_ADMIN'), (3, 'ROLE_USER'), (4, 'ROLE_USER');
 
--- day_type
-INSERT INTO day_type (type, score, description, expiry, created_by, created, updated_by, updated, board_id) VALUES
+-- _groups
+INSERT INTO _groups (name, description, created_by, created, updated_by, updated) VALUES
+    ('Інформатики-4', 'Тестова група для перевірки роботи розумного журналу. Пишу багато символів в описі, щоб перевірити, як це буде виглядати на сторінці. Ліміт сиволів - 65535, тому в мене ще є великий запас. Бла-бла-бла...', 'system', CURRENT_TIMESTAMP, NULL, NULL),
+    ('Прикладна математика-3', NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL),
+    ('Прикладна математика-4', NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL);
+
+-- subjects
+INSERT INTO subjects (name, description, created_by, created, updated_by, updated) VALUES
+    ('Комп’ютерні мережі', NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL),
+    ('Системне програмування', 'Системне програмування та операційні системи', 'system', CURRENT_TIMESTAMP, NULL, NULL);
+
+-- groups_subjects
+INSERT INTO groups_subjects (groups_id, subjects_id) VALUES
+    (1, 1), (1, 2), (2, 1), (3, 1);
+
+-- boards
+INSERT INTO boards (name, description, created_by, created, updated_by, updated, group_id, subject_id, user_id) VALUES
+    ('Інформатики-4. Комп’ютерні мережі', '', 'system', CURRENT_TIMESTAMP, NULL, NULL, 1, 1, 3),
+    ('Інформатики-4. Системне програмування', NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL, 1, 2, 3),
+    ('Прикладна математика-3. Комп’ютерні мережі', 'Згенерований журнал для групи "Прикладна математика-3" і предмету "Комп’ютерні мережі"', 'system', CURRENT_TIMESTAMP, NULL, NULL, 2, 1, 3),
+    ('Прикладна математика-4. Комп’ютерні мережі', 'Останній семестр для групи "Прикладна математика-4" з дисципліни "Комп’ютерні мережі"', 'system', CURRENT_TIMESTAMP, NULL, NULL, 3, 1, 3);
+
+-- day_types
+INSERT INTO day_types (type, score, description, expiry, created_by, created, updated_by, updated, board_id) VALUES
     ('SIMPLE', 1.0, 'Звичайна пара', NULL, 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1),
     ('LAB', 5.0, 'Лабараторна робота', 3, 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1),
     ('MODULE', 10.0, 'Модуль', NULL, 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1),
     ('EXAM', 20.0, 'Екзамен', NULL, 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1),
     ('TEST', 3.0, NULL, NULL, 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1);
 
--- student
-INSERT INTO student (first_name, last_name, middle_name, rating, board_id) VALUES
+-- students
+INSERT INTO students (first_name, last_name, middle_name, rating, board_id) VALUES
     ('Антон', 'Яковенко', 'Сергійович', NULL, 1),
     ('Артем', 'Яковенко', 'Сергійович', NULL, 1),
     ('Джейсон', 'Стетхем', NULL, NULL, 1),
-    ('Довге-довге ім’я', 'Довге-довге прізвище', 'Довге-довге ім’я по-батькові', 44.0, 1);
+    ('Довге-довге ім’я', 'Довге-довге прізвище', 'Довге-довге ім’я по-батькові', 44.0, 1),
+    ('Семен', 'Швидкий', 'Вікторович', 2.4, 1),
+    ('Поліна', 'Іванова', 'Ігорівна', 3.0, 1),
+    ('Олександра', 'Таращук', 'Олексіївна', 2.5, 1),
+    ('Катерина', 'Микитюк', 'Борисівна', 0.0, 1),
+    ('Світлана', 'Шинкаренко', 'Тарасівна', 0.5, 1),
+    ('Юлія', 'Крамаренко', 'Олександрівна', 1.2, 1),
+    ('Олександр', 'Антоненко', 'Володимирович', 1.0, 2),
+    ('Любов', 'Петренко', 'Анатоліївна', 0.0, 2),
+    ('Адам', 'Іванченко', 'Борисович', NULL, 2),
+    ('Діана', 'Лисенко', 'Сергіївна', NULL, 2),
+    ('Віталій', 'Петренко', 'Олексійович', 5.3, 2),
+    ('Ніна', 'Шевченко', 'Андріївна', 1.5, 2),
+    ('Юрій', 'Романченко', 'Євгенович', 2.0, 2),
+    ('Оксана', 'Лисенко', 'Михайлівна', 2.0, 2),
+    ('Оксана', 'Броваренко', 'Петрівна', 0.0, 3),
+    ('Ольга', 'Мірошниченко', 'Романівна', 2.5, 3),
+    ('Тетяна', 'Мельниченко', 'Андріївна', 3.0, 3),
+    ('Дмитро', 'Крамарчук', 'Олексійович', 1.5, 3),
+    ('Софія', 'Іванченко', 'Петрівна', 2.0, 3),
+    ('B''ячеслав', 'Сергієнко', 'Петрович', 3.0, 3),
+    ('Павло', 'Янович', 'Антоненко', 4.0, 3),
+    ('Валерій', 'Овсієнко', 'Федорович', 5.8, 3);
 
--- day
-INSERT INTO day (date, result, student_id, day_type_id) VALUES
+-- days (board with id = 1)
+INSERT INTO days (date, result, student_id, day_type_id) VALUES
     (CURRENT_DATE - integer '28', 0.0, 1, 1),
     (CURRENT_DATE - integer '28', 1.0, 2, 1),
     (CURRENT_DATE - integer '28', 0.0, 3, 1),
@@ -220,17 +267,37 @@ INSERT INTO day (date, result, student_id, day_type_id) VALUES
     (CURRENT_DATE + integer '7', NULL, 3, 1),
     (CURRENT_DATE + integer '7', NULL, 4, 1);
 
--- authority
-INSERT INTO authority (name) VALUES
-    ('ROLE_ADMIN'), ('ROLE_USER');
-
--- app_user
-INSERT INTO app_user (login, password_hash, first_name, last_name, email, image_url, activated, lang_key, activation_key, reset_key, created_by, created, reset_date, updated_by, updated) VALUES
-    ('system', '$2a$10$mE.qmcV0mFU5NcKh73TZx.z4ueI/.bDWbj0T1BYyqP481kGGarKLG', 'System', 'System', 'system@localhost', '', TRUE, 'ua', NULL, NULL, 'system', NULL, NULL, 'system', NULL),
-    ('anonymoususer', '$2a$10$j8S5d7Sr7.8VTOYNviDPOeWX8KcYILUVJBsYV83Y5NtECayypx9lO', 'Anonymous', 'System', 'anonymous@localhost', '', TRUE, 'ua', NULL, NULL, 'system', NULL, NULL, 'system', NULL),
-    ('admin', '$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC', 'System', 'Administrator', 'admin@localhost', '', TRUE, 'ua', NULL, NULL, 'system', NULL, NULL, 'system', NULL),
-    ('user', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'System', 'User', 'user@localhost', '', TRUE, 'ua', NULL, NULL, 'system', NULL, NULL, 'system', NULL);
-
--- app_user_authority
-INSERT INTO app_user_authority (user_id, authority_name) VALUES
-    (1, 'ROLE_ADMIN'), (1, 'ROLE_USER'), (3, 'ROLE_ADMIN'), (3, 'ROLE_USER'), (4, 'ROLE_USER');
+-- days (board with id = 2)
+INSERT INTO days (date, result, student_id, day_type_id) VALUES
+    (CURRENT_DATE - integer '28', 0.0, 1, 1),
+    (CURRENT_DATE - integer '28', 1.0, 2, 1),
+    (CURRENT_DATE - integer '28', 0.0, 3, 1),
+    (CURRENT_DATE - integer '28', 1.0, 4, 1),
+    (CURRENT_DATE - integer '21', 1.0, 1, 2),
+    (CURRENT_DATE - integer '21', 2.0, 2, 2),
+    (CURRENT_DATE - integer '21', 3.0, 3, 2),
+    (CURRENT_DATE - integer '21', 4.0, 4, 2),
+    (CURRENT_DATE - integer '14', 0.0, 1, 3),
+    (CURRENT_DATE - integer '14', 2.0, 2, 3),
+    (CURRENT_DATE - integer '14', 4.0, 3, 3),
+    (CURRENT_DATE - integer '14', 6.0, 4, 3),
+    (CURRENT_DATE - integer '7', 4.0, 1, 4),
+    (CURRENT_DATE - integer '7', 8.0, 2, 4),
+    (CURRENT_DATE - integer '7', 12.0, 3, 4),
+    (CURRENT_DATE - integer '7', 16.0, 4, 4),
+    (CURRENT_DATE, 0.0, 1, 5),
+    (CURRENT_DATE, 1.0, 2, 5),
+    (CURRENT_DATE, 2.0, 3, 5),
+    (CURRENT_DATE, 3.0, 4, 5),
+    (CURRENT_DATE + integer '7', NULL, 1, 1),
+    (CURRENT_DATE + integer '7', NULL, 2, 1),
+    (CURRENT_DATE + integer '7', NULL, 3, 1),
+    (CURRENT_DATE + integer '7', NULL, 4, 1),
+    (CURRENT_DATE + integer '14', NULL, 1, 1),
+    (CURRENT_DATE + integer '14', NULL, 2, 1),
+    (CURRENT_DATE + integer '14', NULL, 3, 1),
+    (CURRENT_DATE + integer '14', NULL, 4, 1),
+    (CURRENT_DATE + integer '21', NULL, 1, 1),
+    (CURRENT_DATE + integer '21', NULL, 2, 1),
+    (CURRENT_DATE + integer '21', NULL, 3, 1),
+    (CURRENT_DATE + integer '21', NULL, 4, 1);

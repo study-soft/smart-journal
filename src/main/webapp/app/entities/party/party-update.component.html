@@ -1,18 +1,18 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-            <h2 id="jhi-party-heading" jhiTranslate="smartjournalApp.party.home.createOrEditLabel">Create or edit a Party</h2>
+            <h2 id="jhi-group-heading" jhiTranslate="smartjournalApp.group.home.createOrEditLabel">Create or edit a Party</h2>
             <div>
                 <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!party.id">
+                <div class="form-group" [hidden]="!group.id">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
                     <input type="text" class="form-control" id="id" name="id"
-                        [(ngModel)]="party.id" readonly />
+                        [(ngModel)]="group.id" readonly />
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="smartjournalApp.party.name" for="field_name">Name</label>
+                    <label class="form-control-label" jhiTranslate="smartjournalApp.group.name" for="field_name">Name</label>
                     <input type="text" class="form-control" name="name" id="field_name"
-                        [(ngModel)]="party.name" required/>
+                        [(ngModel)]="group.name" required/>
                     <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
                         <small class="form-text text-danger"
                         [hidden]="!editForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">
@@ -21,12 +21,12 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="smartjournalApp.party.description" for="field_description">Description</label>
+                    <label class="form-control-label" jhiTranslate="smartjournalApp.group.description" for="field_description">Description</label>
                     <input type="text" class="form-control" name="description" id="field_description"
-                        [(ngModel)]="party.description" />
+                        [(ngModel)]="group.description" />
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="smartjournalApp.party.createdDate" for="field_created">Created</label>
+                    <label class="form-control-label" jhiTranslate="smartjournalApp.group.createdDate" for="field_created">Created</label>
                     <div class="d-flex">
                         <input id="field_created" type="datetime-local" class="form-control" name="created" [(ngModel)]="created"
                         required/>
@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="smartjournalApp.party.updatedDate" for="field_updated">Updated</label>
+                    <label class="form-control-label" jhiTranslate="smartjournalApp.group.updatedDate" for="field_updated">Updated</label>
                     <div class="d-flex">
                         <input id="field_updated" type="datetime-local" class="form-control" name="updated" [(ngModel)]="updated"
                         required/>
@@ -61,9 +61,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label jhiTranslate="smartjournalApp.party.subject" for="field_subject">Subject</label>
-                    <select class="form-control" id="field_subject" multiple name="subject" [(ngModel)]="party.subjects">
-                        <option [ngValue]="getSelected(party.subjects, subjectOption)" *ngFor="let subjectOption of subjects; trackBy: trackSubjectById">{{subjectOption.id}}</option>
+                    <label jhiTranslate="smartjournalApp.group.subject" for="field_subject">Subject</label>
+                    <select class="form-control" id="field_subject" multiple name="subject" [(ngModel)]="group.subjects">
+                        <option [ngValue]="getSelected(group.subjects, subjectOption)" *ngFor="let subjectOption of subjects; trackBy: trackSubjectById">{{subjectOption.id}}</option>
                     </select>
                 </div>
             </div>

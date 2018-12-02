@@ -45,7 +45,7 @@ enum Type {
 }
 
 relationship OneToOne {
-	Board{party} to Party,
+	Board{group} to Party,
 	Board{subject} to Subject,
 	Day{dayType} to DayType
 }

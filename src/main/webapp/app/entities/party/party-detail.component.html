@@ -1,29 +1,29 @@
 <div class="row justify-content-center">
     <div class="col-8">
-        <div *ngIf="party">
-            <h2><span jhiTranslate="smartjournalApp.party.detail.title">Party</span> {{party.id}}</h2>
+        <div *ngIf="group">
+            <h2><span jhiTranslate="smartjournalApp.group.detail.title">Party</span> {{group.id}}</h2>
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="smartjournalApp.party.name">Name</span></dt>
+                <dt><span jhiTranslate="smartjournalApp.group.name">Name</span></dt>
                 <dd>
-                    <span>{{party.name}}</span>
+                    <span>{{group.name}}</span>
                 </dd>
-                <dt><span jhiTranslate="smartjournalApp.party.description">Description</span></dt>
+                <dt><span jhiTranslate="smartjournalApp.group.description">Description</span></dt>
                 <dd>
-                    <span>{{party.description}}</span>
+                    <span>{{group.description}}</span>
                 </dd>
-                <dt><span jhiTranslate="smartjournalApp.party.createdDate">Created</span></dt>
+                <dt><span jhiTranslate="smartjournalApp.group.createdDate">Created</span></dt>
                 <dd>
-                    <span>{{party.created}}</span>
+                    <span>{{group.created}}</span>
                 </dd>
-                <dt><span jhiTranslate="smartjournalApp.party.updatedDate">Updated</span></dt>
+                <dt><span jhiTranslate="smartjournalApp.group.updatedDate">Updated</span></dt>
                 <dd>
-                    <span>{{party.updated}}</span>
+                    <span>{{group.updated}}</span>
                 </dd>
-                <dt><span jhiTranslate="smartjournalApp.party.subject">Subject</span></dt>
+                <dt><span jhiTranslate="smartjournalApp.group.subject">Subject</span></dt>
                 <dd>
-                    <span *ngFor="let subject of party.subjects; let last = last">
+                    <span *ngFor="let subject of group.subjects; let last = last">
                         <a [routerLink]="['/subject', subject?.id, 'view' ]">{{subject.id}}</a>{{last ? '' : ', '}}
                     </span>
                 </dd>
@@ -36,7 +36,7 @@
             </button>
 
             <button type="button"
-                    [routerLink]="['/party', party.id, 'edit']"
+                    [routerLink]="['/group', group.id, 'edit']"
                     class="btn btn-primary">
                 <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
             </button>

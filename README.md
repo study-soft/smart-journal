@@ -62,7 +62,7 @@ For more information, refer to the [Code quality page][].
 
 ## Using Docker to simplify development (optional)
 
-You can use Docker to improve your JHipster development experience. A number of docker-compose configuration are available in the [src/main/docker](src/main/docker) folder to launch required third party services.
+You can use Docker to improve your JHipster development experience. A number of docker-compose configuration are available in the [src/main/docker](src/main/docker) folder to launch required third group services.
 
 For example, to start a  database in a docker container, run:
 
@@ -87,6 +87,9 @@ For more information refer to [Using Docker and Docker-Compose][], this page als
 
 To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`), this will let you generate configuration files for a number of Continuous Integration systems. Consult the [Setting up Continuous Integration][] page for more information.
 
+## Database schema
+![schema](https://github.com/study-soft/smart-journal/blob/master/src/main/resources/images/smartjournal_db.PNG)
+
 [JHipster Homepage and latest documentation]: https://www.jhipster.tech
 [JHipster 5.7.0 archive]: https://www.jhipster.tech/documentation-archive/v5.7.0
 
@@ -96,5 +99,3 @@ To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`)
 [Running tests page]: https://www.jhipster.tech/documentation-archive/v5.7.0/running-tests/
 [Code quality page]: https://www.jhipster.tech/documentation-archive/v5.7.0/code-quality/
 [Setting up Continuous Integration]: https://www.jhipster.tech/documentation-archive/v5.7.0/setting-up-ci/
-
-

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 /**
  * Spring Data  repository for the Board entity.
  */
-@SuppressWarnings("unused")
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {
 

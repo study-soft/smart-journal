@@ -14,14 +14,14 @@ import java.util.Objects;
  * A Day.
  */
 @Entity
-@Table(name = "day")
+@Table(name = "days")
 public class Day implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "daySequence")
-    @SequenceGenerator(name = "daySequence", sequenceName = "day_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "daysSeq")
+    @SequenceGenerator(name = "daysSeq", sequenceName = "days_id_seq", allocationSize = 1)
     private Long id;
 
     @NotNull

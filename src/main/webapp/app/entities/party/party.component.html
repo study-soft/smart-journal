@@ -1,9 +1,9 @@
 <div>
     <h2 id="page-heading">
-        <span jhiTranslate="smartjournalApp.party.home.title">Parties</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-party" [routerLink]="['/party/new']">
+        <span jhiTranslate="smartjournalApp.group.home.title">Parties</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-group" [routerLink]="['/group/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
-            <span  jhiTranslate="smartjournalApp.party.home.createLabel">
+            <span  jhiTranslate="smartjournalApp.group.home.createLabel">
             Create new Party
             </span>
         </button>
@@ -15,42 +15,42 @@
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="smartjournalApp.party.name">Name</span></th>
-            <th><span jhiTranslate="smartjournalApp.party.description">Description</span></th>
-            <th><span jhiTranslate="smartjournalApp.party.createdDate">Created</span></th>
-            <th><span jhiTranslate="smartjournalApp.party.updatedDate">Updated</span></th>
-            <th><span jhiTranslate="smartjournalApp.party.subject">Subject</span></th>
+            <th><span jhiTranslate="smartjournalApp.group.name">Name</span></th>
+            <th><span jhiTranslate="smartjournalApp.group.description">Description</span></th>
+            <th><span jhiTranslate="smartjournalApp.group.createdDate">Created</span></th>
+            <th><span jhiTranslate="smartjournalApp.group.updatedDate">Updated</span></th>
+            <th><span jhiTranslate="smartjournalApp.group.subject">Subject</span></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let party of parties ;trackBy: trackId">
-                <td><a [routerLink]="['/party', party.id, 'view' ]">{{party.id}}</a></td>
-                <td>{{party.name}}</td>
-                <td>{{party.description}}</td>
-                <td>{{party.created | date:'medium'}}</td>
-                <td>{{party.updated | date:'medium'}}</td>
+            <tr *ngFor="let group of parties ;trackBy: trackId">
+                <td><a [routerLink]="['/group', group.id, 'view' ]">{{group.id}}</a></td>
+                <td>{{group.name}}</td>
+                <td>{{group.description}}</td>
+                <td>{{group.created | date:'medium'}}</td>
+                <td>{{group.updated | date:'medium'}}</td>
                 <td>
-                    <span *ngFor="let subject of party.subjects; let last = last">
+                    <span *ngFor="let subject of group.subjects; let last = last">
                             <a class="form-control-static" [routerLink]="['../subject', subject?.id, 'view' ]">{{subject.id}}</a>{{last ? '' : ', '}}
                         </span>
                 </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
-                                [routerLink]="['/party', party.id, 'view' ]"
+                                [routerLink]="['/group', group.id, 'view' ]"
                                 class="btn btn-info btn-sm">
                             <fa-icon [icon]="'eye'"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/party', party.id, 'edit']"
+                                [routerLink]="['/group', group.id, 'edit']"
                                 class="btn btn-primary btn-sm">
                             <fa-icon [icon]="'pencil-alt'"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'party/'+ party.id + '/delete'} }]"
+                                [routerLink]="['/', { outlets: { popup: 'group/'+ group.id + '/delete'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">
