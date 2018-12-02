@@ -1,29 +1,25 @@
 package com.studysoft.smartjournal.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Group.
  */
 @Entity
-@Table(name = "group")
-public class Party implements Serializable {
+@Table(name = "_groups")
+public class Group implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "partySequence")
-    @SequenceGenerator(name = "partySequence", sequenceName = "party_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "groupsSeq")
+    @SequenceGenerator(name = "groupsSeq", sequenceName = "groups_id_seq", allocationSize = 1)
     private Long id;
 
     @NotNull
@@ -49,7 +45,7 @@ public class Party implements Serializable {
         return name;
     }
 
-    public Party name(String name) {
+    public Group name(String name) {
         this.name = name;
         return this;
     }
@@ -62,7 +58,7 @@ public class Party implements Serializable {
         return description;
     }
 
-    public Party description(String description) {
+    public Group description(String description) {
         this.description = description;
         return this;
     }
@@ -75,18 +71,18 @@ public class Party implements Serializable {
         return subjects;
     }
 
-    public Party subjects(Set<Subject> subjects) {
+    public Group subjects(Set<Subject> subjects) {
         this.subjects = subjects;
         return this;
     }
 
-    public Party addSubject(Subject subject) {
+    public Group addSubject(Subject subject) {
         this.subjects.add(subject);
         subject.getGroups().add(this);
         return this;
     }
 
-    public Party removeSubject(Subject subject) {
+    public Group removeSubject(Subject subject) {
         this.subjects.remove(subject);
         subject.getGroups().remove(this);
         return this;
@@ -105,11 +101,11 @@ public class Party implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Party party = (Party) o;
-        if (party.getId() == null || getId() == null) {
+        Group group = (Group) o;
+        if (group.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getId(), party.getId());
+        return Objects.equals(getId(), group.getId());
     }
 
     @Override

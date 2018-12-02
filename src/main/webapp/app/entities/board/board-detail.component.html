@@ -21,10 +21,10 @@
                 <dd>
                     <span>{{board.updated}}</span>
                 </dd>
-                <dt><span jhiTranslate="smartjournalApp.board.party">Party</span></dt>
+                <dt><span jhiTranslate="smartjournalApp.board.group">Group</span></dt>
                 <dd>
                     <div *ngIf="board.group">
-                        <a [routerLink]="['/party', board.group?.id, 'view']">{{board.group?.id}}</a>
+                        <a [routerLink]="['/group', board.group?.id, 'view']">{{board.group?.id}}</a>
                     </div>
                 </dd>
                 <dt><span jhiTranslate="smartjournalApp.board.subject">Subject</span></dt>

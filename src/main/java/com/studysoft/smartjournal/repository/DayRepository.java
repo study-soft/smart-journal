@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 /**
  * Spring Data  repository for the Day entity.
  */
-@SuppressWarnings("unused")
 @Repository
 public interface DayRepository extends JpaRepository<Day, Long> {
 

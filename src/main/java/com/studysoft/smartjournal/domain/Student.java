@@ -13,14 +13,14 @@ import java.util.Set;
  * A Student.
  */
 @Entity
-@Table(name = "student")
+@Table(name = "students")
 public class Student implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "studentSequence")
-    @SequenceGenerator(name = "studentSequence", sequenceName = "student_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "studentsSeq")
+    @SequenceGenerator(name = "studentsSeq", sequenceName = "students_id_seq", allocationSize = 1)
     private Long id;
 
     @NotNull
