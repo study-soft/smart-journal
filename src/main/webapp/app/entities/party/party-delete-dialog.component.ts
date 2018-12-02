@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { IParty } from 'app/shared/model/party.model';
+import { Party } from 'app/shared/model/party.model';
 import { PartyService } from './party.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { PartyService } from './party.service';
     templateUrl: './party-delete-dialog.component.html'
 })
 export class PartyDeleteDialogComponent {
-    party: IParty;
+    party: Party;
 
     constructor(private partyService: PartyService, public activeModal: NgbActiveModal, private eventManager: JhiEventManager) {}
 

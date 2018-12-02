@@ -7,10 +7,10 @@ import { map } from 'rxjs/operators';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
-import { ISubject } from 'app/shared/model/subject.model';
+import { Subject } from 'app/shared/model/subject.model';
 
-type EntityResponseType = HttpResponse<ISubject>;
-type EntityArrayResponseType = HttpResponse<ISubject[]>;
+type EntityResponseType = HttpResponse<Subject>;
+type EntityArrayResponseType = HttpResponse<Subject[]>;
 
 @Injectable({ providedIn: 'root' })
 export class SubjectService {
@@ -18,30 +18,30 @@ export class SubjectService {
 
     constructor(private http: HttpClient) {}
 
-    create(subject: ISubject): Observable<EntityResponseType> {
+    create(subject: Subject): Observable<EntityResponseType> {
         const copy = this.convertDateFromClient(subject);
         return this.http
-            .post<ISubject>(this.resourceUrl, copy, { observe: 'response' })
+            .post<Subject>(this.resourceUrl, copy, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
-    update(subject: ISubject): Observable<EntityResponseType> {
+    update(subject: Subject): Observable<EntityResponseType> {
         const copy = this.convertDateFromClient(subject);
         return this.http
-            .put<ISubject>(this.resourceUrl, copy, { observe: 'response' })
+            .put<Subject>(this.resourceUrl, copy, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
     find(id: number): Observable<EntityResponseType> {
         return this.http
-            .get<ISubject>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+            .get<Subject>(`${this.resourceUrl}/${id}`, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
         return this.http
-            .get<ISubject[]>(this.resourceUrl, { params: options, observe: 'response' })
+            .get<Subject[]>(this.resourceUrl, { params: options, observe: 'response' })
             .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
     }
 
@@ -49,8 +49,8 @@ export class SubjectService {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
-    protected convertDateFromClient(subject: ISubject): ISubject {
-        const copy: ISubject = Object.assign({}, subject, {
+    protected convertDateFromClient(subject: Subject): Subject {
+        const copy: Subject = Object.assign({}, subject, {
             created: subject.created != null && subject.created.isValid() ? subject.created.toJSON() : null,
             updated: subject.updated != null && subject.updated.isValid() ? subject.updated.toJSON() : null
         });
@@ -67,7 +67,7 @@ export class SubjectService {
 
     protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
         if (res.body) {
-            res.body.forEach((subject: ISubject) => {
+            res.body.forEach((subject: Subject) => {
                 subject.created = subject.created != null ? moment(subject.created) : null;
                 subject.updated = subject.updated != null ? moment(subject.updated) : null;
             });

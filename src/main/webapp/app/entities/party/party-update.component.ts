@@ -6,9 +6,9 @@ import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JhiAlertService } from 'ng-jhipster';
 
-import { IParty } from 'app/shared/model/party.model';
+import { Party } from 'app/shared/model/party.model';
 import { PartyService } from './party.service';
-import { ISubject } from 'app/shared/model/subject.model';
+import { Subject } from 'app/shared/model/subject.model';
 import { SubjectService } from 'app/entities/subject';
 
 @Component({
@@ -16,10 +16,10 @@ import { SubjectService } from 'app/entities/subject';
     templateUrl: './party-update.component.html'
 })
 export class PartyUpdateComponent implements OnInit {
-    party: IParty;
+    party: Party;
     isSaving: boolean;
 
-    subjects: ISubject[];
+    subjects: Subject[];
     created: string;
     updated: string;
 
@@ -38,7 +38,7 @@ export class PartyUpdateComponent implements OnInit {
             this.updated = this.party.updated != null ? this.party.updated.format(DATE_TIME_FORMAT) : null;
         });
         this.subjectService.query().subscribe(
-            (res: HttpResponse<ISubject[]>) => {
+            (res: HttpResponse<Subject[]>) => {
                 this.subjects = res.body;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
@@ -60,8 +60,8 @@ export class PartyUpdateComponent implements OnInit {
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<HttpResponse<IParty>>) {
-        result.subscribe((res: HttpResponse<IParty>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+    private subscribeToSaveResponse(result: Observable<HttpResponse<Party>>) {
+        result.subscribe((res: HttpResponse<Party>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
     }
 
     private onSaveSuccess() {
@@ -77,7 +77,7 @@ export class PartyUpdateComponent implements OnInit {
         this.jhiAlertService.error(errorMessage, null, null);
     }
 
-    trackSubjectById(index: number, item: ISubject) {
+    trackSubjectById(index: number, item: Subject) {
         return item.id;
     }
 

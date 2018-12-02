@@ -4,10 +4,10 @@ import { Observable } from 'rxjs';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
-import { IStudent } from 'app/shared/model/student.model';
+import { Student } from 'app/shared/model/student.model';
 
-type EntityResponseType = HttpResponse<IStudent>;
-type EntityArrayResponseType = HttpResponse<IStudent[]>;
+type EntityResponseType = HttpResponse<Student>;
+type EntityArrayResponseType = HttpResponse<Student[]>;
 
 @Injectable({ providedIn: 'root' })
 export class StudentService {
@@ -15,21 +15,21 @@ export class StudentService {
 
     constructor(private http: HttpClient) {}
 
-    create(student: IStudent): Observable<EntityResponseType> {
-        return this.http.post<IStudent>(this.resourceUrl, student, { observe: 'response' });
+    create(student: Student): Observable<EntityResponseType> {
+        return this.http.post<Student>(this.resourceUrl, student, { observe: 'response' });
     }
 
-    update(student: IStudent): Observable<EntityResponseType> {
-        return this.http.put<IStudent>(this.resourceUrl, student, { observe: 'response' });
+    update(student: Student): Observable<EntityResponseType> {
+        return this.http.put<Student>(this.resourceUrl, student, { observe: 'response' });
     }
 
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<IStudent>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+        return this.http.get<Student>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
-        return this.http.get<IStudent[]>(this.resourceUrl, { params: options, observe: 'response' });
+        return this.http.get<Student[]>(this.resourceUrl, { params: options, observe: 'response' });
     }
 
     delete(id: number): Observable<HttpResponse<any>> {

@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { ISubject } from 'app/shared/model/subject.model';
+import { Subject } from 'app/shared/model/subject.model';
 
 @Component({
     selector: 'jhi-subject-detail',
     templateUrl: './subject-detail.component.html'
 })
 export class SubjectDetailComponent implements OnInit {
-    subject: ISubject;
+    subject: Subject;
 
     constructor(private activatedRoute: ActivatedRoute) {}
 

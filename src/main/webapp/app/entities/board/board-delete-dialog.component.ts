@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { IBoard } from 'app/shared/model/board.model';
+import { Board } from 'app/shared/model/board.model';
 import { BoardService } from './board.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { BoardService } from './board.service';
     templateUrl: './board-delete-dialog.component.html'
 })
 export class BoardDeleteDialogComponent {
-    board: IBoard;
+    board: Board;
 
     constructor(private boardService: BoardService, public activeModal: NgbActiveModal, private eventManager: JhiEventManager) {}
 

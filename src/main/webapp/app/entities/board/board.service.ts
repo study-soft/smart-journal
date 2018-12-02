@@ -7,10 +7,10 @@ import { map } from 'rxjs/operators';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
-import { IBoard } from 'app/shared/model/board.model';
+import { Board } from 'app/shared/model/board.model';
 
-type EntityResponseType = HttpResponse<IBoard>;
-type EntityArrayResponseType = HttpResponse<IBoard[]>;
+type EntityResponseType = HttpResponse<Board>;
+type EntityArrayResponseType = HttpResponse<Board[]>;
 
 @Injectable({ providedIn: 'root' })
 export class BoardService {
@@ -18,30 +18,30 @@ export class BoardService {
 
     constructor(private http: HttpClient) {}
 
-    create(board: IBoard): Observable<EntityResponseType> {
+    create(board: Board): Observable<EntityResponseType> {
         const copy = this.convertDateFromClient(board);
         return this.http
-            .post<IBoard>(this.resourceUrl, copy, { observe: 'response' })
+            .post<Board>(this.resourceUrl, copy, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
-    update(board: IBoard): Observable<EntityResponseType> {
+    update(board: Board): Observable<EntityResponseType> {
         const copy = this.convertDateFromClient(board);
         return this.http
-            .put<IBoard>(this.resourceUrl, copy, { observe: 'response' })
+            .put<Board>(this.resourceUrl, copy, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
     find(id: number): Observable<EntityResponseType> {
         return this.http
-            .get<IBoard>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+            .get<Board>(`${this.resourceUrl}/${id}`, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
         return this.http
-            .get<IBoard[]>(this.resourceUrl, { params: options, observe: 'response' })
+            .get<Board[]>(this.resourceUrl, { params: options, observe: 'response' })
             .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
     }
 
@@ -49,8 +49,8 @@ export class BoardService {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
-    protected convertDateFromClient(board: IBoard): IBoard {
-        const copy: IBoard = Object.assign({}, board, {
+    protected convertDateFromClient(board: Board): Board {
+        const copy: Board = Object.assign({}, board, {
             created: board.created != null && board.created.isValid() ? board.created.toJSON() : null,
             updated: board.updated != null && board.updated.isValid() ? board.updated.toJSON() : null
         });
@@ -67,7 +67,7 @@ export class BoardService {
 
     protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
         if (res.body) {
-            res.body.forEach((board: IBoard) => {
+            res.body.forEach((board: Board) => {
                 board.created = board.created != null ? moment(board.created) : null;
                 board.updated = board.updated != null ? moment(board.updated) : null;
             });

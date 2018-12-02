@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { IParty } from 'app/shared/model/party.model';
+import { Party } from 'app/shared/model/party.model';
 
 @Component({
     selector: 'jhi-party-detail',
     templateUrl: './party-detail.component.html'
 })
 export class PartyDetailComponent implements OnInit {
-    party: IParty;
+    party: Party;
 
     constructor(private activatedRoute: ActivatedRoute) {}
 

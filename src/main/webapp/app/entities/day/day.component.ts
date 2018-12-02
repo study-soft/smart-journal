@@ -3,7 +3,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
-import { IDay } from 'app/shared/model/day.model';
+import { Day } from 'app/shared/model/day.model';
 import { Principal } from 'app/core';
 import { DayService } from './day.service';
 
@@ -12,7 +12,7 @@ import { DayService } from './day.service';
     templateUrl: './day.component.html'
 })
 export class DayComponent implements OnInit, OnDestroy {
-    days: IDay[];
+    days: Day[];
     currentAccount: any;
     eventSubscriber: Subscription;
 
@@ -25,7 +25,7 @@ export class DayComponent implements OnInit, OnDestroy {
 
     loadAll() {
         this.dayService.query().subscribe(
-            (res: HttpResponse<IDay[]>) => {
+            (res: HttpResponse<Day[]>) => {
                 this.days = res.body;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
@@ -44,7 +44,7 @@ export class DayComponent implements OnInit, OnDestroy {
         this.eventManager.destroy(this.eventSubscriber);
     }
 
-    trackId(index: number, item: IDay) {
+    trackId(index: number, item: Day) {
         return item.id;
     }
 

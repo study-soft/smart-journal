@@ -10,10 +10,9 @@ import { BoardComponent } from './board.component';
 import { BoardDetailComponent } from './board-detail.component';
 import { BoardUpdateComponent } from './board-update.component';
 import { BoardDeletePopupComponent } from './board-delete-dialog.component';
-import { IBoard } from 'app/shared/model/board.model';
 
 @Injectable({ providedIn: 'root' })
-export class BoardResolve implements Resolve<IBoard> {
+export class BoardResolve implements Resolve<Board> {
     constructor(private service: BoardService) {}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Board> {

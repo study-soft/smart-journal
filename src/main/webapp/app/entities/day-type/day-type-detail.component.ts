@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { IDayType } from 'app/shared/model/day-type.model';
+import { DayType } from 'app/shared/model/day-type.model';
 
 @Component({
     selector: 'jhi-day-type-detail',
     templateUrl: './day-type-detail.component.html'
 })
 export class DayTypeDetailComponent implements OnInit {
-    dayType: IDayType;
+    dayType: DayType;
 
     constructor(private activatedRoute: ActivatedRoute) {}
 

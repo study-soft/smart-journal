@@ -1,5 +1,5 @@
 import { Moment } from 'moment';
-import { IBoard } from 'app/shared/model//board.model';
+import { Board } from 'app/shared/model//board.model';
 
 export const enum Type {
     SIMPLE = 'SIMPLE',
@@ -9,18 +9,7 @@ export const enum Type {
     TEST = 'TEST'
 }
 
-export interface IDayType {
-    id?: number;
-    type?: Type;
-    score?: number;
-    description?: string;
-    expiry?: number;
-    created?: Moment;
-    updated?: Moment;
-    board?: IBoard;
-}
-
-export class DayType implements IDayType {
+export class DayType implements DayType {
     constructor(
         public id?: number,
         public type?: Type,
@@ -29,6 +18,6 @@ export class DayType implements IDayType {
         public expiry?: number,
         public created?: Moment,
         public updated?: Moment,
-        public board?: IBoard
+        public board?: Board
     ) {}
 }

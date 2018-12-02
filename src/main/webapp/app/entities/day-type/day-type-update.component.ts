@@ -6,9 +6,9 @@ import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JhiAlertService } from 'ng-jhipster';
 
-import { IDayType } from 'app/shared/model/day-type.model';
+import { DayType } from 'app/shared/model/day-type.model';
 import { DayTypeService } from './day-type.service';
-import { IBoard } from 'app/shared/model/board.model';
+import { Board } from 'app/shared/model/board.model';
 import { BoardService } from 'app/entities/board';
 
 @Component({
@@ -16,10 +16,10 @@ import { BoardService } from 'app/entities/board';
     templateUrl: './day-type-update.component.html'
 })
 export class DayTypeUpdateComponent implements OnInit {
-    dayType: IDayType;
+    dayType: DayType;
     isSaving: boolean;
 
-    boards: IBoard[];
+    boards: Board[];
     created: string;
     updated: string;
 
@@ -38,7 +38,7 @@ export class DayTypeUpdateComponent implements OnInit {
             this.updated = this.dayType.updated != null ? this.dayType.updated.format(DATE_TIME_FORMAT) : null;
         });
         this.boardService.query().subscribe(
-            (res: HttpResponse<IBoard[]>) => {
+            (res: HttpResponse<Board[]>) => {
                 this.boards = res.body;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
@@ -60,8 +60,8 @@ export class DayTypeUpdateComponent implements OnInit {
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<HttpResponse<IDayType>>) {
-        result.subscribe((res: HttpResponse<IDayType>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+    private subscribeToSaveResponse(result: Observable<HttpResponse<DayType>>) {
+        result.subscribe((res: HttpResponse<DayType>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
     }
 
     private onSaveSuccess() {
@@ -77,7 +77,7 @@ export class DayTypeUpdateComponent implements OnInit {
         this.jhiAlertService.error(errorMessage, null, null);
     }
 
-    trackBoardById(index: number, item: IBoard) {
+    trackBoardById(index: number, item: Board) {
         return item.id;
     }
 }

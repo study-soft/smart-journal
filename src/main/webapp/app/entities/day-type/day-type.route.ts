@@ -10,10 +10,9 @@ import { DayTypeComponent } from './day-type.component';
 import { DayTypeDetailComponent } from './day-type-detail.component';
 import { DayTypeUpdateComponent } from './day-type-update.component';
 import { DayTypeDeletePopupComponent } from './day-type-delete-dialog.component';
-import { IDayType } from 'app/shared/model/day-type.model';
 
 @Injectable({ providedIn: 'root' })
-export class DayTypeResolve implements Resolve<IDayType> {
+export class DayTypeResolve implements Resolve<DayType> {
     constructor(private service: DayTypeService) {}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<DayType> {

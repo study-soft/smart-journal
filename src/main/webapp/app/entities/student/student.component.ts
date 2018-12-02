@@ -3,7 +3,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
-import { IStudent } from 'app/shared/model/student.model';
+import { Student } from 'app/shared/model/student.model';
 import { Principal } from 'app/core';
 import { StudentService } from './student.service';
 
@@ -12,7 +12,7 @@ import { StudentService } from './student.service';
     templateUrl: './student.component.html'
 })
 export class StudentComponent implements OnInit, OnDestroy {
-    students: IStudent[];
+    students: Student[];
     currentAccount: any;
     eventSubscriber: Subscription;
 
@@ -25,7 +25,7 @@ export class StudentComponent implements OnInit, OnDestroy {
 
     loadAll() {
         this.studentService.query().subscribe(
-            (res: HttpResponse<IStudent[]>) => {
+            (res: HttpResponse<Student[]>) => {
                 this.students = res.body;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
@@ -44,7 +44,7 @@ export class StudentComponent implements OnInit, OnDestroy {
         this.eventManager.destroy(this.eventSubscriber);
     }
 
-    trackId(index: number, item: IStudent) {
+    trackId(index: number, item: Student) {
         return item.id;
     }
 

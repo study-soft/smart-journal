@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { IStudent } from 'app/shared/model/student.model';
+import { Student } from 'app/shared/model/student.model';
 import { StudentService } from './student.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { StudentService } from './student.service';
     templateUrl: './student-delete-dialog.component.html'
 })
 export class StudentDeleteDialogComponent {
-    student: IStudent;
+    student: Student;
 
     constructor(private studentService: StudentService, public activeModal: NgbActiveModal, private eventManager: JhiEventManager) {}
 

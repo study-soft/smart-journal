@@ -3,7 +3,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
-import { IParty } from 'app/shared/model/party.model';
+import { Party } from 'app/shared/model/party.model';
 import { Principal } from 'app/core';
 import { PartyService } from './party.service';
 
@@ -12,7 +12,7 @@ import { PartyService } from './party.service';
     templateUrl: './party.component.html'
 })
 export class PartyComponent implements OnInit, OnDestroy {
-    parties: IParty[];
+    parties: Party[];
     currentAccount: any;
     eventSubscriber: Subscription;
 
@@ -25,7 +25,7 @@ export class PartyComponent implements OnInit, OnDestroy {
 
     loadAll() {
         this.partyService.query().subscribe(
-            (res: HttpResponse<IParty[]>) => {
+            (res: HttpResponse<Party[]>) => {
                 this.parties = res.body;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
@@ -44,7 +44,7 @@ export class PartyComponent implements OnInit, OnDestroy {
         this.eventManager.destroy(this.eventSubscriber);
     }
 
-    trackId(index: number, item: IParty) {
+    trackId(index: number, item: Party) {
         return item.id;
     }
 

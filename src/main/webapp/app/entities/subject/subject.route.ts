@@ -10,10 +10,9 @@ import { SubjectComponent } from './subject.component';
 import { SubjectDetailComponent } from './subject-detail.component';
 import { SubjectUpdateComponent } from './subject-update.component';
 import { SubjectDeletePopupComponent } from './subject-delete-dialog.component';
-import { ISubject } from 'app/shared/model/subject.model';
 
 @Injectable({ providedIn: 'root' })
-export class SubjectResolve implements Resolve<ISubject> {
+export class SubjectResolve implements Resolve<Subject> {
     constructor(private service: SubjectService) {}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Subject> {

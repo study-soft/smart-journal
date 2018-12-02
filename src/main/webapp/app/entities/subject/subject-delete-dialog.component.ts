@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { ISubject } from 'app/shared/model/subject.model';
+import { Subject } from 'app/shared/model/subject.model';
 import { SubjectService } from './subject.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { SubjectService } from './subject.service';
     templateUrl: './subject-delete-dialog.component.html'
 })
 export class SubjectDeleteDialogComponent {
-    subject: ISubject;
+    subject: Subject;
 
     constructor(private subjectService: SubjectService, public activeModal: NgbActiveModal, private eventManager: JhiEventManager) {}
 

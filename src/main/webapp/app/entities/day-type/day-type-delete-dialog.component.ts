@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { IDayType } from 'app/shared/model/day-type.model';
+import { DayType } from 'app/shared/model/day-type.model';
 import { DayTypeService } from './day-type.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { DayTypeService } from './day-type.service';
     templateUrl: './day-type-delete-dialog.component.html'
 })
 export class DayTypeDeleteDialogComponent {
-    dayType: IDayType;
+    dayType: DayType;
 
     constructor(private dayTypeService: DayTypeService, public activeModal: NgbActiveModal, private eventManager: JhiEventManager) {}
 

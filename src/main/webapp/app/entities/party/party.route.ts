@@ -10,10 +10,9 @@ import { PartyComponent } from './party.component';
 import { PartyDetailComponent } from './party-detail.component';
 import { PartyUpdateComponent } from './party-update.component';
 import { PartyDeletePopupComponent } from './party-delete-dialog.component';
-import { IParty } from 'app/shared/model/party.model';
 
 @Injectable({ providedIn: 'root' })
-export class PartyResolve implements Resolve<IParty> {
+export class PartyResolve implements Resolve<Party> {
     constructor(private service: PartyService) {}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Party> {

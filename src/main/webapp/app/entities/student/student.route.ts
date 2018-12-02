@@ -10,10 +10,9 @@ import { StudentComponent } from './student.component';
 import { StudentDetailComponent } from './student-detail.component';
 import { StudentUpdateComponent } from './student-update.component';
 import { StudentDeletePopupComponent } from './student-delete-dialog.component';
-import { IStudent } from 'app/shared/model/student.model';
 
 @Injectable({ providedIn: 'root' })
-export class StudentResolve implements Resolve<IStudent> {
+export class StudentResolve implements Resolve<Student> {
     constructor(private service: StudentService) {}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Student> {

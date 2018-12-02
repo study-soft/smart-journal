@@ -6,11 +6,11 @@ import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JhiAlertService } from 'ng-jhipster';
 
-import { IDay } from 'app/shared/model/day.model';
+import { Day } from 'app/shared/model/day.model';
 import { DayService } from './day.service';
-import { IStudent } from 'app/shared/model/student.model';
+import { Student } from 'app/shared/model/student.model';
 import { StudentService } from 'app/entities/student';
-import { IDayType } from 'app/shared/model/day-type.model';
+import { DayType } from 'app/shared/model/day-type.model';
 import { DayTypeService } from 'app/entities/day-type';
 
 @Component({
@@ -18,12 +18,12 @@ import { DayTypeService } from 'app/entities/day-type';
     templateUrl: './day-update.component.html'
 })
 export class DayUpdateComponent implements OnInit {
-    day: IDay;
+    day: Day;
     isSaving: boolean;
 
-    students: IStudent[];
+    students: Student[];
 
-    daytypes: IDayType[];
+    daytypes: DayType[];
     date: string;
 
     constructor(
@@ -41,18 +41,18 @@ export class DayUpdateComponent implements OnInit {
             this.date = this.day.date != null ? this.day.date.format(DATE_TIME_FORMAT) : null;
         });
         this.studentService.query().subscribe(
-            (res: HttpResponse<IStudent[]>) => {
+            (res: HttpResponse<Student[]>) => {
                 this.students = res.body;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
         this.dayTypeService.query({ filter: 'day-is-null' }).subscribe(
-            (res: HttpResponse<IDayType[]>) => {
+            (res: HttpResponse<DayType[]>) => {
                 if (!this.day.dayType || !this.day.dayType.id) {
                     this.daytypes = res.body;
                 } else {
                     this.dayTypeService.find(this.day.dayType.id).subscribe(
-                        (subRes: HttpResponse<IDayType>) => {
+                        (subRes: HttpResponse<DayType>) => {
                             this.daytypes = [subRes.body].concat(res.body);
                         },
                         (subRes: HttpErrorResponse) => this.onError(subRes.message)
@@ -77,8 +77,8 @@ export class DayUpdateComponent implements OnInit {
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<HttpResponse<IDay>>) {
-        result.subscribe((res: HttpResponse<IDay>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+    private subscribeToSaveResponse(result: Observable<HttpResponse<Day>>) {
+        result.subscribe((res: HttpResponse<Day>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
     }
 
     private onSaveSuccess() {
@@ -94,11 +94,11 @@ export class DayUpdateComponent implements OnInit {
         this.jhiAlertService.error(errorMessage, null, null);
     }
 
-    trackStudentById(index: number, item: IStudent) {
+    trackStudentById(index: number, item: Student) {
         return item.id;
     }
 
-    trackDayTypeById(index: number, item: IDayType) {
+    trackDayTypeById(index: number, item: DayType) {
         return item.id;
     }
 }

@@ -4,9 +4,9 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { JhiAlertService } from 'ng-jhipster';
 
-import { IStudent } from 'app/shared/model/student.model';
+import { Student } from 'app/shared/model/student.model';
 import { StudentService } from './student.service';
-import { IBoard } from 'app/shared/model/board.model';
+import { Board } from 'app/shared/model/board.model';
 import { BoardService } from 'app/entities/board';
 
 @Component({
@@ -14,10 +14,10 @@ import { BoardService } from 'app/entities/board';
     templateUrl: './student-update.component.html'
 })
 export class StudentUpdateComponent implements OnInit {
-    student: IStudent;
+    student: Student;
     isSaving: boolean;
 
-    boards: IBoard[];
+    boards: Board[];
 
     constructor(
         private jhiAlertService: JhiAlertService,
@@ -32,7 +32,7 @@ export class StudentUpdateComponent implements OnInit {
             this.student = student;
         });
         this.boardService.query().subscribe(
-            (res: HttpResponse<IBoard[]>) => {
+            (res: HttpResponse<Board[]>) => {
                 this.boards = res.body;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
@@ -52,8 +52,8 @@ export class StudentUpdateComponent implements OnInit {
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<HttpResponse<IStudent>>) {
-        result.subscribe((res: HttpResponse<IStudent>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+    private subscribeToSaveResponse(result: Observable<HttpResponse<Student>>) {
+        result.subscribe((res: HttpResponse<Student>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
     }
 
     private onSaveSuccess() {
@@ -69,7 +69,7 @@ export class StudentUpdateComponent implements OnInit {
         this.jhiAlertService.error(errorMessage, null, null);
     }
 
-    trackBoardById(index: number, item: IBoard) {
+    trackBoardById(index: number, item: Board) {
         return item.id;
     }
 }

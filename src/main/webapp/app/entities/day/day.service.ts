@@ -7,10 +7,10 @@ import { map } from 'rxjs/operators';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
-import { IDay } from 'app/shared/model/day.model';
+import { Day } from 'app/shared/model/day.model';
 
-type EntityResponseType = HttpResponse<IDay>;
-type EntityArrayResponseType = HttpResponse<IDay[]>;
+type EntityResponseType = HttpResponse<Day>;
+type EntityArrayResponseType = HttpResponse<Day[]>;
 
 @Injectable({ providedIn: 'root' })
 export class DayService {
@@ -18,30 +18,30 @@ export class DayService {
 
     constructor(private http: HttpClient) {}
 
-    create(day: IDay): Observable<EntityResponseType> {
+    create(day: Day): Observable<EntityResponseType> {
         const copy = this.convertDateFromClient(day);
         return this.http
-            .post<IDay>(this.resourceUrl, copy, { observe: 'response' })
+            .post<Day>(this.resourceUrl, copy, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
-    update(day: IDay): Observable<EntityResponseType> {
+    update(day: Day): Observable<EntityResponseType> {
         const copy = this.convertDateFromClient(day);
         return this.http
-            .put<IDay>(this.resourceUrl, copy, { observe: 'response' })
+            .put<Day>(this.resourceUrl, copy, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
     find(id: number): Observable<EntityResponseType> {
         return this.http
-            .get<IDay>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+            .get<Day>(`${this.resourceUrl}/${id}`, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
         return this.http
-            .get<IDay[]>(this.resourceUrl, { params: options, observe: 'response' })
+            .get<Day[]>(this.resourceUrl, { params: options, observe: 'response' })
             .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
     }
 
@@ -49,8 +49,8 @@ export class DayService {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
-    protected convertDateFromClient(day: IDay): IDay {
-        const copy: IDay = Object.assign({}, day, {
+    protected convertDateFromClient(day: Day): Day {
+        const copy: Day = Object.assign({}, day, {
             date: day.date != null && day.date.isValid() ? day.date.toJSON() : null
         });
         return copy;
@@ -65,7 +65,7 @@ export class DayService {
 
     protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
         if (res.body) {
-            res.body.forEach((day: IDay) => {
+            res.body.forEach((day: Day) => {
                 day.date = day.date != null ? moment(day.date) : null;
             });
         }

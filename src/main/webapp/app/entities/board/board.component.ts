@@ -3,7 +3,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
-import { IBoard } from 'app/shared/model/board.model';
+import { Board } from 'app/shared/model/board.model';
 import { Principal } from 'app/core';
 import { BoardService } from './board.service';
 
@@ -12,7 +12,7 @@ import { BoardService } from './board.service';
     templateUrl: './board.component.html'
 })
 export class BoardComponent implements OnInit, OnDestroy {
-    boards: IBoard[];
+    boards: Board[];
     currentAccount: any;
     eventSubscriber: Subscription;
 
@@ -25,7 +25,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     loadAll() {
         this.boardService.query().subscribe(
-            (res: HttpResponse<IBoard[]>) => {
+            (res: HttpResponse<Board[]>) => {
                 this.boards = res.body;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
@@ -44,7 +44,7 @@ export class BoardComponent implements OnInit, OnDestroy {
         this.eventManager.destroy(this.eventSubscriber);
     }
 
-    trackId(index: number, item: IBoard) {
+    trackId(index: number, item: Board) {
         return item.id;
     }
 

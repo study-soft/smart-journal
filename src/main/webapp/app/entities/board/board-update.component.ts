@@ -6,11 +6,11 @@ import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JhiAlertService } from 'ng-jhipster';
 
-import { IBoard } from 'app/shared/model/board.model';
+import { Board } from 'app/shared/model/board.model';
 import { BoardService } from './board.service';
-import { IParty } from 'app/shared/model/party.model';
+import { Party } from 'app/shared/model/party.model';
 import { PartyService } from 'app/entities/party';
-import { ISubject } from 'app/shared/model/subject.model';
+import { Subject } from 'app/shared/model/subject.model';
 import { SubjectService } from 'app/entities/subject';
 
 @Component({
@@ -18,12 +18,12 @@ import { SubjectService } from 'app/entities/subject';
     templateUrl: './board-update.component.html'
 })
 export class BoardUpdateComponent implements OnInit {
-    board: IBoard;
+    board: Board;
     isSaving: boolean;
 
-    parties: IParty[];
+    parties: Party[];
 
-    subjects: ISubject[];
+    subjects: Subject[];
     created: string;
     updated: string;
 
@@ -43,12 +43,12 @@ export class BoardUpdateComponent implements OnInit {
             this.updated = this.board.updated != null ? this.board.updated.format(DATE_TIME_FORMAT) : null;
         });
         this.partyService.query({ filter: 'board-is-null' }).subscribe(
-            (res: HttpResponse<IParty[]>) => {
+            (res: HttpResponse<Party[]>) => {
                 if (!this.board.party || !this.board.party.id) {
                     this.parties = res.body;
                 } else {
                     this.partyService.find(this.board.party.id).subscribe(
-                        (subRes: HttpResponse<IParty>) => {
+                        (subRes: HttpResponse<Party>) => {
                             this.parties = [subRes.body].concat(res.body);
                         },
                         (subRes: HttpErrorResponse) => this.onError(subRes.message)
@@ -58,12 +58,12 @@ export class BoardUpdateComponent implements OnInit {
             (res: HttpErrorResponse) => this.onError(res.message)
         );
         this.subjectService.query({ filter: 'board-is-null' }).subscribe(
-            (res: HttpResponse<ISubject[]>) => {
+            (res: HttpResponse<Subject[]>) => {
                 if (!this.board.subject || !this.board.subject.id) {
                     this.subjects = res.body;
                 } else {
                     this.subjectService.find(this.board.subject.id).subscribe(
-                        (subRes: HttpResponse<ISubject>) => {
+                        (subRes: HttpResponse<Subject>) => {
                             this.subjects = [subRes.body].concat(res.body);
                         },
                         (subRes: HttpErrorResponse) => this.onError(subRes.message)
@@ -89,8 +89,8 @@ export class BoardUpdateComponent implements OnInit {
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<HttpResponse<IBoard>>) {
-        result.subscribe((res: HttpResponse<IBoard>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+    private subscribeToSaveResponse(result: Observable<HttpResponse<Board>>) {
+        result.subscribe((res: HttpResponse<Board>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
     }
 
     private onSaveSuccess() {
@@ -106,11 +106,11 @@ export class BoardUpdateComponent implements OnInit {
         this.jhiAlertService.error(errorMessage, null, null);
     }
 
-    trackPartyById(index: number, item: IParty) {
+    trackPartyById(index: number, item: Party) {
         return item.id;
     }
 
-    trackSubjectById(index: number, item: ISubject) {
+    trackSubjectById(index: number, item: Subject) {
         return item.id;
     }
 }

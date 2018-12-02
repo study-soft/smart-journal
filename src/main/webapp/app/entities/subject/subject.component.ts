@@ -3,7 +3,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
-import { ISubject } from 'app/shared/model/subject.model';
+import { Subject } from 'app/shared/model/subject.model';
 import { Principal } from 'app/core';
 import { SubjectService } from './subject.service';
 
@@ -12,7 +12,7 @@ import { SubjectService } from './subject.service';
     templateUrl: './subject.component.html'
 })
 export class SubjectComponent implements OnInit, OnDestroy {
-    subjects: ISubject[];
+    subjects: Subject[];
     currentAccount: any;
     eventSubscriber: Subscription;
 
@@ -25,7 +25,7 @@ export class SubjectComponent implements OnInit, OnDestroy {
 
     loadAll() {
         this.subjectService.query().subscribe(
-            (res: HttpResponse<ISubject[]>) => {
+            (res: HttpResponse<Subject[]>) => {
                 this.subjects = res.body;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
@@ -44,7 +44,7 @@ export class SubjectComponent implements OnInit, OnDestroy {
         this.eventManager.destroy(this.eventSubscriber);
     }
 
-    trackId(index: number, item: ISubject) {
+    trackId(index: number, item: Subject) {
         return item.id;
     }
 
