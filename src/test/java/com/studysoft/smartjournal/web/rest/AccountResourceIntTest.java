@@ -36,7 +36,6 @@ import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -297,9 +296,9 @@ public class AccountResourceIntTest {
         secondUser.setImageUrl(firstUser.getImageUrl());
         secondUser.setLangKey(firstUser.getLangKey());
         secondUser.setCreatedBy(firstUser.getCreatedBy());
-        secondUser.setCreatedDate(firstUser.getCreatedDate());
-        secondUser.setLastModifiedBy(firstUser.getLastModifiedBy());
-        secondUser.setLastModifiedDate(firstUser.getLastModifiedDate());
+        secondUser.setCreated(firstUser.getCreated());
+        secondUser.setUpdatedBy(firstUser.getUpdatedBy());
+        secondUser.setUpdated(firstUser.getUpdated());
         secondUser.setAuthorities(new HashSet<>(firstUser.getAuthorities()));
 
         // First user

@@ -45,11 +45,11 @@ public class UserDTO {
 
     private String createdBy;
 
-    private Instant createdDate;
+    private Instant created;
 
-    private String lastModifiedBy;
+    private String updatedBy;
 
-    private Instant lastModifiedDate;
+    private Instant updated;
 
     private Set<String> authorities;
 
@@ -67,9 +67,9 @@ public class UserDTO {
         this.imageUrl = user.getImageUrl();
         this.langKey = user.getLangKey();
         this.createdBy = user.getCreatedBy();
-        this.createdDate = user.getCreatedDate();
-        this.lastModifiedBy = user.getLastModifiedBy();
-        this.lastModifiedDate = user.getLastModifiedDate();
+        this.created = user.getCreated();
+        this.updatedBy = user.getUpdatedBy();
+        this.updated = user.getUpdated();
         this.authorities = user.getAuthorities().stream()
             .map(Authority::getName)
             .collect(Collectors.toSet());
@@ -147,28 +147,28 @@ public class UserDTO {
         this.createdBy = createdBy;
     }
 
-    public Instant getCreatedDate() {
-        return createdDate;
+    public Instant getCreated() {
+        return created;
     }
 
-    public void setCreatedDate(Instant createdDate) {
-        this.createdDate = createdDate;
+    public void setCreated(Instant created) {
+        this.created = created;
     }
 
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
+    public String getUpdatedBy() {
+        return updatedBy;
     }
 
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
-    public Instant getLastModifiedDate() {
-        return lastModifiedDate;
+    public Instant getUpdated() {
+        return updated;
     }
 
-    public void setLastModifiedDate(Instant lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
+    public void setUpdated(Instant updated) {
+        this.updated = updated;
     }
 
     public Set<String> getAuthorities() {
@@ -190,9 +190,9 @@ public class UserDTO {
             ", activated=" + activated +
             ", langKey='" + langKey + '\'' +
             ", createdBy=" + createdBy +
-            ", createdDate=" + createdDate +
-            ", lastModifiedBy='" + lastModifiedBy + '\'' +
-            ", lastModifiedDate=" + lastModifiedDate +
+            ", created=" + created +
+            ", updatedBy='" + updatedBy + '\'' +
+            ", updated=" + updated +
             ", authorities=" + authorities +
             "}";
     }

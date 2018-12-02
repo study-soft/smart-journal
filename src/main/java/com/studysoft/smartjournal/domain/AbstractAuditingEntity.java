@@ -1,6 +1,7 @@
 package com.studysoft.smartjournal.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -27,22 +28,18 @@ public abstract class AbstractAuditingEntity implements Serializable {
 
     @CreatedBy
     @Column(name = "created_by", nullable = false, length = 50, updatable = false)
-    @JsonIgnore
     private String createdBy;
 
     @CreatedDate
     @Column(name = "created", updatable = false)
-    @JsonIgnore
     private Instant created = Instant.now();
 
     @LastModifiedBy
     @Column(name = "updated_by", length = 50)
-    @JsonIgnore
     private String updatedBy;
 
     @LastModifiedDate
     @Column(name = "updated")
-    @JsonIgnore
     private Instant updated = Instant.now();
 
     public String getCreatedBy() {
@@ -53,27 +50,27 @@ public abstract class AbstractAuditingEntity implements Serializable {
         this.createdBy = createdBy;
     }
 
-    public Instant getCreatedDate() {
+    public Instant getCreated() {
         return created;
     }
 
-    public void setCreatedDate(Instant createdDate) {
-        this.created = createdDate;
+    public void setCreated(Instant created) {
+        this.created = created;
     }
 
-    public String getLastModifiedBy() {
+    public String getUpdatedBy() {
         return updatedBy;
     }
 
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.updatedBy = lastModifiedBy;
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
-    public Instant getLastModifiedDate() {
+    public Instant getUpdated() {
         return updated;
     }
 
-    public void setLastModifiedDate(Instant lastModifiedDate) {
-        this.updated = lastModifiedDate;
+    public void setUpdated(Instant updated) {
+        this.updated = updated;
     }
 }

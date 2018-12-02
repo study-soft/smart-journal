@@ -151,7 +151,7 @@ public class UserServiceIntTest {
         when(dateTimeProvider.getNow()).thenReturn(Optional.of(now.minus(4, ChronoUnit.DAYS)));
         user.setActivated(false);
         User dbUser = userRepository.saveAndFlush(user);
-        dbUser.setCreatedDate(now.minus(4, ChronoUnit.DAYS));
+        dbUser.setCreated(now.minus(4, ChronoUnit.DAYS));
         userRepository.saveAndFlush(user);
         List<User> users = userRepository.findAllByActivatedIsFalseAndCreatedBefore(now.minus(3, ChronoUnit.DAYS));
         assertThat(users).isNotEmpty();
