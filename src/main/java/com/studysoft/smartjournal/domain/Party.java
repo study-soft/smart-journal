@@ -1,6 +1,8 @@
 package com.studysoft.smartjournal.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -31,10 +33,7 @@ public class Party implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany
-    @JoinTable(name = "party_subject",
-               joinColumns = @JoinColumn(name = "parties_id", referencedColumnName = "id"),
-               inverseJoinColumns = @JoinColumn(name = "subjects_id", referencedColumnName = "id"))
+    @ManyToMany(mappedBy = "groups")
     private Set<Subject> subjects = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

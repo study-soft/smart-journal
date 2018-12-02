@@ -1,15 +1,11 @@
 package com.studysoft.smartjournal.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Subject.
@@ -32,8 +28,10 @@ public class Subject extends AbstractAuditingEntity implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany(mappedBy = "subjects")
-    @JsonIgnore
+    @ManyToMany
+    @JoinTable(name = "party_subject",
+        joinColumns = @JoinColumn(name = "subjects_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "parties_id", referencedColumnName = "id"))
     private Set<Party> groups = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

@@ -82,7 +82,7 @@ public class SubjectResource {
     @GetMapping("/subjects")
     public List<Subject> getAllSubjects() {
         log.debug("REST request to get all Subjects");
-        return subjectRepository.findAll();
+        return subjectRepository.findAllWithEagerRelationships();
     }
 
     /**
@@ -94,7 +94,7 @@ public class SubjectResource {
     @GetMapping("/subjects/{id}")
     public ResponseEntity<Subject> getSubject(@PathVariable Long id) {
         log.debug("REST request to get Subject : {}", id);
-        Optional<Subject> subject = subjectRepository.findById(id);
+        Optional<Subject> subject = subjectRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(subject);
     }
 
