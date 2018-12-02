@@ -8,10 +8,10 @@ import { JhiAlertService } from 'ng-jhipster';
 
 import { Board } from 'app/shared/model/board.model';
 import { BoardService } from './board.service';
-import { Party } from 'app/shared/model/party.model';
-import { PartyService } from 'app/entities/party';
+import { GroupService } from 'app/entities/group';
 import { Subject } from 'app/shared/model/subject.model';
 import { SubjectService } from 'app/entities/subject';
+import { Group } from 'app/shared/model/group.model';
 
 @Component({
     selector: 'jhi-board-update',
@@ -21,7 +21,7 @@ export class BoardUpdateComponent implements OnInit {
     board: Board;
     isSaving: boolean;
 
-    parties: Party[];
+    groups: Group[];
 
     subjects: Subject[];
     created: string;
@@ -30,7 +30,7 @@ export class BoardUpdateComponent implements OnInit {
     constructor(
         private jhiAlertService: JhiAlertService,
         private boardService: BoardService,
-        private partyService: PartyService,
+        private groupService: GroupService,
         private subjectService: SubjectService,
         private activatedRoute: ActivatedRoute
     ) {}
@@ -42,14 +42,14 @@ export class BoardUpdateComponent implements OnInit {
             this.created = this.board.created != null ? this.board.created.format(DATE_TIME_FORMAT) : null;
             this.updated = this.board.updated != null ? this.board.updated.format(DATE_TIME_FORMAT) : null;
         });
-        this.partyService.query({ filter: 'board-is-null' }).subscribe(
-            (res: HttpResponse<Party[]>) => {
-                if (!this.board.party || !this.board.party.id) {
-                    this.parties = res.body;
+        this.groupService.query({ filter: 'board-is-null' }).subscribe(
+            (res: HttpResponse<Group[]>) => {
+                if (!this.board.group || !this.board.group.id) {
+                    this.groups = res.body;
                 } else {
-                    this.partyService.find(this.board.party.id).subscribe(
-                        (subRes: HttpResponse<Party>) => {
-                            this.parties = [subRes.body].concat(res.body);
+                    this.groupService.find(this.board.group.id).subscribe(
+                        (subRes: HttpResponse<Group>) => {
+                            this.groups = [subRes.body].concat(res.body);
                         },
                         (subRes: HttpErrorResponse) => this.onError(subRes.message)
                     );
@@ -106,7 +106,7 @@ export class BoardUpdateComponent implements OnInit {
         this.jhiAlertService.error(errorMessage, null, null);
     }
 
-    trackPartyById(index: number, item: Party) {
+    trackGroupById(index: number, item: Group) {
         return item.id;
     }
 

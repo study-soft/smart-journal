@@ -13,10 +13,10 @@ import java.util.Set;
 import java.util.Objects;
 
 /**
- * A Party.
+ * A Group.
  */
 @Entity
-@Table(name = "party")
+@Table(name = "group")
 public class Party implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -119,7 +119,7 @@ public class Party implements Serializable {
 
     @Override
     public String toString() {
-        return "Party{" +
+        return "Group{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +

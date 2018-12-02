@@ -7,41 +7,41 @@ import { map } from 'rxjs/operators';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
-import { Party } from 'app/shared/model/party.model';
+import { Group } from 'app/shared/model/group.model';
 
-type EntityResponseType = HttpResponse<Party>;
-type EntityArrayResponseType = HttpResponse<Party[]>;
+type EntityResponseType = HttpResponse<Group>;
+type EntityArrayResponseType = HttpResponse<Group[]>;
 
 @Injectable({ providedIn: 'root' })
-export class PartyService {
-    public resourceUrl = SERVER_API_URL + 'api/parties';
+export class GroupService {
+    public resourceUrl = SERVER_API_URL + 'api/groups';
 
     constructor(private http: HttpClient) {}
 
-    create(party: Party): Observable<EntityResponseType> {
-        const copy = this.convertDateFromClient(party);
+    create(group: Group): Observable<EntityResponseType> {
+        const copy = this.convertDateFromClient(group);
         return this.http
-            .post<Party>(this.resourceUrl, copy, { observe: 'response' })
+            .post<Group>(this.resourceUrl, copy, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
-    update(party: Party): Observable<EntityResponseType> {
-        const copy = this.convertDateFromClient(party);
+    update(group: Group): Observable<EntityResponseType> {
+        const copy = this.convertDateFromClient(group);
         return this.http
-            .put<Party>(this.resourceUrl, copy, { observe: 'response' })
+            .put<Group>(this.resourceUrl, copy, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
     find(id: number): Observable<EntityResponseType> {
         return this.http
-            .get<Party>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+            .get<Group>(`${this.resourceUrl}/${id}`, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
         return this.http
-            .get<Party[]>(this.resourceUrl, { params: options, observe: 'response' })
+            .get<Group[]>(this.resourceUrl, { params: options, observe: 'response' })
             .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
     }
 
@@ -49,10 +49,10 @@ export class PartyService {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
-    protected convertDateFromClient(party: Party): Party {
-        const copy: Party = Object.assign({}, party, {
-            created: party.created != null && party.created.isValid() ? party.created.toJSON() : null,
-            updated: party.updated != null && party.updated.isValid() ? party.updated.toJSON() : null
+    protected convertDateFromClient(group: Group): Group {
+        const copy: Group = Object.assign({}, group, {
+            created: group.created != null && group.created.isValid() ? group.created.toJSON() : null,
+            updated: group.updated != null && group.updated.isValid() ? group.updated.toJSON() : null
         });
         return copy;
     }
@@ -67,9 +67,9 @@ export class PartyService {
 
     protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
         if (res.body) {
-            res.body.forEach((party: Party) => {
-                party.created = party.created != null ? moment(party.created) : null;
-                party.updated = party.updated != null ? moment(party.updated) : null;
+            res.body.forEach((group: Group) => {
+                group.created = group.created != null ? moment(group.created) : null;
+                group.updated = group.updated != null ? moment(group.updated) : null;
             });
         }
         return res;

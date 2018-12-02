@@ -32,8 +32,8 @@
                 <td>{{board.created | date:'medium'}}</td>
                 <td>{{board.updated | date:'medium'}}</td>
                 <td>
-                    <div *ngIf="board.party">
-                        <a [routerLink]="['../party', board.party?.id, 'view' ]" >{{board.party?.id}}</a>
+                    <div *ngIf="board.group">
+                        <a [routerLink]="['../party', board.group?.id, 'view' ]" >{{board.group?.id}}</a>
                     </div>
                 </td>
                 <td>

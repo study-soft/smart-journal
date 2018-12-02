@@ -1,17 +1,17 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-import { SmartjournalPartyModule } from './party/party.module';
 import { SmartjournalSubjectModule } from './subject/subject.module';
 import { SmartjournalStudentModule } from './student/student.module';
 import { SmartjournalDayModule } from './day/day.module';
 import { SmartjournalDayTypeModule } from './day-type/day-type.module';
 import { SmartjournalBoardModule } from './board/board.module';
+import { SmartjournalGroupModule } from 'app/entities/group/Group.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
     // prettier-ignore
     imports: [
-        SmartjournalPartyModule,
+        SmartjournalGroupModule,
         SmartjournalSubjectModule,
         SmartjournalStudentModule,
         SmartjournalDayModule,

@@ -8,8 +8,8 @@ import { JhiAlertService } from 'ng-jhipster';
 
 import { Subject } from 'app/shared/model/subject.model';
 import { SubjectService } from './subject.service';
-import { Party } from 'app/shared/model/party.model';
-import { PartyService } from 'app/entities/party';
+import { GroupService } from 'app/entities/group';
+import { Group } from 'app/shared/model/group.model';
 
 @Component({
     selector: 'jhi-subject-update',
@@ -19,14 +19,14 @@ export class SubjectUpdateComponent implements OnInit {
     subject: Subject;
     isSaving: boolean;
 
-    parties: Party[];
+    groups: Group[];
     created: string;
     updated: string;
 
     constructor(
         private jhiAlertService: JhiAlertService,
         private subjectService: SubjectService,
-        private partyService: PartyService,
+        private partyService: GroupService,
         private activatedRoute: ActivatedRoute
     ) {}
 
@@ -38,8 +38,8 @@ export class SubjectUpdateComponent implements OnInit {
             this.updated = this.subject.updated != null ? this.subject.updated.format(DATE_TIME_FORMAT) : null;
         });
         this.partyService.query().subscribe(
-            (res: HttpResponse<Party[]>) => {
-                this.parties = res.body;
+            (res: HttpResponse<Group[]>) => {
+                this.groups = res.body;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
@@ -77,7 +77,7 @@ export class SubjectUpdateComponent implements OnInit {
         this.jhiAlertService.error(errorMessage, null, null);
     }
 
-    trackPartyById(index: number, item: Party) {
+    trackPartyById(index: number, item: Group) {
         return item.id;
     }
 

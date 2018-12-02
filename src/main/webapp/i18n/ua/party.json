@@ -1,6 +1,6 @@
 {
     "smartjournalApp": {
-        "party": {
+        "group": {
             "home": {
                 "title": "Parties",
                 "createLabel": "Створити новий Party",

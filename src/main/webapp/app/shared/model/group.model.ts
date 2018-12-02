@@ -1,7 +1,7 @@
 import { Moment } from 'moment';
 import { Subject } from 'app/shared/model//subject.model';
 
-export class Party implements Party {
+export class Group {
     constructor(
         public id?: number,
         public name?: string,

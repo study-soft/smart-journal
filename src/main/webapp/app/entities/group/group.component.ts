@@ -3,21 +3,21 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
-import { Party } from 'app/shared/model/party.model';
 import { Principal } from 'app/core';
-import { PartyService } from './party.service';
+import { Group } from 'app/shared/model/group.model';
+import { GroupService } from 'app/entities/group/group.service';
 
 @Component({
     selector: 'jhi-party',
-    templateUrl: './party.component.html'
+    templateUrl: './group.component.html'
 })
-export class PartyComponent implements OnInit, OnDestroy {
-    parties: Party[];
+export class GroupComponent implements OnInit, OnDestroy {
+    groups: Group[];
     currentAccount: any;
     eventSubscriber: Subscription;
 
     constructor(
-        private partyService: PartyService,
+        private partyService: GroupService,
         private jhiAlertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private principal: Principal
@@ -25,8 +25,8 @@ export class PartyComponent implements OnInit, OnDestroy {
 
     loadAll() {
         this.partyService.query().subscribe(
-            (res: HttpResponse<Party[]>) => {
-                this.parties = res.body;
+            (res: HttpResponse<Group[]>) => {
+                this.groups = res.body;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
@@ -44,7 +44,7 @@ export class PartyComponent implements OnInit, OnDestroy {
         this.eventManager.destroy(this.eventSubscriber);
     }
 
-    trackId(index: number, item: Party) {
+    trackId(index: number, item: Group) {
         return item.id;
     }
 

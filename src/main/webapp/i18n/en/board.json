@@ -19,7 +19,7 @@
             "description": "Description",
             "createdDate": "Created",
             "updatedDate": "Updated",
-            "party": "Party",
+            "group": "Party",
             "subject": "Subject",
             "student": "Student",
             "dayType": "Day Type"

@@ -9,7 +9,7 @@ export const enum Type {
     TEST = 'TEST'
 }
 
-export class DayType implements DayType {
+export class DayType {
     constructor(
         public id?: number,
         public type?: Type,

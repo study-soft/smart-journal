@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * REST controller for managing Party.
+ * REST controller for managing Group.
  */
 @RestController
 @RequestMapping("/api")
@@ -26,7 +26,7 @@ public class PartyResource {
 
     private final Logger log = LoggerFactory.getLogger(PartyResource.class);
 
-    private static final String ENTITY_NAME = "party";
+    private static final String ENTITY_NAME = "group";
 
     private final PartyRepository partyRepository;
 
@@ -35,36 +35,36 @@ public class PartyResource {
     }
 
     /**
-     * POST  /parties : Create a new party.
+     * POST  /groups : Create a new group.
      *
-     * @param party the party to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new party, or with status 400 (Bad Request) if the party has already an ID
+     * @param party the group to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new group, or with status 400 (Bad Request) if the group has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/parties")
     public ResponseEntity<Party> createParty(@Valid @RequestBody Party party) throws URISyntaxException {
-        log.debug("REST request to save Party : {}", party);
+        log.debug("REST request to save Group : {}", party);
         if (party.getId() != null) {
-            throw new BadRequestAlertException("A new party cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("A new group cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Party result = partyRepository.save(party);
-        return ResponseEntity.created(new URI("/api/parties/" + result.getId()))
+        return ResponseEntity.created(new URI("/api/groups/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
     /**
-     * PUT  /parties : Updates an existing party.
+     * PUT  /groups : Updates an existing group.
      *
-     * @param party the party to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated party,
-     * or with status 400 (Bad Request) if the party is not valid,
-     * or with status 500 (Internal Server Error) if the party couldn't be updated
+     * @param party the group to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated group,
+     * or with status 400 (Bad Request) if the group is not valid,
+     * or with status 500 (Internal Server Error) if the group couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/parties")
     public ResponseEntity<Party> updateParty(@Valid @RequestBody Party party) throws URISyntaxException {
-        log.debug("REST request to update Party : {}", party);
+        log.debug("REST request to update Group : {}", party);
         if (party.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -75,10 +75,10 @@ public class PartyResource {
     }
 
     /**
-     * GET  /parties : get all the parties.
+     * GET  /groups : get all the groups.
      *
      * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many)
-     * @return the ResponseEntity with status 200 (OK) and the list of parties in body
+     * @return the ResponseEntity with status 200 (OK) and the list of groups in body
      */
     @GetMapping("/parties")
     public List<Party> getAllParties(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
@@ -87,27 +87,27 @@ public class PartyResource {
     }
 
     /**
-     * GET  /parties/:id : get the "id" party.
+     * GET  /groups/:id : get the "id" group.
      *
-     * @param id the id of the party to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the party, or with status 404 (Not Found)
+     * @param id the id of the group to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the group, or with status 404 (Not Found)
      */
     @GetMapping("/parties/{id}")
     public ResponseEntity<Party> getParty(@PathVariable Long id) {
-        log.debug("REST request to get Party : {}", id);
+        log.debug("REST request to get Group : {}", id);
         Optional<Party> party = partyRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(party);
     }
 
     /**
-     * DELETE  /parties/:id : delete the "id" party.
+     * DELETE  /groups/:id : delete the "id" group.
      *
-     * @param id the id of the party to delete
+     * @param id the id of the group to delete
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/parties/{id}")
     public ResponseEntity<Void> deleteParty(@PathVariable Long id) {
-        log.debug("REST request to delete Party : {}", id);
+        log.debug("REST request to delete Group : {}", id);
 
         partyRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

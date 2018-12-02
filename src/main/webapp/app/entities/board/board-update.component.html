@@ -62,9 +62,9 @@
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="smartjournalApp.board.party" for="field_party">Party</label>
-                    <select class="form-control" id="field_party" name="party" [(ngModel)]="board.party">
+                    <select class="form-control" id="field_party" name="party" [(ngModel)]="board.group">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="partyOption.id === board.party?.id ? board.party : partyOption" *ngFor="let partyOption of parties; trackBy: trackPartyById">{{partyOption.id}}</option>
+                        <option [ngValue]="partyOption.id === board.group?.id ? board.group : partyOption" *ngFor="let partyOption of groups; trackBy: trackGroupById">{{partyOption.id}}</option>
                     </select>
                 </div>
                 <div class="form-group">

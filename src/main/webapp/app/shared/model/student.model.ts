@@ -1,7 +1,7 @@
 import { Day } from 'app/shared/model//day.model';
 import { Board } from 'app/shared/model//board.model';
 
-export class Student implements Student {
+export class Student {
     constructor(
         public id?: number,
         public firstName?: string,

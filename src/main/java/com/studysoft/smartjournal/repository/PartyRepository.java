@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Spring Data  repository for the Party entity.
+ * Spring Data  repository for the Group entity.
  */
 @SuppressWarnings("unused")
 @Repository

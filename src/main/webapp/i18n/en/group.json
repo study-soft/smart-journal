@@ -1,0 +1,25 @@
+{
+    "smartjournalApp": {
+        "group": {
+            "home": {
+                "title": "Groups",
+                "createLabel": "Create a new Group",
+                "createOrEditLabel": "Create or edit a Group"
+            },
+            "created": "A new Group is created with identifier {{ param }}",
+            "updated": "A Group is updated with identifier {{ param }}",
+            "deleted": "A Group is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Group {{ id }}?"
+            },
+            "detail": {
+                "title": "Group"
+            },
+            "name": "Name",
+            "description": "Description",
+            "createdDate": "Created",
+            "updatedDate": "Updated",
+            "subject": "Subject"
+        }
+    }
+}

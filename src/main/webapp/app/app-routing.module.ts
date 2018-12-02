@@ -15,7 +15,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
                     loadChildren: './admin/admin.module#SmartjournalAdminModule'
                 }
             ],
-            { useHash: true, enableTracing: DEBUG_INFO_ENABLED }
+            {enableTracing: DEBUG_INFO_ENABLED }
         )
     ],
     exports: [RouterModule]

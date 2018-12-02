@@ -1,6 +1,6 @@
 ------------------------- TABLES -------------------------
 
--- party
+-- group
 DROP TABLE IF EXISTS party CASCADE;
 DROP SEQUENCE IF EXISTS party_id_seq CASCADE;
 CREATE TABLE party (
@@ -162,7 +162,7 @@ ALTER TABLE app_user_authority ADD CONSTRAINT fk_authority_name FOREIGN KEY (aut
 ALTER TABLE app_user_authority ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES app_user (id);
 
 ------------------------- INSERT DATA -------------------------
--- party
+-- group
 INSERT INTO party (name, description, created_by, created, updated_by, updated) VALUES
     ('Інформатики', 'Тестова група для перевірки роботи розумного журналу. Пишу багато символів в описі, щоб перевірити, як це буде виглядати на сторінці. Ліміт сиволів - 65535, тому в мене ще є великий запас. Бла-бла-бла...', 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP);
 
