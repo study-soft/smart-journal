@@ -22,15 +22,15 @@ import java.time.Instant;
  * A user.
  */
 @Entity
-@Table(name = "teacher")
+@Table(name = "app_user")
 
 public class User extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userSequence")
+    @SequenceGenerator(name = "userSequence", sequenceName = "app_user_id_seq", allocationSize = 1)
     private Long id;
 
     @NotNull
@@ -86,7 +86,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @JsonIgnore
     @ManyToMany
     @JoinTable(
-        name = "user_authority",
+        name = "app_user_authority",
         joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
         inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
 

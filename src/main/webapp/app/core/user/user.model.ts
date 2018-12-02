@@ -8,9 +8,9 @@ export interface IUser {
     langKey?: string;
     authorities?: any[];
     createdBy?: string;
-    createdDate?: Date;
-    lastModifiedBy?: string;
-    lastModifiedDate?: Date;
+    created?: Date;
+    updatedBy?: string;
+    updated?: Date;
     password?: string;
 }
 
@@ -25,9 +25,9 @@ export class User implements IUser {
         public langKey?: string,
         public authorities?: any[],
         public createdBy?: string,
-        public createdDate?: Date,
-        public lastModifiedBy?: string,
-        public lastModifiedDate?: Date,
+        public created?: Date,
+        public updatedBy?: string,
+        public updated?: Date,
         public password?: string
     ) {
         this.id = id ? id : null;
@@ -39,9 +39,9 @@ export class User implements IUser {
         this.langKey = langKey ? langKey : null;
         this.authorities = authorities ? authorities : null;
         this.createdBy = createdBy ? createdBy : null;
-        this.createdDate = createdDate ? createdDate : null;
-        this.lastModifiedBy = lastModifiedBy ? lastModifiedBy : null;
-        this.lastModifiedDate = lastModifiedDate ? lastModifiedDate : null;
+        this.created = created ? created : null;
+        this.updatedBy = updatedBy ? updatedBy : null;
+        this.updated = updated ? updated : null;
         this.password = password ? password : null;
     }
 }

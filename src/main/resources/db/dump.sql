@@ -8,9 +8,9 @@ CREATE TABLE party (
     name VARCHAR(255) UNIQUE NOT NULL,
     description VARCHAR(65535),
     created_by VARCHAR(50) NOT NULL,
-    created_date TIMESTAMP,
-    last_modified_by VARCHAR(50),
-    last_modified_date TIMESTAMP
+    created TIMESTAMP,
+    updated_by VARCHAR(50),
+    updated TIMESTAMP
 );
 
 -- subject
@@ -21,9 +21,9 @@ CREATE TABLE subject (
     name VARCHAR(255) UNIQUE NOT NULL,
     description VARCHAR(65535),
     created_by VARCHAR(50) NOT NULL,
-    created_date TIMESTAMP,
-    last_modified_by VARCHAR(50),
-    last_modified_date TIMESTAMP
+    created TIMESTAMP,
+    updated_by VARCHAR(50),
+    updated TIMESTAMP
 );
 
 -- party_subject
@@ -41,9 +41,9 @@ CREATE TABLE board (
     name VARCHAR(255) UNIQUE NOT NULL,
     description VARCHAR(65535),
     created_by VARCHAR(50) NOT NULL,
-    created_date TIMESTAMP,
-    last_modified_by VARCHAR(50),
-    last_modified_date TIMESTAMP,
+    created TIMESTAMP,
+    updated_by VARCHAR(50),
+    updated TIMESTAMP,
     party_id BIGINT NOT NULL,
     subject_id BIGINT NOT NULL
 );
@@ -58,9 +58,9 @@ CREATE TABLE day_type (
     description VARCHAR(65535),
     expiry INT,
     created_by VARCHAR(50) NOT NULL,
-    created_date TIMESTAMP,
-    last_modified_by VARCHAR(50),
-    last_modified_date TIMESTAMP,
+    created TIMESTAMP,
+    updated_by VARCHAR(50),
+    updated TIMESTAMP,
     board_id BIGINT NOT NULL
 );
 
@@ -92,10 +92,10 @@ CREATE TABLE authority (
     name VARCHAR(50) PRIMARY KEY
 );
 
--- teacher
-DROP TABLE IF EXISTS teacher CASCADE;
-DROP SEQUENCE IF EXISTS teacher_id_seq CASCADE;
-CREATE TABLE teacher (
+-- app_user
+DROP TABLE IF EXISTS app_user CASCADE;
+DROP SEQUENCE IF EXISTS app_user_id_seq CASCADE;
+CREATE TABLE app_user (
     id BIGSERIAL PRIMARY KEY,
     login VARCHAR(50) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
@@ -108,21 +108,18 @@ CREATE TABLE teacher (
     activation_key VARCHAR(20),
     reset_key VARCHAR(20),
     created_by VARCHAR(50) NOT NULL,
-    created_date TIMESTAMP,
+    created TIMESTAMP,
     reset_date TIMESTAMP,
-    last_modified_by VARCHAR(50),
-    last_modified_date TIMESTAMP
+    updated_by VARCHAR(50),
+    updated TIMESTAMP
 );
 
--- user_authority
-DROP TABLE IF EXISTS user_authority CASCADE;
-CREATE TABLE user_authority (
+-- app_user_authority
+DROP TABLE IF EXISTS app_user_authority CASCADE;
+CREATE TABLE app_user_authority (
     user_id BIGINT NOT NULL,
     authority_name VARCHAR(50) NOT NULL
 );
-
-DROP SEQUENCE IF EXISTS hibernate_sequence CASCADE;
-CREATE SEQUENCE hibernate_sequence;
 
 ------------------------- INDICES -------------------------
 
@@ -138,12 +135,12 @@ CREATE UNIQUE INDEX pk_day ON day (id ASC);
 CREATE INDEX ux_day_day_type_id ON day (day_type_id ASC);
 
 CREATE UNIQUE INDEX pk_authority ON authority (name ASC);
-CREATE UNIQUE INDEX pk_teacher ON teacher (id ASC);
-CREATE UNIQUE INDEX ux_teacher_email ON teacher (email ASC);
-CREATE UNIQUE INDEX ux_teacher_login ON teacher (login ASC);
-CREATE UNIQUE INDEX pk_teacher_authority ON user_authority (user_id ASC, authority_name ASC);
+CREATE UNIQUE INDEX pk_app_user ON app_user (id ASC);
+CREATE UNIQUE INDEX ux_app_user_email ON app_user (email ASC);
+CREATE UNIQUE INDEX ux_app_user_login ON app_user (login ASC);
+CREATE UNIQUE INDEX pk_app_user_authority ON app_user_authority (user_id ASC, authority_name ASC);
 
-------------------------- KEYS -------------------------
+------------------------- CONSTRAINTS -------------------------
 
 -- board
 ALTER TABLE board ADD CONSTRAINT fk_board_party_id FOREIGN KEY (party_id) REFERENCES party (id);
@@ -159,18 +156,18 @@ ALTER TABLE student ADD CONSTRAINT fk_student_board_id FOREIGN KEY (board_id) RE
 ALTER TABLE day ADD CONSTRAINT fk_day_day_type_id FOREIGN KEY (day_type_id) REFERENCES day_type (id);
 ALTER TABLE day ADD CONSTRAINT fk_day_student_id FOREIGN KEY (student_id) REFERENCES student (id);
 
--- user_authority
-ALTER TABLE user_authority ADD CONSTRAINT pkey_user_authority PRIMARY KEY (user_id, authority_name);
-ALTER TABLE user_authority ADD CONSTRAINT fk_authority_name FOREIGN KEY (authority_name) REFERENCES authority (name);
-ALTER TABLE user_authority ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES "user" (id);
+-- app_user_authority
+ALTER TABLE app_user_authority ADD CONSTRAINT pkey_app_user_authority PRIMARY KEY (user_id, authority_name);
+ALTER TABLE app_user_authority ADD CONSTRAINT fk_authority_name FOREIGN KEY (authority_name) REFERENCES authority (name);
+ALTER TABLE app_user_authority ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES app_user (id);
 
 ------------------------- INSERT DATA -------------------------
 -- party
-INSERT INTO party (name, description, created_by, created_date, last_modified_by, last_modified_date) VALUES
+INSERT INTO party (name, description, created_by, created, updated_by, updated) VALUES
     ('Інформатики', 'Тестова група для перевірки роботи розумного журналу. Пишу багато символів в описі, щоб перевірити, як це буде виглядати на сторінці. Ліміт сиволів - 65535, тому в мене ще є великий запас. Бла-бла-бла...', 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP);
 
 -- subject
-INSERT INTO subject (name, description, created_by, created_date, last_modified_by, last_modified_date) VALUES
+INSERT INTO subject (name, description, created_by, created, updated_by, updated) VALUES
     ('Комп’ютерні мережі', NULL, 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP);
 
 -- party_subject
@@ -178,11 +175,11 @@ INSERT INTO party_subject (subjects_id, parties_id) VALUES
     (1, 1);
 
 -- board
-INSERT INTO board (name, description, created_by, created_date, last_modified_by, last_modified_date, party_id, subject_id) VALUES
+INSERT INTO board (name, description, created_by, created, updated_by, updated, party_id, subject_id) VALUES
     ('Інформатики. Комп’ютерні мережі', '', 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1, 1);
 
 -- day_type
-INSERT INTO day_type (type, score, description, expiry, created_by, created_date, last_modified_by, last_modified_date, board_id) VALUES
+INSERT INTO day_type (type, score, description, expiry, created_by, created, updated_by, updated, board_id) VALUES
     ('SIMPLE', 1.0, 'Звичайна пара', NULL, 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1),
     ('LAB', 5.0, 'Лабараторна робота', 3, 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1),
     ('MODULE', 10.0, 'Модуль', NULL, 'system', CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 1),
@@ -227,14 +224,13 @@ INSERT INTO day (date, result, student_id, day_type_id) VALUES
 INSERT INTO authority (name) VALUES
     ('ROLE_ADMIN'), ('ROLE_USER');
 
--- teacher
-INSERT INTO teacher (login, password_hash, first_name, last_name, email, image_url, activated, lang_key, activation_key, reset_key, created_by, created_date, reset_date, last_modified_by, last_modified_date) VALUES
+-- app_user
+INSERT INTO app_user (login, password_hash, first_name, last_name, email, image_url, activated, lang_key, activation_key, reset_key, created_by, created, reset_date, updated_by, updated) VALUES
     ('system', '$2a$10$mE.qmcV0mFU5NcKh73TZx.z4ueI/.bDWbj0T1BYyqP481kGGarKLG', 'System', 'System', 'system@localhost', '', TRUE, 'ua', NULL, NULL, 'system', NULL, NULL, 'system', NULL),
     ('anonymoususer', '$2a$10$j8S5d7Sr7.8VTOYNviDPOeWX8KcYILUVJBsYV83Y5NtECayypx9lO', 'Anonymous', 'System', 'anonymous@localhost', '', TRUE, 'ua', NULL, NULL, 'system', NULL, NULL, 'system', NULL),
     ('admin', '$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC', 'System', 'Administrator', 'admin@localhost', '', TRUE, 'ua', NULL, NULL, 'system', NULL, NULL, 'system', NULL),
     ('user', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'System', 'User', 'user@localhost', '', TRUE, 'ua', NULL, NULL, 'system', NULL, NULL, 'system', NULL);
 
--- user_authority
-INSERT INTO user_authority (user_id, authority_name) VALUES
+-- app_user_authority
+INSERT INTO app_user_authority (user_id, authority_name) VALUES
     (1, 'ROLE_ADMIN'), (1, 'ROLE_USER'), (3, 'ROLE_ADMIN'), (3, 'ROLE_USER'), (4, 'ROLE_USER');
-

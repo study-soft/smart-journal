@@ -23,8 +23,8 @@
         "profiles": "Profiles",
         "langKey": "Language",
         "createdBy": "Created by",
-        "createdDate": "Created date",
-        "lastModifiedBy": "Modified by",
-        "lastModifiedDate": "Modified date"
+        "created": "Created date",
+        "updatedBy": "Modified by",
+        "updated": "Modified date"
     }
 }

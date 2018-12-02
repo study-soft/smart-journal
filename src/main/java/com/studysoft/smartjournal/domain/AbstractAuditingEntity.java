@@ -31,19 +31,19 @@ public abstract class AbstractAuditingEntity implements Serializable {
     private String createdBy;
 
     @CreatedDate
-    @Column(name = "created_date", updatable = false)
+    @Column(name = "created", updatable = false)
     @JsonIgnore
-    private Instant createdDate = Instant.now();
+    private Instant created = Instant.now();
 
     @LastModifiedBy
-    @Column(name = "last_modified_by", length = 50)
+    @Column(name = "updated_by", length = 50)
     @JsonIgnore
-    private String lastModifiedBy;
+    private String updatedBy;
 
     @LastModifiedDate
-    @Column(name = "last_modified_date")
+    @Column(name = "updated")
     @JsonIgnore
-    private Instant lastModifiedDate = Instant.now();
+    private Instant updated = Instant.now();
 
     public String getCreatedBy() {
         return createdBy;
@@ -54,26 +54,26 @@ public abstract class AbstractAuditingEntity implements Serializable {
     }
 
     public Instant getCreatedDate() {
-        return createdDate;
+        return created;
     }
 
     public void setCreatedDate(Instant createdDate) {
-        this.createdDate = createdDate;
+        this.created = createdDate;
     }
 
     public String getLastModifiedBy() {
-        return lastModifiedBy;
+        return updatedBy;
     }
 
     public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
+        this.updatedBy = lastModifiedBy;
     }
 
     public Instant getLastModifiedDate() {
-        return lastModifiedDate;
+        return updated;
     }
 
     public void setLastModifiedDate(Instant lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
+        this.updated = lastModifiedDate;
     }
 }

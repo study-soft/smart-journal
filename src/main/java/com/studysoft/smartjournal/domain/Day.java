@@ -20,8 +20,8 @@ public class Day implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "daySequence")
+    @SequenceGenerator(name = "daySequence", sequenceName = "day_id_seq", allocationSize = 1)
     private Long id;
 
     @NotNull
