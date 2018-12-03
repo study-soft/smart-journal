@@ -28,6 +28,9 @@ public class Board extends AbstractAuditingEntity implements Serializable {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "total_score")
+    private Double totalScore;
+
     @OneToOne    @JoinColumn(unique = true)
     private Group group;
 
@@ -71,6 +74,19 @@ public class Board extends AbstractAuditingEntity implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Double getTotalScore() {
+        return totalScore;
+    }
+
+    public Board totalScore(Double totalScore) {
+        this.totalScore = totalScore;
+        return this;
+    }
+
+    public void setTotalScore(Double totalScore) {
+        this.totalScore = totalScore;
     }
 
     public Group getGroup() {
@@ -172,10 +188,14 @@ public class Board extends AbstractAuditingEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "Board{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", description='" + getDescription() + "'" +
-            "}";
+        StringBuilder sb = new StringBuilder(getClass() + "{");
+        sb.append("id='").append(id).append("'");
+        sb.append(", name='").append(name).append("'");
+        sb.append(", description='").append(description).append("'");
+        sb.append(", totalScore='").append(totalScore).append("'");
+        sb.append(", groupId='").append(group.getId()).append("'");
+        sb.append(", subjectId='").append(subject.getId()).append("'");
+        sb.append("}");
+        return sb.toString();
     }
 }

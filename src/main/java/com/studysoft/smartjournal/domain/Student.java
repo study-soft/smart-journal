@@ -165,12 +165,14 @@ public class Student implements Serializable {
 
     @Override
     public String toString() {
-        return "Student{" +
-            "id=" + getId() +
-            ", firstName='" + getFirstName() + "'" +
-            ", lastName='" + getLastName() + "'" +
-            ", middleName='" + getMiddleName() + "'" +
-            ", rating=" + getRating() +
-            "}";
+        StringBuilder sb = new StringBuilder(getClass() + "{");
+        sb.append("id='").append(id).append("'");
+        sb.append(", firstName='").append(firstName).append("'");
+        sb.append(", lastName='").append(lastName).append("'");
+        sb.append(", middleName='").append(middleName).append("'");
+        sb.append(", rating='").append(rating).append("'");
+        sb.append(", boardId='").append(board.getId()).append("'");
+        sb.append("}");
+        return sb.toString();
     }
 }

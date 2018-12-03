@@ -115,10 +115,11 @@ public class Group implements Serializable {
 
     @Override
     public String toString() {
-        return "Group{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", description='" + getDescription() + "'" +
-            "}";
+        StringBuilder sb = new StringBuilder(getClass() + "{");
+        sb.append("id='").append(id).append("'");
+        sb.append(", name='").append(name).append("'");
+        sb.append(", description='").append(description).append("'");
+        sb.append("}");
+        return sb.toString();
     }
 }

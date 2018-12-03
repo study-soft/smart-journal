@@ -218,15 +218,17 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" +
-            "login='" + login + '\'' +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", email='" + email + '\'' +
-            ", imageUrl='" + imageUrl + '\'' +
-            ", activated='" + activated + '\'' +
-            ", langKey='" + langKey + '\'' +
-            ", activationKey='" + activationKey + '\'' +
-            "}";
+        StringBuilder sb = new StringBuilder(getClass() + "{");
+        sb.append("id='").append(id).append("'");
+        sb.append(", login='").append(login).append("'");
+        sb.append(", firstName='").append(firstName).append("'");
+        sb.append(", lastName='").append(lastName).append("'");
+        sb.append(", email='").append(email).append("'");
+        sb.append(", imageUrl='").append(imageUrl).append("'");
+        sb.append(", activated='").append(activated).append("'");
+        sb.append(", langKey='").append(langKey).append("'");
+        sb.append(", activationKey='").append(activationKey).append("'");
+        sb.append("}");
+        return sb.toString();
     }
 }

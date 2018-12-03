@@ -40,6 +40,7 @@ CREATE TABLE boards (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) UNIQUE NOT NULL,
     description VARCHAR(65535),
+    total_score DOUBLE PRECISION,
     created_by VARCHAR(50) NOT NULL,
     created TIMESTAMP,
     updated_by VARCHAR(50),
@@ -197,11 +198,11 @@ INSERT INTO groups_subjects (groups_id, subjects_id) VALUES
     (1, 1), (1, 2), (2, 1), (3, 1);
 
 -- boards
-INSERT INTO boards (name, description, created_by, created, updated_by, updated, group_id, subject_id, user_id) VALUES
-    ('Інформатики-4. Комп’ютерні мережі', '', 'system', CURRENT_TIMESTAMP, NULL, NULL, 1, 1, 3),
-    ('Інформатики-4. Системне програмування', NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL, 1, 2, 3),
-    ('Прикладна математика-3. Комп’ютерні мережі', 'Згенерований журнал для групи "Прикладна математика-3" і предмету "Комп’ютерні мережі"', 'system', CURRENT_TIMESTAMP, NULL, NULL, 2, 1, 3),
-    ('Прикладна математика-4. Комп’ютерні мережі', 'Останній семестр для групи "Прикладна математика-4" з дисципліни "Комп’ютерні мережі"', 'system', CURRENT_TIMESTAMP, NULL, NULL, 3, 1, 3);
+INSERT INTO boards (name, description, total_score, created_by, created, updated_by, updated, group_id, subject_id, user_id) VALUES
+    ('Інформатики-4. Комп’ютерні мережі', '', 100.0, 'system', CURRENT_TIMESTAMP, NULL, NULL, 1, 1, 3),
+    ('Інформатики-4. Системне програмування', NULL, 100.0, 'system', CURRENT_TIMESTAMP, NULL, NULL, 1, 2, 3),
+    ('Прикладна математика-3. Комп’ютерні мережі', 'Згенерований журнал для групи "Прикладна математика-3" і предмету "Комп’ютерні мережі"', 1000.0, 'system', CURRENT_TIMESTAMP, NULL, NULL, 2, 1, 3),
+    ('Прикладна математика-4. Комп’ютерні мережі', 'Останній семестр для групи "Прикладна математика-4" з дисципліни "Комп’ютерні мережі"', NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL, 3, 1, 3);
 
 -- day_types
 INSERT INTO day_types (type, score, description, expiry, created_by, created, updated_by, updated, board_id) VALUES
@@ -209,7 +210,16 @@ INSERT INTO day_types (type, score, description, expiry, created_by, created, up
     ('LAB', 5.0, 'Лабараторна робота', 3, 'system', CURRENT_TIMESTAMP, NULL, NULL, 1),
     ('MODULE', 10.0, 'Модуль', NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL, 1),
     ('EXAM', 20.0, 'Екзамен', NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL, 1),
-    ('TEST', 3.0, NULL, NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL, 1);
+    ('TEST', 3.0, NULL, NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL, 1),
+    ('SIMPLE', 1.5, 'Звичайна пара, відвідування якої оцінюється', NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL, 2),
+    ('LAB', 8.0, 'Лабараторна робота №1. Багатопоточність в прикладних системах', 5, 'system', CURRENT_TIMESTAMP, NULL, NULL, 2),
+    ('LAB', 5.0, 'Лабараторна робота №2. Задача про обідаючих філософів', 5, 'system', CURRENT_TIMESTAMP, NULL, NULL, 2),
+    ('LAB', 5.0, 'Лабараторна робота №3. XML-парсер', 5, 'system', CURRENT_TIMESTAMP, NULL, NULL, 2),
+    ('LAB', 7.0, 'Лабараторна робота №4. Імітатор шедулера операційної системи', 5, 'system', CURRENT_TIMESTAMP, NULL, NULL, 2),
+    ('LAB', 10.0, 'Лабараторна робота №5. Генетичні алгоритми', 5, 'system', CURRENT_TIMESTAMP, NULL, NULL, 2),
+    ('MODULE', 15.0, 'Підсумковий модуль №1. Багатопоточність', 5, 'system', CURRENT_TIMESTAMP, NULL, NULL, 2),
+    ('MODULE', 15.0, 'Підсумковий модуль №2. Прикладні програми в системному програмуванні', NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL, 2),
+    ('EXAM', 20.0, 'Семестровий екзамен', NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL, 2);
 
 -- students
 INSERT INTO students (first_name, last_name, middle_name, rating, board_id) VALUES

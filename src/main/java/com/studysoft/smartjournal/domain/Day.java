@@ -122,10 +122,13 @@ public class Day implements Serializable {
 
     @Override
     public String toString() {
-        return "Day{" +
-            "id=" + getId() +
-            ", date='" + getDate() + "'" +
-            ", result=" + getResult() +
-            "}";
+        StringBuilder sb = new StringBuilder(getClass() + "{");
+        sb.append("id='").append(id).append("'");
+        sb.append(", date='").append(date).append("'");
+        sb.append(", result='").append(result).append("'");
+        sb.append(", studentId='").append(student.getId()).append("'");
+        sb.append(", dayTypeId='").append(dayType.getId()).append("'");
+        sb.append("}");
+        return sb.toString();
     }
 }

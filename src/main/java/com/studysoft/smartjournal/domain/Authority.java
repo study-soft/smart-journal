@@ -52,8 +52,9 @@ public class Authority implements Serializable {
 
     @Override
     public String toString() {
-        return "Authority{" +
-            "name='" + name + '\'' +
-            "}";
+        StringBuilder sb = new StringBuilder(getClass() + "{");
+        sb.append("name='").append(name).append("'");
+        sb.append("}");
+        return sb.toString();
     }
 }
