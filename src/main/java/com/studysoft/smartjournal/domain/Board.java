@@ -1,5 +1,8 @@
 package com.studysoft.smartjournal.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -32,15 +35,23 @@ public class Board extends AbstractAuditingEntity implements Serializable {
     private Double totalScore;
 
     @OneToOne    @JoinColumn(unique = true)
+    @JsonIgnoreProperties({"createdBy", "created", "updatedBy", "updated"})
     private Group group;
 
     @OneToOne    @JoinColumn(unique = true)
+    @JsonIgnoreProperties({"createdBy", "created", "updatedBy", "updated"})
     private Subject subject;
 
-    @OneToMany(mappedBy = "board")
-    private Set<Student> students = new HashSet<>();
-    @OneToMany(mappedBy = "board")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private User user;
+
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
     private Set<DayType> dayTypes = new HashSet<>();
+
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
+    private Set<Student> students = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -115,6 +126,19 @@ public class Board extends AbstractAuditingEntity implements Serializable {
         this.subject = subject;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public Board user(User user) {
+        this.user = user;
+        return this;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Set<Student> getStudents() {
         return students;
     }
@@ -164,6 +188,7 @@ public class Board extends AbstractAuditingEntity implements Serializable {
     public void setDayTypes(Set<DayType> dayTypes) {
         this.dayTypes = dayTypes;
     }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -195,6 +220,7 @@ public class Board extends AbstractAuditingEntity implements Serializable {
         sb.append(", totalScore='").append(totalScore).append("'");
         sb.append(", groupId='").append(group.getId()).append("'");
         sb.append(", subjectId='").append(subject.getId()).append("'");
+        sb.append(", userId='").append(user.getId()).append("'");
         sb.append("}");
         return sb.toString();
     }

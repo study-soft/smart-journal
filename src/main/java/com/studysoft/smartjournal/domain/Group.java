@@ -13,7 +13,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "_groups")
-public class Group implements Serializable {
+public class Group extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

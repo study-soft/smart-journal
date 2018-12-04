@@ -1,5 +1,6 @@
 package com.studysoft.smartjournal.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -37,10 +38,11 @@ public class Student implements Serializable {
     @Column(name = "rating")
     private Double rating;
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER)
     private Set<Day> days = new HashSet<>();
-    @ManyToOne
-    @JsonIgnoreProperties("students")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Board board;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

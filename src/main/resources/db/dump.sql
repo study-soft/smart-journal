@@ -131,7 +131,7 @@ CREATE UNIQUE INDEX pk_groups_subjects ON groups_subjects (subjects_id ASC, grou
 CREATE UNIQUE INDEX pk_boards ON boards (id ASC);
 CREATE INDEX ux_boards_groups_id ON boards (group_id ASC);
 CREATE INDEX ux_boards_subjects_id ON boards (subject_id ASC);
-CREATE INDEX ux_boards_teachers_id ON boards (user_id ASC);
+CREATE INDEX ux_boards_users_id ON boards (user_id ASC);
 CREATE UNIQUE INDEX pk_day_types ON day_types (id ASC);
 CREATE UNIQUE INDEX pk_students ON students (id ASC);
 CREATE UNIQUE INDEX pk_days ON days (id ASC);

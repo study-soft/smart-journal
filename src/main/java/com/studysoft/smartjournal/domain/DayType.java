@@ -1,5 +1,6 @@
 package com.studysoft.smartjournal.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -40,8 +41,8 @@ public class DayType extends AbstractAuditingEntity implements Serializable {
     @Column(name = "expiry")
     private Integer expiry;
 
-    @ManyToOne
-    @JsonIgnoreProperties("dayTypes")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Board board;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
