@@ -20,11 +20,15 @@ public interface SubjectRepository extends JpaRepository<Subject, Long> {
 
     @Query(value = "select distinct subject from Subject subject left join fetch subject.groups",
         countQuery = "select count(distinct subject) from Subject subject")
-    Page<Subject> findAllWithEagerRelationships(Pageable pageable);
+    Page<Subject> findAllEager(Pageable pageable);
 
     @Query(value = "select distinct subject from Subject subject left join fetch subject.groups")
-    List<Subject> findAllWithEagerRelationships();
+    List<Subject> findAllEager();
 
     @Query("select subject from Subject subject left join fetch subject.groups where subject.id =:id")
-    Optional<Subject> findOneWithEagerRelationships(@Param("id") Long id);
+    Optional<Subject> findOneEager(@Param("id") Long id);
+
+    @Query("select distinct subject from Subject subject left join fetch subject.groups " +
+        "where subject.user.login = ?#{principal.username}")
+    List<Subject> findAllByUserIsCurrentUserEager();
 }

@@ -52,7 +52,6 @@ public class Board extends AbstractAuditingEntity implements Serializable {
     @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
     private Set<Student> students = new HashSet<>();
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -188,8 +187,6 @@ public class Board extends AbstractAuditingEntity implements Serializable {
     public void setDayTypes(Set<DayType> dayTypes) {
         this.dayTypes = dayTypes;
     }
-
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {

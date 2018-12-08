@@ -16,14 +16,19 @@ import java.util.Optional;
 @Repository
 public interface GroupRepository extends JpaRepository<Group, Long> {
 
-    @Query(value = "select distinct party from Group party left join fetch party.subjects",
-        countQuery = "select count(distinct party) from Group party")
-    Page<Group> findAllWithEagerRelationships(Pageable pageable);
+    @Query(value = "select distinct _group from Group _group left join fetch _group.subjects",
+        countQuery = "select count(distinct _group) from Group _group")
+    Page<Group> findAllEager(Pageable pageable);
 
-    @Query(value = "select distinct party from Group party left join fetch party.subjects")
-    List<Group> findAllWithEagerRelationships();
+    @Query(value = "select distinct _group from Group _group left join fetch _group.subjects")
+    List<Group> findAllEager();
 
-    @Query("select party from Group party left join fetch party.subjects where party.id =:id")
-    Optional<Group> findOneWithEagerRelationships(@Param("id") Long id);
+    @Query("select _group from Group _group left join fetch _group.subjects " +
+        "where _group.id =:id")
+    Optional<Group> findOneEager(@Param("id") Long id);
+
+    @Query("select distinct _group from Group _group left join fetch _group.subjects " +
+        "where _group.user.login = ?#{principal.username}")
+    List<Group> findAllByUserIsCurrentUserEager();
 
 }

@@ -2,11 +2,13 @@ package com.studysoft.smartjournal.web.rest;
 
 import com.studysoft.smartjournal.domain.Board;
 import com.studysoft.smartjournal.repository.BoardRepository;
+import com.studysoft.smartjournal.security.SecurityUtils;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
 import com.studysoft.smartjournal.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -79,10 +81,11 @@ public class BoardResource {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of boards in body
      */
+    // TODO: Get only boards info
     @GetMapping("/boards")
     public List<Board> getAllBoards() {
         log.debug("REST request to get all Boards");
-        return boardRepository.findAll();
+        return boardRepository.findAllByUserIsCurrentUser();
     }
 
     /**
@@ -95,6 +98,11 @@ public class BoardResource {
     public ResponseEntity<Board> getBoard(@PathVariable Long id) {
         log.debug("REST request to get Board : {}", id);
         Optional<Board> board = boardRepository.findById(id);
+        if (board.isPresent() && board.get().getUser() != null &&
+            !board.get().getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
+            // TODO: throw accessDeniedException
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new Board());
+        }
         return ResponseUtil.wrapOrNotFound(board);
     }
 

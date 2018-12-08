@@ -1,5 +1,7 @@
 package com.studysoft.smartjournal.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -28,13 +30,16 @@ public class Subject extends AbstractAuditingEntity implements Serializable {
     @Column(name = "description")
     private String description;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private User user;
+
     @ManyToMany
     @JoinTable(name = "groups_subjects",
         joinColumns = @JoinColumn(name = "subjects_id", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "groups_id", referencedColumnName = "id"))
     private Set<Group> groups = new HashSet<>();
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -69,6 +74,19 @@ public class Subject extends AbstractAuditingEntity implements Serializable {
         this.description = description;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public Subject user(User user) {
+        this.user = user;
+        return this;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Set<Group> getGroups() {
         return groups;
     }
@@ -93,7 +111,6 @@ public class Subject extends AbstractAuditingEntity implements Serializable {
     public void setGroups(Set<Group> parties) {
         this.groups = parties;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {

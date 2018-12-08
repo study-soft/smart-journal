@@ -2,18 +2,19 @@ package com.studysoft.smartjournal.web.rest;
 
 import com.studysoft.smartjournal.domain.Group;
 import com.studysoft.smartjournal.repository.GroupRepository;
+import com.studysoft.smartjournal.security.SecurityUtils;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
 import com.studysoft.smartjournal.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +43,7 @@ public class GroupResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/groups")
-    public ResponseEntity<Group> creategroup(@Valid @RequestBody Group group) throws URISyntaxException {
+    public ResponseEntity<Group> createGroup(@Valid @RequestBody Group group) throws URISyntaxException {
         log.debug("REST request to save group : {}", group);
         if (group.getId() != null) {
             throw new BadRequestAlertException("A new group cannot already have an ID", ENTITY_NAME, "idexists");
@@ -63,7 +64,7 @@ public class GroupResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/groups")
-    public ResponseEntity<Group> updategroup(@Valid @RequestBody Group group) throws URISyntaxException {
+    public ResponseEntity<Group> updateGroup(@Valid @RequestBody Group group) throws URISyntaxException {
         log.debug("REST request to update group : {}", group);
         if (group.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -77,13 +78,12 @@ public class GroupResource {
     /**
      * GET  /groups : get all the parties.
      *
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many)
      * @return the ResponseEntity with status 200 (OK) and the list of parties in body
      */
     @GetMapping("/groups")
-    public List<Group> getAllParties(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
+    public List<Group> getAllGroups() {
         log.debug("REST request to get all Parties");
-        return groupRepository.findAllWithEagerRelationships();
+        return groupRepository.findAllByUserIsCurrentUserEager();
     }
 
     /**
@@ -93,9 +93,14 @@ public class GroupResource {
      * @return the ResponseEntity with status 200 (OK) and with body the group, or with status 404 (Not Found)
      */
     @GetMapping("/groups/{id}")
-    public ResponseEntity<Group> getgroup(@PathVariable Long id) {
+    public ResponseEntity<Group> getGroup(@PathVariable Long id) {
         log.debug("REST request to get group : {}", id);
-        Optional<Group> group = groupRepository.findOneWithEagerRelationships(id);
+        Optional<Group> group = groupRepository.findOneEager(id);
+        if (group.isPresent() && group.get().getUser() != null &&
+            !group.get().getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
+            // TODO: throw accessDeniedException
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new Group());
+        }
         return ResponseUtil.wrapOrNotFound(group);
     }
 
@@ -106,7 +111,7 @@ public class GroupResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/groups/{id}")
-    public ResponseEntity<Void> deletegroup(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteGroup(@PathVariable Long id) {
         log.debug("REST request to delete group : {}", id);
 
         groupRepository.deleteById(id);

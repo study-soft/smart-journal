@@ -86,6 +86,12 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Board> boards = new HashSet<>();
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private Set<Group> groups = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private Set<Subject> subjects = new HashSet<>();
+
     @JsonIgnore
     @ManyToMany
     @JoinTable(
@@ -224,6 +230,56 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setBoards(Set<Board> boards) {
         this.boards = boards;
+    }
+
+    public Set<Group> getGroups() {
+        return groups;
+    }
+
+    public User groups(Set<Group> groups) {
+        this.groups = groups;
+        return this;
+    }
+
+    public User addGroup(Group group) {
+        this.groups.add(group);
+        group.setUser(this);
+        return this;
+    }
+
+    public User removeGroup(Group group) {
+        this.groups.remove(group);
+        group.setUser(null);
+        return this;
+    }
+
+    public void setGroups(Set<Group> groups) {
+        this.groups = groups;
+    }
+
+    public Set<Subject> getSubjects() {
+        return subjects;
+    }
+
+    public User subjects(Set<Subject> subjects) {
+        this.subjects = subjects;
+        return this;
+    }
+
+    public User addSubject(Subject subject) {
+        this.subjects.add(subject);
+        subject.setUser(this);
+        return this;
+    }
+
+    public User removeSubject(Subject subject) {
+        this.subjects.remove(subject);
+        subject.setUser(null);
+        return this;
+    }
+
+    public void setSubjects(Set<Subject> subjects) {
+        this.subjects = subjects;
     }
 
     @Override

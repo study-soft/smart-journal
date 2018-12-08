@@ -37,7 +37,8 @@ spring:
                 cache.use_second_level_cache: false
                 cache.use_query_cache: false
                 generate_statistics: true
-                format_sql: true
+                enable_lazy_load_no_trans: true
+#                format_sql: true
     liquibase:
         contexts: dev
     mail:

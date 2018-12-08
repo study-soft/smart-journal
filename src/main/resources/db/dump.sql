@@ -10,7 +10,8 @@ CREATE TABLE _groups (
     created_by VARCHAR(50) NOT NULL,
     created TIMESTAMP,
     updated_by VARCHAR(50),
-    updated TIMESTAMP
+    updated TIMESTAMP,
+    user_id BIGINT NOT NULL
 );
 
 -- subjects
@@ -23,7 +24,8 @@ CREATE TABLE subjects (
     created_by VARCHAR(50) NOT NULL,
     created TIMESTAMP,
     updated_by VARCHAR(50),
-    updated TIMESTAMP
+    updated TIMESTAMP,
+    user_id BIGINT NOT NULL
 );
 
 -- groups_subjects
@@ -125,25 +127,51 @@ CREATE TABLE users_authorities (
 
 ------------------------- INDICES -------------------------
 
+-- _groups
 CREATE UNIQUE INDEX pk_groups ON _groups (id ASC);
+CREATE INDEX ux_groups_users_id ON _groups (user_id ASC);
+
+-- subjects
 CREATE UNIQUE INDEX pk_subjects ON subjects (id ASC);
+CREATE INDEX ux_subjects_users_id ON subjects (user_id ASC);
+
+-- groups_subjects
 CREATE UNIQUE INDEX pk_groups_subjects ON groups_subjects (subjects_id ASC, groups_id ASC);
+
+-- boards
 CREATE UNIQUE INDEX pk_boards ON boards (id ASC);
 CREATE INDEX ux_boards_groups_id ON boards (group_id ASC);
 CREATE INDEX ux_boards_subjects_id ON boards (subject_id ASC);
 CREATE INDEX ux_boards_users_id ON boards (user_id ASC);
+
+-- day_types
 CREATE UNIQUE INDEX pk_day_types ON day_types (id ASC);
+
+-- students
 CREATE UNIQUE INDEX pk_students ON students (id ASC);
+
+-- days
 CREATE UNIQUE INDEX pk_days ON days (id ASC);
 CREATE INDEX ux_days_day_types_id ON days (day_type_id ASC);
 
+-- authorities
 CREATE UNIQUE INDEX pk_authorities ON authorities (name ASC);
+
+-- users
 CREATE UNIQUE INDEX pk_users ON users (id ASC);
 CREATE UNIQUE INDEX ux_users_email ON users (email ASC);
 CREATE UNIQUE INDEX ux_users_login ON users (login ASC);
+
+-- users_authorities
 CREATE UNIQUE INDEX pk_users_authorities ON users_authorities (user_id ASC, authority_name ASC);
 
 ------------------------- CONSTRAINTS -------------------------
+
+-- _groups
+ALTER TABLE _groups ADD CONSTRAINT fk_groups_user_id FOREIGN KEY (user_id) REFERENCES users (id);
+
+-- subjects
+ALTER TABLE subjects ADD CONSTRAINT fk_subjects_user_id FOREIGN KEY (user_id) REFERENCES users (id);
 
 -- boards
 ALTER TABLE boards ADD CONSTRAINT fk_boards_group_id FOREIGN KEY (group_id) REFERENCES _groups (id);
@@ -172,7 +200,8 @@ INSERT INTO users (login, password_hash, first_name, last_name, email, image_url
     ('system', '$2a$10$mE.qmcV0mFU5NcKh73TZx.z4ueI/.bDWbj0T1BYyqP481kGGarKLG', 'System', 'System', 'system@localhost', '', TRUE, 'ua', NULL, NULL, 'system', NULL, NULL, 'system', NULL),
     ('anonymoususer', '$2a$10$j8S5d7Sr7.8VTOYNviDPOeWX8KcYILUVJBsYV83Y5NtECayypx9lO', 'Anonymous', 'System', 'anonymous@localhost', '', TRUE, 'ua', NULL, NULL, 'system', NULL, NULL, 'system', NULL),
     ('admin', '$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC', 'System', 'Administrator', 'admin@localhost', '', TRUE, 'ua', NULL, NULL, 'system', NULL, NULL, 'system', NULL),
-    ('user', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'System', 'User', 'user@localhost', '', TRUE, 'ua', NULL, NULL, 'system', NULL, NULL, 'system', NULL);
+    ('user', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'System', 'User', 'user@localhost', '', TRUE, 'ua', NULL, NULL, 'system', NULL, NULL, 'system', NULL),
+    ('teacher', '$2a$10$ikrj7VVeyrPAcEtX4GAHquITr1EOwQGFsVYNveNIl0HcuoWEriqpa', 'System', 'Teacher', 'teacher@localhost', '', TRUE, 'ua', NULL, NULL, 'system', NULL, NULL, 'system', NULL);
 
 -- authorities
 INSERT INTO authorities (name) VALUES
@@ -180,29 +209,32 @@ INSERT INTO authorities (name) VALUES
 
 -- users_authorities
 INSERT INTO users_authorities (user_id, authority_name) VALUES
-    (1, 'ROLE_ADMIN'), (1, 'ROLE_USER'), (3, 'ROLE_ADMIN'), (3, 'ROLE_USER'), (4, 'ROLE_USER');
+    (1, 'ROLE_ADMIN'), (1, 'ROLE_USER'), (3, 'ROLE_ADMIN'), (3, 'ROLE_USER'), (4, 'ROLE_USER'), (5, 'ROLE_ADMIN'), (5, 'ROLE_USER');
 
 -- _groups
-INSERT INTO _groups (name, description, created_by, created, updated_by, updated) VALUES
-    ('Інформатики-4', 'Тестова група для перевірки роботи розумного журналу. Пишу багато символів в описі, щоб перевірити, як це буде виглядати на сторінці. Ліміт сиволів - 65535, тому в мене ще є великий запас. Бла-бла-бла...', 'system', CURRENT_TIMESTAMP, NULL, NULL),
-    ('Прикладна математика-3', NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL),
-    ('Прикладна математика-4', NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL);
+INSERT INTO _groups (name, description, created_by, created, updated_by, updated, user_id) VALUES
+    ('Інформатики-4', 'Тестова група для перевірки роботи розумного журналу. Пишу багато символів в описі, щоб перевірити, як це буде виглядати на сторінці. Ліміт сиволів - 65535, тому в мене ще є великий запас. Бла-бла-бла...', 'system', CURRENT_TIMESTAMP, NULL, NULL, 3),
+    ('Прикладна математика-3', NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL, 3),
+    ('Прикладна математика-4', NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL, 3),
+    ('Група 2-го викладача', NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL, 5);
 
 -- subjects
-INSERT INTO subjects (name, description, created_by, created, updated_by, updated) VALUES
-    ('Комп’ютерні мережі', NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL),
-    ('Системне програмування', 'Системне програмування та операційні системи', 'system', CURRENT_TIMESTAMP, NULL, NULL);
+INSERT INTO subjects (name, description, created_by, created, updated_by, updated, user_id) VALUES
+    ('Комп’ютерні мережі', NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL, 3),
+    ('Системне програмування', 'Системне програмування та операційні системи', 'system', CURRENT_TIMESTAMP, NULL, NULL, 3),
+    ('Предмет 2-го викладача', NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL, 5);
 
 -- groups_subjects
 INSERT INTO groups_subjects (groups_id, subjects_id) VALUES
-    (1, 1), (1, 2), (2, 1), (3, 1);
+    (1, 1), (1, 2), (2, 1), (3, 1), (4, 3);
 
 -- boards
 INSERT INTO boards (name, description, total_score, created_by, created, updated_by, updated, group_id, subject_id, user_id) VALUES
     ('Інформатики-4. Комп’ютерні мережі', '', 100.0, 'system', CURRENT_TIMESTAMP, NULL, NULL, 1, 1, 3),
     ('Інформатики-4. Системне програмування', NULL, 100.0, 'system', CURRENT_TIMESTAMP, NULL, NULL, 1, 2, 3),
     ('Прикладна математика-3. Комп’ютерні мережі', 'Згенерований журнал для групи "Прикладна математика-3" і предмету "Комп’ютерні мережі"', 1000.0, 'system', CURRENT_TIMESTAMP, NULL, NULL, 2, 1, 3),
-    ('Прикладна математика-4. Комп’ютерні мережі', 'Останній семестр для групи "Прикладна математика-4" з дисципліни "Комп’ютерні мережі"', NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL, 3, 1, 3);
+    ('Прикладна математика-4. Комп’ютерні мережі', 'Останній семестр для групи "Прикладна математика-4" з дисципліни "Комп’ютерні мережі"', NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL, 3, 1, 3),
+    ('Дошка 2-го викладача', NULL, NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL, 4, 3, 5);
 
 -- day_types
 INSERT INTO day_types (type, score, description, expiry, created_by, created, updated_by, updated, board_id) VALUES
@@ -219,7 +251,8 @@ INSERT INTO day_types (type, score, description, expiry, created_by, created, up
     ('LAB', 10.0, 'Лабараторна робота №5. Генетичні алгоритми', 5, 'system', CURRENT_TIMESTAMP, NULL, NULL, 2),
     ('MODULE', 15.0, 'Підсумковий модуль №1. Багатопоточність', 5, 'system', CURRENT_TIMESTAMP, NULL, NULL, 2),
     ('MODULE', 15.0, 'Підсумковий модуль №2. Прикладні програми в системному програмуванні', NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL, 2),
-    ('EXAM', 20.0, 'Семестровий екзамен', NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL, 2);
+    ('EXAM', 20.0, 'Семестровий екзамен', NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL, 2),
+    ('SIMPLE', 0.0, NULL, NULL, 'system', CURRENT_TIMESTAMP, NULL, NULL, 5);
 
 -- students
 INSERT INTO students (first_name, last_name, middle_name, rating, board_id) VALUES

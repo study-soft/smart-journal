@@ -40,7 +40,6 @@ public class Day implements Serializable {
     @JsonIgnoreProperties({"createdBy", "created", "updatedBy", "updated"})
     private DayType dayType;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -100,7 +99,6 @@ public class Day implements Serializable {
     public void setDayType(DayType dayType) {
         this.dayType = dayType;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
