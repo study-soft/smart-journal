@@ -11,20 +11,22 @@ import { AuthInterceptor } from './blocks/interceptor/auth.interceptor';
 import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';
 import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.interceptor';
 import { NotificationInterceptor } from './blocks/interceptor/notification.interceptor';
-import { SmartjournalSharedModule } from 'app/shared';
-import { SmartjournalCoreModule } from 'app/core';
-import { SmartjournalAppRoutingModule } from './app-routing.module';
-import { SmartjournalHomeModule } from './home/home.module';
-import { SmartjournalAccountModule } from './account/account.module';
-import { SmartjournalEntityModule } from './entities/entity.module';
+import { SharedModule } from 'app/shared';
+import { CoreModule } from 'app/core';
+import { AppRoutingModule } from './app-routing.module';
+import { HomeModule } from './home/home.module';
+import { AccountModule } from './account/account.module';
 import * as moment from 'moment';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ActiveMenuDirective, ErrorComponent } from './layouts';
+import { SubjectModule } from 'app/subject/subject.module';
+import { BoardModule } from 'app/board/board.module';
+import { GroupModule } from 'app/group/group.module';
 
 @NgModule({
     imports: [
         BrowserModule,
-        SmartjournalAppRoutingModule,
+        AppRoutingModule,
         Ng2Webstorage.forRoot({ prefix: 'jhi', separator: '-' }),
         NgJhipsterModule.forRoot({
             // set below to true to make alerts look like toast
@@ -33,12 +35,13 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
             i18nEnabled: true,
             defaultI18nLang: 'ua'
         }),
-        SmartjournalSharedModule.forRoot(),
-        SmartjournalCoreModule,
-        SmartjournalHomeModule,
-        SmartjournalAccountModule,
-        // jhipster-needle-angular-add-module JHipster will add new module here
-        SmartjournalEntityModule
+        SharedModule.forRoot(),
+        CoreModule,
+        HomeModule,
+        AccountModule,
+        SubjectModule,
+        BoardModule,
+        GroupModule
     ],
     declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
     providers: [
@@ -65,7 +68,7 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
     ],
     bootstrap: [JhiMainComponent]
 })
-export class SmartjournalAppModule {
+export class AppModule {
     constructor(private dpConfig: NgbDatepickerConfig) {
         this.dpConfig.minDate = { year: moment().year() - 100, month: 1, day: 1 };
     }

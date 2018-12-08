@@ -5,11 +5,11 @@ import { UserRouteAccessService } from 'app/core';
 import { Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { Group } from 'app/shared/model/group.model';
-import { GroupService } from 'app/entities/group/group.service';
-import { GroupComponent } from 'app/entities/group/group.component';
-import { GroupDetailComponent } from 'app/entities/group/group-detail.component';
-import { GroupUpdateComponent } from 'app/entities/group/group-update.component';
-import { GroupDeletePopupComponent } from 'app/entities/group/group-delete-dialog.component';
+import { GroupService } from 'app/group/group.service';
+import { GroupComponent } from 'app/group/group.component';
+import { GroupDetailComponent } from 'app/group/group-detail.component';
+import { GroupUpdateComponent } from 'app/group/group-update.component';
+import { GroupDeletePopupComponent } from 'app/group/group-delete-dialog.component';
 
 @Injectable({ providedIn: 'root' })
 export class GroupResolve implements Resolve<Group> {

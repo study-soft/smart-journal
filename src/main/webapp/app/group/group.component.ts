@@ -5,7 +5,7 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { Principal } from 'app/core';
 import { Group } from 'app/shared/model/group.model';
-import { GroupService } from 'app/entities/group/group.service';
+import { GroupService } from 'app/group/group.service';
 
 @Component({
     selector: 'jhi-party',
@@ -37,7 +37,7 @@ export class GroupComponent implements OnInit, OnDestroy {
         this.principal.identity().then(account => {
             this.currentAccount = account;
         });
-        this.registerChangeInParties();
+        this.registerChangeInGroups();
     }
 
     ngOnDestroy() {
@@ -48,7 +48,7 @@ export class GroupComponent implements OnInit, OnDestroy {
         return item.id;
     }
 
-    registerChangeInParties() {
+    registerChangeInGroups() {
         this.eventSubscriber = this.eventManager.subscribe('partyListModification', response => this.loadAll());
     }
 

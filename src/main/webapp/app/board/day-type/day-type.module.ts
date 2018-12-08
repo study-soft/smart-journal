@@ -1,7 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { SmartjournalSharedModule } from 'app/shared';
+import { SharedModule } from 'app/shared';
 import {
     DayTypeComponent,
     DayTypeDetailComponent,
@@ -10,12 +10,12 @@ import {
     DayTypeDeleteDialogComponent,
     dayTypeRoute,
     dayTypePopupRoute
-} from './';
+} from '.';
 
 const ENTITY_STATES = [...dayTypeRoute, ...dayTypePopupRoute];
 
 @NgModule({
-    imports: [SmartjournalSharedModule, RouterModule.forChild(ENTITY_STATES)],
+    imports: [SharedModule, RouterModule.forChild(ENTITY_STATES)],
     declarations: [
         DayTypeComponent,
         DayTypeDetailComponent,
@@ -26,4 +26,4 @@ const ENTITY_STATES = [...dayTypeRoute, ...dayTypePopupRoute];
     entryComponents: [DayTypeComponent, DayTypeUpdateComponent, DayTypeDeleteDialogComponent, DayTypeDeletePopupComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class SmartjournalDayTypeModule {}
+export class DayTypeModule {}

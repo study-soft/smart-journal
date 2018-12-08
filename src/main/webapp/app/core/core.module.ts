@@ -17,7 +17,7 @@ import locale from '@angular/common/locales/uk';
         DatePipe
     ]
 })
-export class SmartjournalCoreModule {
+export class CoreModule {
     constructor() {
         registerLocaleData(locale);
     }

@@ -7,39 +7,39 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JhiAlertService } from 'ng-jhipster';
 
 import { Subject } from 'app/shared/model/subject.model';
-import { SubjectService } from './subject.service';
-import { GroupService } from 'app/entities/group';
+import { SubjectService } from 'app/subject';
 import { Group } from 'app/shared/model/group.model';
+import { GroupService } from 'app/group/group.service';
 
 @Component({
-    selector: 'jhi-subject-update',
-    templateUrl: './subject-update.component.html'
+    selector: 'jhi-group-update',
+    templateUrl: './group-update.component.html'
 })
-export class SubjectUpdateComponent implements OnInit {
-    subject: Subject;
+export class GroupUpdateComponent implements OnInit {
+    group: Group;
     isSaving: boolean;
 
-    groups: Group[];
+    subjects: Subject[];
     created: string;
     updated: string;
 
     constructor(
         private jhiAlertService: JhiAlertService,
+        private groupService: GroupService,
         private subjectService: SubjectService,
-        private partyService: GroupService,
         private activatedRoute: ActivatedRoute
     ) {}
 
     ngOnInit() {
         this.isSaving = false;
-        this.activatedRoute.data.subscribe(({ subject }) => {
-            this.subject = subject;
-            this.created = this.subject.created != null ? this.subject.created.format(DATE_TIME_FORMAT) : null;
-            this.updated = this.subject.updated != null ? this.subject.updated.format(DATE_TIME_FORMAT) : null;
+        this.activatedRoute.data.subscribe(({ group: group }) => {
+            this.group = group;
+            this.created = this.group.created != null ? this.group.created.format(DATE_TIME_FORMAT) : null;
+            this.updated = this.group.updated != null ? this.group.updated.format(DATE_TIME_FORMAT) : null;
         });
-        this.partyService.query().subscribe(
-            (res: HttpResponse<Group[]>) => {
-                this.groups = res.body;
+        this.subjectService.query().subscribe(
+            (res: HttpResponse<Subject[]>) => {
+                this.subjects = res.body;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
@@ -51,17 +51,17 @@ export class SubjectUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        this.subject.created = this.created != null ? moment(this.created, DATE_TIME_FORMAT) : null;
-        this.subject.updated = this.updated != null ? moment(this.updated, DATE_TIME_FORMAT) : null;
-        if (this.subject.id !== undefined) {
-            this.subscribeToSaveResponse(this.subjectService.update(this.subject));
+        this.group.created = this.created != null ? moment(this.created, DATE_TIME_FORMAT) : null;
+        this.group.updated = this.updated != null ? moment(this.updated, DATE_TIME_FORMAT) : null;
+        if (this.group.id !== undefined) {
+            this.subscribeToSaveResponse(this.groupService.update(this.group));
         } else {
-            this.subscribeToSaveResponse(this.subjectService.create(this.subject));
+            this.subscribeToSaveResponse(this.groupService.create(this.group));
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<HttpResponse<Subject>>) {
-        result.subscribe((res: HttpResponse<Subject>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+    private subscribeToSaveResponse(result: Observable<HttpResponse<Group>>) {
+        result.subscribe((res: HttpResponse<Group>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
     }
 
     private onSaveSuccess() {
@@ -77,7 +77,7 @@ export class SubjectUpdateComponent implements OnInit {
         this.jhiAlertService.error(errorMessage, null, null);
     }
 
-    trackPartyById(index: number, item: Group) {
+    trackSubjectById(index: number, item: Subject) {
         return item.id;
     }
 

@@ -1,7 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { SmartjournalSharedModule } from 'app/shared';
+import { SharedModule } from 'app/shared';
 import {
     StudentComponent,
     StudentDetailComponent,
@@ -10,12 +10,12 @@ import {
     StudentDeleteDialogComponent,
     studentRoute,
     studentPopupRoute
-} from './';
+} from '.';
 
 const ENTITY_STATES = [...studentRoute, ...studentPopupRoute];
 
 @NgModule({
-    imports: [SmartjournalSharedModule, RouterModule.forChild(ENTITY_STATES)],
+    imports: [SharedModule, RouterModule.forChild(ENTITY_STATES)],
     declarations: [
         StudentComponent,
         StudentDetailComponent,
@@ -26,4 +26,4 @@ const ENTITY_STATES = [...studentRoute, ...studentPopupRoute];
     entryComponents: [StudentComponent, StudentUpdateComponent, StudentDeleteDialogComponent, StudentDeletePopupComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class SmartjournalStudentModule {}
+export class StudentModule {}

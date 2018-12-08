@@ -4,27 +4,27 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { Group } from 'app/shared/model/group.model';
-import { GroupService } from './group.service';
+import { Board } from 'app/shared/model/board.model';
+import { BoardService } from 'app/board/board.service';
 
 @Component({
-    selector: 'jhi-group-delete-dialog',
-    templateUrl: './group-delete-dialog.component.html'
+    selector: 'jhi-board-delete-dialog',
+    templateUrl: './board-delete-dialog.component.html'
 })
-export class GroupDeleteDialogComponent {
-    group: Group;
+export class BoardDeleteDialogComponent {
+    board: Board;
 
-    constructor(private groupService: GroupService, public activeModal: NgbActiveModal, private eventManager: JhiEventManager) {}
+    constructor(private boardService: BoardService, public activeModal: NgbActiveModal, private eventManager: JhiEventManager) {}
 
     clear() {
         this.activeModal.dismiss('cancel');
     }
 
     confirmDelete(id: number) {
-        this.groupService.delete(id).subscribe(response => {
+        this.boardService.delete(id).subscribe(response => {
             this.eventManager.broadcast({
-                name: 'groupListModification',
-                content: 'Deleted an group'
+                name: 'boardListModification',
+                content: 'Deleted an board'
             });
             this.activeModal.dismiss(true);
         });
@@ -32,19 +32,19 @@ export class GroupDeleteDialogComponent {
 }
 
 @Component({
-    selector: 'jhi-group-delete-popup',
+    selector: 'jhi-board-delete-popup',
     template: ''
 })
-export class GroupDeletePopupComponent implements OnInit, OnDestroy {
+export class BoardDeletePopupComponent implements OnInit, OnDestroy {
     private ngbModalRef: NgbModalRef;
 
     constructor(private activatedRoute: ActivatedRoute, private router: Router, private modalService: NgbModal) {}
 
     ngOnInit() {
-        this.activatedRoute.data.subscribe(({ group: group }) => {
+        this.activatedRoute.data.subscribe(({ board }) => {
             setTimeout(() => {
-                this.ngbModalRef = this.modalService.open(GroupDeleteDialogComponent as Component, { size: 'lg', backdrop: 'static' });
-                this.ngbModalRef.componentInstance.group = group;
+                this.ngbModalRef = this.modalService.open(BoardDeleteDialogComponent as Component, { size: 'lg', backdrop: 'static' });
+                this.ngbModalRef.componentInstance.board = board;
                 this.ngbModalRef.result.then(
                     result => {
                         this.router.navigate([{ outlets: { popup: null } }], { replaceUrl: true, queryParamsHandling: 'merge' });

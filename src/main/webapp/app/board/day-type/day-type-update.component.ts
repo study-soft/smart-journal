@@ -9,7 +9,7 @@ import { JhiAlertService } from 'ng-jhipster';
 import { DayType } from 'app/shared/model/day-type.model';
 import { DayTypeService } from './day-type.service';
 import { Board } from 'app/shared/model/board.model';
-import { BoardService } from 'app/entities/board';
+import { BoardService } from 'app/board/board.service';
 
 @Component({
     selector: 'jhi-day-type-update',

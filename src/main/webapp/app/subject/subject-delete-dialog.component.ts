@@ -5,7 +5,7 @@ import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstra
 import { JhiEventManager } from 'ng-jhipster';
 
 import { Subject } from 'app/shared/model/subject.model';
-import { SubjectService } from './subject.service';
+import { SubjectService } from 'app/subject/subject.service';
 
 @Component({
     selector: 'jhi-subject-delete-dialog',

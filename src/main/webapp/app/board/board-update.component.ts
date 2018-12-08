@@ -7,11 +7,11 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JhiAlertService } from 'ng-jhipster';
 
 import { Board } from 'app/shared/model/board.model';
-import { BoardService } from './board.service';
-import { GroupService } from 'app/entities/group';
 import { Subject } from 'app/shared/model/subject.model';
-import { SubjectService } from 'app/entities/subject';
 import { Group } from 'app/shared/model/group.model';
+import { BoardService } from 'app/board/board.service';
+import { SubjectService } from 'app/subject';
+import { GroupService } from 'app/group/group.service';
 
 @Component({
     selector: 'jhi-board-update',

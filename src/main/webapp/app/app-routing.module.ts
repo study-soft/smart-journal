@@ -12,12 +12,12 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
                 ...LAYOUT_ROUTES,
                 {
                     path: 'admin',
-                    loadChildren: './admin/admin.module#SmartjournalAdminModule'
+                    loadChildren: './admin/admin.module#AdminModule'
                 }
             ],
-            {enableTracing: DEBUG_INFO_ENABLED }
+            {enableTracing: DEBUG_INFO_ENABLED, useHash: true }
         )
     ],
     exports: [RouterModule]
 })
-export class SmartjournalAppRoutingModule {}
+export class AppRoutingModule {}

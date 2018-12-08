@@ -5,11 +5,11 @@ import { UserRouteAccessService } from 'app/core';
 import { Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { Board } from 'app/shared/model/board.model';
-import { BoardService } from './board.service';
-import { BoardComponent } from './board.component';
 import { BoardDetailComponent } from './board-detail.component';
 import { BoardUpdateComponent } from './board-update.component';
 import { BoardDeletePopupComponent } from './board-delete-dialog.component';
+import { BoardComponent } from 'app/board/board.component';
+import { BoardService } from 'app/board/board.service';
 
 @Injectable({ providedIn: 'root' })
 export class BoardResolve implements Resolve<Board> {

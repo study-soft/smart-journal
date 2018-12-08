@@ -9,9 +9,9 @@ import { JhiAlertService } from 'ng-jhipster';
 import { Day } from 'app/shared/model/day.model';
 import { DayService } from './day.service';
 import { Student } from 'app/shared/model/student.model';
-import { StudentService } from 'app/entities/student';
+import { StudentService } from 'app/group/student';
 import { DayType } from 'app/shared/model/day-type.model';
-import { DayTypeService } from 'app/entities/day-type';
+import { DayTypeService } from 'app/board/day-type';
 
 @Component({
     selector: 'jhi-day-update',

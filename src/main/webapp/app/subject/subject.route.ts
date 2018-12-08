@@ -6,10 +6,10 @@ import { Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { Subject } from 'app/shared/model/subject.model';
 import { SubjectService } from './subject.service';
-import { SubjectComponent } from './subject.component';
 import { SubjectDetailComponent } from './subject-detail.component';
 import { SubjectUpdateComponent } from './subject-update.component';
 import { SubjectDeletePopupComponent } from './subject-delete-dialog.component';
+import { SubjectComponent } from 'app/subject/subject.component';
 
 @Injectable({ providedIn: 'root' })
 export class SubjectResolve implements Resolve<Subject> {
