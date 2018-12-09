@@ -52,7 +52,7 @@ public class Authority implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(getClass() + "{");
+        StringBuilder sb = new StringBuilder(getClass().getSimpleName() + "{");
         sb.append("name='").append(name).append("'");
         sb.append("}");
         return sb.toString();

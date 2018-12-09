@@ -122,7 +122,7 @@ public class Day implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(getClass() + "{");
+        StringBuilder sb = new StringBuilder(getClass().getSimpleName() + "{");
         sb.append("id='").append(id).append("'");
         sb.append(", date='").append(date).append("'");
         sb.append(", result='").append(result).append("'");

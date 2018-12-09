@@ -302,7 +302,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(getClass() + "{");
+        StringBuilder sb = new StringBuilder(getClass().getSimpleName() + "{");
         sb.append("id='").append(id).append("'");
         sb.append(", login='").append(login).append("'");
         sb.append(", firstName='").append(firstName).append("'");

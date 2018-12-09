@@ -134,7 +134,7 @@ public class Subject extends AbstractAuditingEntity implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(getClass() + "{");
+        StringBuilder sb = new StringBuilder(getClass().getSimpleName() + "{");
         sb.append("id='").append(id).append("'");
         sb.append(", name='").append(name).append("'");
         sb.append(", description='").append(description).append("'");

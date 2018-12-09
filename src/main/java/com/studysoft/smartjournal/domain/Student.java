@@ -39,6 +39,7 @@ public class Student implements Serializable {
     private Double rating;
 
     @OneToMany(mappedBy = "student", fetch = FetchType.EAGER)
+    @OrderBy("date ASC")
     private Set<Day> days = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -165,7 +166,7 @@ public class Student implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(getClass() + "{");
+        StringBuilder sb = new StringBuilder(getClass().getSimpleName() + "{");
         sb.append("id='").append(id).append("'");
         sb.append(", firstName='").append(firstName).append("'");
         sb.append(", lastName='").append(lastName).append("'");

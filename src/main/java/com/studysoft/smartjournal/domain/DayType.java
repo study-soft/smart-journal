@@ -45,7 +45,6 @@ public class DayType extends AbstractAuditingEntity implements Serializable {
     @JsonIgnore
     private Board board;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -118,7 +117,6 @@ public class DayType extends AbstractAuditingEntity implements Serializable {
     public void setBoard(Board board) {
         this.board = board;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -142,7 +140,7 @@ public class DayType extends AbstractAuditingEntity implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(getClass() + "{");
+        StringBuilder sb = new StringBuilder(getClass().getSimpleName() + "{");
         sb.append("id='").append(id).append("'");
         sb.append(", type='").append(type).append("'");
         sb.append(", score='").append(score).append("'");
