@@ -1,15 +1,14 @@
 package com.studysoft.smartjournal.web.rest;
 
-import com.studysoft.smartjournal.domain.Board;
 import com.studysoft.smartjournal.domain.Subject;
 import com.studysoft.smartjournal.repository.SubjectRepository;
 import com.studysoft.smartjournal.security.SecurityUtils;
+import com.studysoft.smartjournal.web.rest.errors.AccessDeniedException;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
+import com.studysoft.smartjournal.web.rest.errors.EntityNotFoundException;
 import com.studysoft.smartjournal.web.rest.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +17,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * REST controller for managing Subject.
@@ -85,7 +83,7 @@ public class SubjectResource {
     @GetMapping("/subjects")
     public List<Subject> getAllSubjects() {
         log.debug("REST request to get all Subjects");
-        return subjectRepository.findAllByUserIsCurrentUserEager();
+        return subjectRepository.findAllByUserIsCurrentUser();
     }
 
     /**
@@ -97,13 +95,12 @@ public class SubjectResource {
     @GetMapping("/subjects/{id}")
     public ResponseEntity<?> getSubject(@PathVariable Long id) {
         log.debug("REST request to get Subject : {}", id);
-        Optional<Subject> subject = subjectRepository.findOneEager(id);
-        if (subject.isPresent() && subject.get().getUser() != null &&
-            !subject.get().getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
-            // TODO: throw accessDeniedException
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("error.http.403");
+        Subject subject = subjectRepository.findOneEager(id).orElseThrow(() -> new EntityNotFoundException(ENTITY_NAME));
+        if (subject.getUser() != null &&
+            !subject.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
+            throw new AccessDeniedException();
         }
-        return ResponseUtil.wrapOrNotFound(subject);
+        return ResponseEntity.ok(subject);
     }
 
     /**

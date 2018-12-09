@@ -126,8 +126,12 @@ public class Day implements Serializable {
         sb.append("id='").append(id).append("'");
         sb.append(", date='").append(date).append("'");
         sb.append(", result='").append(result).append("'");
-        sb.append(", studentId='").append(student.getId()).append("'");
-        sb.append(", dayTypeId='").append(dayType.getId()).append("'");
+        if (student != null) {
+            sb.append(", studentId='").append(student.getId()).append("'");
+        }
+        if (dayType != null) {
+            sb.append(", dayTypeId='").append(dayType.getId()).append("'");
+        }
         sb.append("}");
         return sb.toString();
     }

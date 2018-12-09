@@ -39,7 +39,6 @@ public class Student implements Serializable {
     private Double rating;
 
     @OneToMany(mappedBy = "student", fetch = FetchType.EAGER)
-    @OrderBy("date ASC")
     private Set<Day> days = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -172,7 +171,9 @@ public class Student implements Serializable {
         sb.append(", lastName='").append(lastName).append("'");
         sb.append(", middleName='").append(middleName).append("'");
         sb.append(", rating='").append(rating).append("'");
-        sb.append(", boardId='").append(board.getId()).append("'");
+        if (board != null) {
+            sb.append(", boardId='").append(board.getId()).append("'");
+        }
         sb.append("}");
         return sb.toString();
     }

@@ -3,12 +3,12 @@ package com.studysoft.smartjournal.web.rest;
 import com.studysoft.smartjournal.domain.Group;
 import com.studysoft.smartjournal.repository.GroupRepository;
 import com.studysoft.smartjournal.security.SecurityUtils;
+import com.studysoft.smartjournal.web.rest.errors.AccessDeniedException;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
+import com.studysoft.smartjournal.web.rest.errors.EntityNotFoundException;
 import com.studysoft.smartjournal.web.rest.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +16,6 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * REST controller for managing group.
@@ -83,7 +82,7 @@ public class GroupResource {
     @GetMapping("/groups")
     public List<Group> getAllGroups() {
         log.debug("REST request to get all Parties");
-        return groupRepository.findAllByUserIsCurrentUserEager();
+        return groupRepository.findAllByUserIsCurrentUser();
     }
 
     /**
@@ -95,13 +94,12 @@ public class GroupResource {
     @GetMapping("/groups/{id}")
     public ResponseEntity<Group> getGroup(@PathVariable Long id) {
         log.debug("REST request to get group : {}", id);
-        Optional<Group> group = groupRepository.findOneEager(id);
-        if (group.isPresent() && group.get().getUser() != null &&
-            !group.get().getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
-            // TODO: throw accessDeniedException
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new Group());
+        Group group = groupRepository.findOneEager(id).orElseThrow(() -> new EntityNotFoundException(ENTITY_NAME));
+        if (group.getUser() != null &&
+            !group.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
+            throw new AccessDeniedException();
         }
-        return ResponseUtil.wrapOrNotFound(group);
+        return ResponseEntity.ok(group);
     }
 
     /**

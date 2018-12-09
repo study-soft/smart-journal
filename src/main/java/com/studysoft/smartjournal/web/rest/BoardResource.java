@@ -1,23 +1,29 @@
 package com.studysoft.smartjournal.web.rest;
 
 import com.studysoft.smartjournal.domain.Board;
+import com.studysoft.smartjournal.domain.Group;
 import com.studysoft.smartjournal.repository.BoardRepository;
 import com.studysoft.smartjournal.security.SecurityUtils;
+import com.studysoft.smartjournal.service.BoardService;
+import com.studysoft.smartjournal.web.rest.errors.AccessDeniedException;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
+import com.studysoft.smartjournal.web.rest.errors.EntityNotFoundException;
 import com.studysoft.smartjournal.web.rest.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * REST controller for managing Board.
@@ -31,9 +37,11 @@ public class BoardResource {
     private static final String ENTITY_NAME = "board";
 
     private final BoardRepository boardRepository;
+    private final BoardService boardService;
 
-    public BoardResource(BoardRepository boardRepository) {
+    public BoardResource(BoardRepository boardRepository, BoardService boardService) {
         this.boardRepository = boardRepository;
+        this.boardService = boardService;
     }
 
     /**
@@ -81,11 +89,10 @@ public class BoardResource {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of boards in body
      */
-    // TODO: Get only boards info
     @GetMapping("/boards")
     public List<Board> getAllBoards() {
         log.debug("REST request to get all Boards");
-        return boardRepository.findAllByUserIsCurrentUser();
+        return boardService.findAllByUserIsCurrentUser();
     }
 
     /**
@@ -97,13 +104,12 @@ public class BoardResource {
     @GetMapping("/boards/{id}")
     public ResponseEntity<Board> getBoard(@PathVariable Long id) {
         log.debug("REST request to get Board : {}", id);
-        Optional<Board> board = boardRepository.findById(id);
-        if (board.isPresent() && board.get().getUser() != null &&
-            !board.get().getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
-            // TODO: throw accessDeniedException
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new Board());
+        Board board = boardRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(ENTITY_NAME));
+        if (board.getUser() != null &&
+            !board.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
+            throw new AccessDeniedException();
         }
-        return ResponseUtil.wrapOrNotFound(board);
+        return ResponseEntity.ok(board);
     }
 
     /**

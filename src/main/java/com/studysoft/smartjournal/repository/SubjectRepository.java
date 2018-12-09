@@ -28,7 +28,6 @@ public interface SubjectRepository extends JpaRepository<Subject, Long> {
     @Query("select subject from Subject subject left join fetch subject.groups where subject.id =:id")
     Optional<Subject> findOneEager(@Param("id") Long id);
 
-    @Query("select distinct subject from Subject subject left join fetch subject.groups " +
-        "where subject.user.login = ?#{principal.username}")
-    List<Subject> findAllByUserIsCurrentUserEager();
+    @Query("select distinct subject from Subject subject where subject.user.login = ?#{principal.username}")
+    List<Subject> findAllByUserIsCurrentUser();
 }

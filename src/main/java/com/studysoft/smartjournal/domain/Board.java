@@ -2,6 +2,7 @@ package com.studysoft.smartjournal.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -50,6 +51,7 @@ public class Board extends AbstractAuditingEntity implements Serializable {
     private Set<DayType> dayTypes = new HashSet<>();
 
     @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
+    @OrderBy("last_name, first_name ASC")
     private Set<Student> students = new HashSet<>();
 
     public Long getId() {
@@ -215,9 +217,15 @@ public class Board extends AbstractAuditingEntity implements Serializable {
         sb.append(", name='").append(name).append("'");
         sb.append(", description='").append(description).append("'");
         sb.append(", totalScore='").append(totalScore).append("'");
-        sb.append(", groupId='").append(group.getId()).append("'");
-        sb.append(", subjectId='").append(subject.getId()).append("'");
-        sb.append(", userId='").append(user.getId()).append("'");
+        if (group != null) {
+            sb.append(", groupId='").append(group.getId()).append("'");
+        }
+        if (subject != null) {
+            sb.append(", subjectId='").append(subject.getId()).append("'");
+        }
+        if (user != null) {
+            sb.append(", userId='").append(user.getId()).append("'");
+        }
         sb.append("}");
         return sb.toString();
     }

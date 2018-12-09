@@ -146,7 +146,9 @@ public class DayType extends AbstractAuditingEntity implements Serializable {
         sb.append(", score='").append(score).append("'");
         sb.append(", description='").append(description).append("'");
         sb.append(", expiry='").append(expiry).append("'");
-        sb.append(", boardId='").append(board.getId()).append("'");
+        if (board != null) {
+            sb.append(", boardId='").append(board.getId()).append("'");
+        }
         return sb.toString();
     }
 }
