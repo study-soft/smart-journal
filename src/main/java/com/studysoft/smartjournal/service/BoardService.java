@@ -30,34 +30,38 @@ public class BoardService {
         List<Board> boards = new ArrayList<>();
         for (Object[] item : raw) {
             Board board = new Board();
-            board.setId(Long.parseLong(String.valueOf(item[0])));
-            board.setName(String.valueOf(item[1]));
-            if (item[2] != null) {
-                board.setDescription(String.valueOf(item[2]));
-            }
-            if (item[3] != null) {
-                board.setTotalScore(Double.parseDouble(String.valueOf(item[3])));
-            }
-            board.setCreatedBy(String.valueOf(item[4]));
-            if (item[5] != null) {
-                board.setCreated(LocalDateTime.parse(String.valueOf(item[5]),
-                    DateTimeFormatter.ofPattern(Constants.DATE_TIME_PATTERN)).toInstant(
-                    ZoneOffset.of(Constants.EASTERN_EUROPEAN_OFFSET)));
-            }
-            if (item[6] != null) {
-                board.setUpdatedBy(String.valueOf(item[6]));
-            }
-            if (item[7] != null) {
-                board.setUpdated(LocalDateTime.parse(String.valueOf(item[7]),
-                    DateTimeFormatter.ofPattern(Constants.DATE_TIME_PATTERN)).toInstant(ZoneOffset.of(
-                    Constants.EASTERN_EUROPEAN_OFFSET)));
-            } else {
-                board.setUpdated(null);
-            }
-            board.setDayTypes(null);
-            board.setStudents(null);
+            mapBoard(item, board);
             boards.add(board);
         }
         return boards;
+    }
+
+    private void mapBoard(Object[] source, Board target) {
+        target.setId(Long.parseLong(String.valueOf(source[0])));
+        target.setName(String.valueOf(source[1]));
+        if (source[2] != null) {
+            target.setDescription(String.valueOf(source[2]));
+        }
+        if (source[3] != null) {
+            target.setTotalScore(Double.parseDouble(String.valueOf(source[3])));
+        }
+        target.setCreatedBy(String.valueOf(source[4]));
+        if (source[5] != null) {
+            target.setCreated(LocalDateTime.parse(String.valueOf(source[5]),
+                DateTimeFormatter.ofPattern(Constants.DATE_TIME_PATTERN)).toInstant(
+                ZoneOffset.of(Constants.EASTERN_EUROPEAN_OFFSET)));
+        }
+        if (source[6] != null) {
+            target.setUpdatedBy(String.valueOf(source[6]));
+        }
+        if (source[7] != null) {
+            target.setUpdated(LocalDateTime.parse(String.valueOf(source[7]),
+                DateTimeFormatter.ofPattern(Constants.DATE_TIME_PATTERN)).toInstant(ZoneOffset.of(
+                Constants.EASTERN_EUROPEAN_OFFSET)));
+        } else {
+            target.setUpdated(null);
+        }
+        target.setDayTypes(null);
+        target.setStudents(null);
     }
 }

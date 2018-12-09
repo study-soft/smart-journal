@@ -39,6 +39,7 @@ public class Student implements Serializable {
     private Double rating;
 
     @OneToMany(mappedBy = "student", fetch = FetchType.EAGER)
+    @OrderBy("date ASC")
     private Set<Day> days = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
