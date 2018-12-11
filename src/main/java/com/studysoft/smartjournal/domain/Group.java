@@ -136,6 +136,9 @@ public class Group extends AbstractAuditingEntity implements Serializable {
         sb.append("id='").append(id).append("'");
         sb.append(", name='").append(name).append("'");
         sb.append(", description='").append(description).append("'");
+        if (user != null) {
+            sb.append(", userId='").append(user.getId()).append("'");
+        }
         sb.append("}");
         return sb.toString();
     }

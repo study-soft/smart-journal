@@ -1,7 +1,9 @@
 package com.studysoft.smartjournal.web.rest;
 
 import com.studysoft.smartjournal.domain.Subject;
+import com.studysoft.smartjournal.domain.User;
 import com.studysoft.smartjournal.repository.SubjectRepository;
+import com.studysoft.smartjournal.repository.UserRepository;
 import com.studysoft.smartjournal.security.SecurityUtils;
 import com.studysoft.smartjournal.web.rest.errors.AccessDeniedException;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
@@ -30,9 +32,12 @@ public class SubjectResource {
     private static final String ENTITY_NAME = "subject";
 
     private final SubjectRepository subjectRepository;
+    private final UserRepository userRepository;
 
-    public SubjectResource(SubjectRepository subjectRepository) {
+    public SubjectResource(SubjectRepository subjectRepository,
+                           UserRepository userRepository) {
         this.subjectRepository = subjectRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -48,6 +53,11 @@ public class SubjectResource {
         if (subject.getId() != null) {
             throw new BadRequestAlertException("A new subject cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().orElse(""))
+            .orElseThrow(() -> new EntityNotFoundException("user", "no authorized user in current session"));
+        subject.setUser(user);
+
         Subject result = subjectRepository.save(subject);
         return ResponseEntity.created(new URI("/api/subjects/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))

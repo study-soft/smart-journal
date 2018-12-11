@@ -1,7 +1,9 @@
 package com.studysoft.smartjournal.web.rest;
 
 import com.studysoft.smartjournal.domain.Group;
+import com.studysoft.smartjournal.domain.User;
 import com.studysoft.smartjournal.repository.GroupRepository;
+import com.studysoft.smartjournal.repository.UserRepository;
 import com.studysoft.smartjournal.security.SecurityUtils;
 import com.studysoft.smartjournal.web.rest.errors.AccessDeniedException;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
@@ -29,9 +31,12 @@ public class GroupResource {
     private static final String ENTITY_NAME = "group";
 
     private final GroupRepository groupRepository;
+    private final UserRepository userRepository;
 
-    public GroupResource(GroupRepository groupRepository) {
+    public GroupResource(GroupRepository groupRepository,
+                         UserRepository userRepository) {
         this.groupRepository = groupRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -47,6 +52,11 @@ public class GroupResource {
         if (group.getId() != null) {
             throw new BadRequestAlertException("A new group cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().orElse(""))
+            .orElseThrow(() -> new EntityNotFoundException("user", "no authorized user in current session"));
+        group.setUser(user);
+
         Group result = groupRepository.save(group);
         return ResponseEntity.created(new URI("/api/parties/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))

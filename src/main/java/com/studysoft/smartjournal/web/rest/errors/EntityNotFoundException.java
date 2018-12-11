@@ -14,4 +14,8 @@ public class EntityNotFoundException extends AbstractThrowableProblem {
     public EntityNotFoundException(String entityName) {
         super(ErrorConstants.ENTITY_NOT_FOUND_TYPE, entityName + " not found", Status.NOT_FOUND);
     }
+
+    public EntityNotFoundException(String entityName, String detail) {
+        super(ErrorConstants.ENTITY_NOT_FOUND_TYPE, entityName + " not found", Status.NOT_FOUND, detail);
+    }
 }
