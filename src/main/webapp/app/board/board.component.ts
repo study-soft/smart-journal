@@ -27,6 +27,7 @@ export class BoardComponent implements OnInit, OnDestroy {
         this.boardService.query().subscribe(
             (res: HttpResponse<Board[]>) => {
                 this.boards = res.body;
+                console.log(this.boards);
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );

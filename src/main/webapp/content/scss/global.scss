@@ -223,4 +223,6 @@ ui bootstrap tweaks
     white-space: nowrap;
 }
 
-/* jhipster-needle-scss-add-main JHipster will add new css style */
+.shadowed {
+    box-shadow: 0 1px 5px rgba(0,0,0,0.5);
+}

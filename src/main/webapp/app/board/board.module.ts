@@ -9,13 +9,15 @@ import { BoardUpdateComponent } from 'app/board/board-update.component';
 import { BoardDeleteDialogComponent, BoardDeletePopupComponent } from 'app/board/board-delete-dialog.component';
 import { DayModule } from 'app/board/day/day.module';
 import { DayTypeModule } from 'app/board/day-type/day-type.module';
+import { BoardChildComponent } from './board-child.component';
 
 const ENTITY_STATES = [...boardRoute, ...boardPopupRoute];
 
 @NgModule({
     imports: [SharedModule, DayModule, DayTypeModule, RouterModule.forChild(ENTITY_STATES)],
-    declarations: [BoardComponent, BoardDetailComponent, BoardUpdateComponent, BoardDeleteDialogComponent, BoardDeletePopupComponent],
+    declarations: [BoardComponent, BoardDetailComponent, BoardUpdateComponent, BoardDeleteDialogComponent, BoardDeletePopupComponent, BoardChildComponent],
     entryComponents: [BoardComponent, BoardUpdateComponent, BoardDeleteDialogComponent, BoardDeletePopupComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class BoardModule {}
+export class BoardModule {
+}

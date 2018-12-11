@@ -7,6 +7,7 @@ import { SubjectDetailComponent } from 'app/subject/subject-detail.component';
 import { SubjectUpdateComponent } from 'app/subject/subject-update.component';
 import { SubjectDeleteDialogComponent, SubjectDeletePopupComponent } from 'app/subject/subject-delete-dialog.component';
 import { SharedModule } from 'app/shared';
+import { SubjectChildComponent } from './subject-child.component';
 
 const ENTITY_STATES = [...subjectRoute, ...subjectPopupRoute];
 
@@ -17,7 +18,8 @@ const ENTITY_STATES = [...subjectRoute, ...subjectPopupRoute];
         SubjectDetailComponent,
         SubjectUpdateComponent,
         SubjectDeleteDialogComponent,
-        SubjectDeletePopupComponent
+        SubjectDeletePopupComponent,
+        SubjectChildComponent
     ],
     entryComponents: [SubjectComponent, SubjectUpdateComponent, SubjectDeleteDialogComponent, SubjectDeletePopupComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

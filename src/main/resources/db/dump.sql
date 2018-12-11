@@ -395,13 +395,13 @@ INSERT INTO days (date, result, student_id, day_type_id) VALUES
     (CURRENT_DATE + integer '35', NULL, 9, 1),
     (CURRENT_DATE + integer '35', NULL, 10, 1),
     ----------------------------------------
-    (CURRENT_DATE - integer '42', NULL, 1, 4),
-    (CURRENT_DATE - integer '42', NULL, 2, 4),
-    (CURRENT_DATE - integer '42', NULL, 3, 4),
-    (CURRENT_DATE - integer '42', NULL, 4, 4),
-    (CURRENT_DATE - integer '42', NULL, 5, 4),
-    (CURRENT_DATE - integer '42', NULL, 6, 4),
-    (CURRENT_DATE - integer '42', NULL, 7, 4),
-    (CURRENT_DATE - integer '42', NULL, 8, 4),
-    (CURRENT_DATE - integer '42', NULL, 9, 4),
-    (CURRENT_DATE - integer '42', NULL, 10, 4);
+    (CURRENT_DATE + integer '42', NULL, 1, 4),
+    (CURRENT_DATE + integer '42', NULL, 2, 4),
+    (CURRENT_DATE + integer '42', NULL, 3, 4),
+    (CURRENT_DATE + integer '42', NULL, 4, 4),
+    (CURRENT_DATE + integer '42', NULL, 5, 4),
+    (CURRENT_DATE + integer '42', NULL, 6, 4),
+    (CURRENT_DATE + integer '42', NULL, 7, 4),
+    (CURRENT_DATE + integer '42', NULL, 8, 4),
+    (CURRENT_DATE + integer '42', NULL, 9, 4),
+    (CURRENT_DATE + integer '42', NULL, 10, 4);
