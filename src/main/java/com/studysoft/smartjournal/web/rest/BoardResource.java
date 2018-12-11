@@ -2,7 +2,9 @@ package com.studysoft.smartjournal.web.rest;
 
 import com.studysoft.smartjournal.domain.Board;
 import com.studysoft.smartjournal.domain.Group;
+import com.studysoft.smartjournal.domain.User;
 import com.studysoft.smartjournal.repository.BoardRepository;
+import com.studysoft.smartjournal.repository.UserRepository;
 import com.studysoft.smartjournal.security.SecurityUtils;
 import com.studysoft.smartjournal.service.BoardService;
 import com.studysoft.smartjournal.web.rest.errors.AccessDeniedException;
@@ -24,6 +26,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * REST controller for managing Board.
@@ -38,10 +41,14 @@ public class BoardResource {
 
     private final BoardRepository boardRepository;
     private final BoardService boardService;
+    private final UserRepository userRepository;
 
-    public BoardResource(BoardRepository boardRepository, BoardService boardService) {
+    public BoardResource(BoardRepository boardRepository,
+                         BoardService boardService,
+                         UserRepository userRepository) {
         this.boardRepository = boardRepository;
         this.boardService = boardService;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -57,6 +64,11 @@ public class BoardResource {
         if (board.getId() != null) {
             throw new BadRequestAlertException("A new board cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().orElse(""))
+            .orElseThrow(() -> new EntityNotFoundException("user", "no authorized user in current session"));
+        board.setUser(user);
+
         Board result = boardRepository.save(board);
         return ResponseEntity.created(new URI("/api/boards/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
