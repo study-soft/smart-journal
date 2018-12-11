@@ -5,7 +5,6 @@ import com.studysoft.smartjournal.domain.User;
 import com.studysoft.smartjournal.repository.GroupRepository;
 import com.studysoft.smartjournal.repository.UserRepository;
 import com.studysoft.smartjournal.security.SecurityUtils;
-import com.studysoft.smartjournal.web.rest.errors.AccessDeniedException;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
 import com.studysoft.smartjournal.web.rest.errors.EntityNotFoundException;
 import com.studysoft.smartjournal.web.rest.util.HeaderUtil;
@@ -107,7 +106,7 @@ public class GroupResource {
         Group group = groupRepository.findOneEager(id).orElseThrow(() -> new EntityNotFoundException(ENTITY_NAME));
         if (group.getUser() != null &&
             !group.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
-            throw new AccessDeniedException();
+            throw new BadRequestAlertException("Requested id does not belong to current user", ENTITY_NAME, "accessDenied");
         }
         return ResponseEntity.ok(group);
     }

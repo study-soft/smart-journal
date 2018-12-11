@@ -1,13 +1,11 @@
 package com.studysoft.smartjournal.web.rest;
 
 import com.studysoft.smartjournal.domain.Board;
-import com.studysoft.smartjournal.domain.Group;
 import com.studysoft.smartjournal.domain.User;
 import com.studysoft.smartjournal.repository.BoardRepository;
 import com.studysoft.smartjournal.repository.UserRepository;
 import com.studysoft.smartjournal.security.SecurityUtils;
 import com.studysoft.smartjournal.service.BoardService;
-import com.studysoft.smartjournal.web.rest.errors.AccessDeniedException;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
 import com.studysoft.smartjournal.web.rest.errors.EntityNotFoundException;
 import com.studysoft.smartjournal.web.rest.util.HeaderUtil;
@@ -19,14 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * REST controller for managing Board.
@@ -119,7 +110,7 @@ public class BoardResource {
         Board board = boardRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(ENTITY_NAME));
         if (board.getUser() != null &&
             !board.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
-            throw new AccessDeniedException();
+            throw new BadRequestAlertException("Requested id does not belong to current user", ENTITY_NAME, "accessDenied");
         }
         return ResponseEntity.ok(board);
     }

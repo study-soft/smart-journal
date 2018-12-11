@@ -133,7 +133,8 @@
         "userexists": "Ім'я користувача вже використовується!",
         "emailexists": "Електронна пошта вже використовується!",
         "idexists": "Новий {{entityName}} не може мати даний ID",
-        "idnull": "Invalid ID"
+        "idnull": "Invalid ID",
+        "accessDenied": "Ви не маєте дозволу на перегляд цієї сторінки"
     },
     "footer": "Це ваш футер"
 }
