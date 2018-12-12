@@ -5,6 +5,7 @@ import com.studysoft.smartjournal.domain.User;
 import com.studysoft.smartjournal.repository.SubjectRepository;
 import com.studysoft.smartjournal.repository.UserRepository;
 import com.studysoft.smartjournal.security.SecurityUtils;
+import com.studysoft.smartjournal.service.SubjectService;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
 import com.studysoft.smartjournal.web.rest.errors.EntityNotFoundException;
 import com.studysoft.smartjournal.web.rest.util.HeaderUtil;
@@ -30,12 +31,12 @@ public class SubjectResource {
     private static final String ENTITY_NAME = "subject";
 
     private final SubjectRepository subjectRepository;
-    private final UserRepository userRepository;
+    private final SubjectService subjectService;
 
     public SubjectResource(SubjectRepository subjectRepository,
-                           UserRepository userRepository) {
+                           SubjectService subjectService) {
         this.subjectRepository = subjectRepository;
-        this.userRepository = userRepository;
+        this.subjectService = subjectService;
     }
 
     /**
@@ -52,11 +53,9 @@ public class SubjectResource {
             throw new BadRequestAlertException("A new subject cannot already have an ID", ENTITY_NAME, "idexists");
         }
 
-        User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().orElse(""))
-            .orElseThrow(() -> new EntityNotFoundException("user", "no authorized user in current session"));
-        subject.setUser(user);
-
+        subjectService.setCurrentUser(subject);
         Subject result = subjectRepository.save(subject);
+
         return ResponseEntity.created(new URI("/api/subjects/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -77,7 +76,10 @@ public class SubjectResource {
         if (subject.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+
+        subjectService.setCurrentUser(subject);
         Subject result = subjectRepository.save(subject);
+
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, subject.getId().toString()))
             .body(result);

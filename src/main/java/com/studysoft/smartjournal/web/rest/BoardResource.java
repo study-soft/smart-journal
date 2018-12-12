@@ -32,14 +32,11 @@ public class BoardResource {
 
     private final BoardRepository boardRepository;
     private final BoardService boardService;
-    private final UserRepository userRepository;
 
     public BoardResource(BoardRepository boardRepository,
-                         BoardService boardService,
-                         UserRepository userRepository) {
+                         BoardService boardService) {
         this.boardRepository = boardRepository;
         this.boardService = boardService;
-        this.userRepository = userRepository;
     }
 
     /**
@@ -56,11 +53,9 @@ public class BoardResource {
             throw new BadRequestAlertException("A new board cannot already have an ID", ENTITY_NAME, "idexists");
         }
 
-        User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().orElse(""))
-            .orElseThrow(() -> new EntityNotFoundException("user", "no authorized user in current session"));
-        board.setUser(user);
-
+        boardService.setCurrentUser(board);
         Board result = boardRepository.save(board);
+
         return ResponseEntity.created(new URI("/api/boards/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -81,7 +76,10 @@ public class BoardResource {
         if (board.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+
+        boardService.setCurrentUser(board);
         Board result = boardRepository.save(board);
+
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, board.getId().toString()))
             .body(result);
