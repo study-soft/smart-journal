@@ -11,16 +11,15 @@
     </h2>
     <jhi-alert></jhi-alert>
     <br/>
-
-</div>
-<div *ngIf="boards">
-    <div *ngFor="let board of boards; let i = index; trackBy: trackId">
-        <div *ngIf="i % 2 === 0" class="row">
-            <div class="col-lg-6">
-                <jhi-board-child [board]="board"></jhi-board-child>
-            </div>
-            <div *ngIf="i !== boards.length - 1" class="col-lg-6">
-                <jhi-board-child [board]="boards[i + 1]"></jhi-board-child>
+    <div *ngIf="boards">
+        <div *ngFor="let board of boards; let i = index; trackBy: trackId">
+            <div *ngIf="i % 2 === 0" class="row">
+                <div class="col-lg-6">
+                    <jhi-board-child [board]="board"></jhi-board-child>
+                </div>
+                <div *ngIf="i !== boards.length - 1" class="col-lg-6">
+                    <jhi-board-child [board]="boards[i + 1]"></jhi-board-child>
+                </div>
             </div>
         </div>
     </div>
