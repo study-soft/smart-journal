@@ -1,3 +1,31 @@
-<p>
-  subject-child works!
-</p>
+<div class="card bg-light m-3 shadow">
+    <div class="card-body">
+        <h5 class="card-title">{{subject.name}}</h5>
+        <p>
+            <small>Created: {{subject.created | date: 'medium'}}</small>
+            <br/>
+            <small *ngIf="subject.updated">Updated: {{subject.updated | date: 'medium'}}</small>
+        </p>
+        <p class="card-text">{{subject.description}}</p>
+        <button type="submit"
+                [routerLink]="['/subject', subject.id, 'view' ]"
+                class="btn btn-info">
+            <fa-icon [icon]="'eye'"></fa-icon>
+            <span jhiTranslate="entity.action.view">View</span>
+        </button>
+        <button type="submit"
+                [routerLink]="['/subject', subject.id, 'edit']"
+                class="btn btn-primary">
+            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+            <span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+        <button type="submit"
+                [routerLink]="['/', { outlets: { popup: 'subject/'+ subject.id + '/delete'} }]"
+                replaceUrl="true"
+                queryParamsHandling="merge"
+                class="btn btn-danger">
+            <fa-icon [icon]="'times'"></fa-icon>
+            <span jhiTranslate="entity.action.delete">Delete</span>
+        </button>
+    </div>
+</div>
