@@ -47,10 +47,10 @@ public class Board extends AbstractAuditingEntity implements Serializable {
     @JsonIgnore
     private User user;
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
     private Set<DayType> dayTypes = new HashSet<>();
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
     @OrderBy("last_name, first_name ASC")
     private Set<Student> students = new HashSet<>();
 

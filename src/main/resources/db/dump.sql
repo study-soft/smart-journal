@@ -40,7 +40,8 @@ DROP TABLE IF EXISTS boards CASCADE;
 DROP SEQUENCE IF EXISTS boards_id_seq CASCADE;
 CREATE TABLE boards (
     id BIGSERIAL PRIMARY KEY,
-    name VARCHAR(255) UNIQUE NOT NULL,
+    title VARCHAR(255) UNIQUE NOT NULL,
+    name VARCHAR(255),
     description VARCHAR(65535),
     total_score DOUBLE PRECISION,
     created_by VARCHAR(50) NOT NULL,
@@ -229,12 +230,12 @@ INSERT INTO groups_subjects (groups_id, subjects_id) VALUES
     (1, 1), (1, 2), (2, 1), (3, 1), (4, 3);
 
 -- boards
-INSERT INTO boards (name, description, total_score, created_by, created, updated_by, updated, group_id, subject_id, user_id) VALUES
-    ('Інформатики-4. Комп’ютерні мережі', '', 100.0, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1, 1, 3),
-    ('Інформатики-4. Системне програмування', NULL, 100.0, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1, 2, 3),
-    ('Прикладна математика-3. Комп’ютерні мережі', 'Згенерований журнал для групи "Прикладна математика-3" і предмету "Комп’ютерні мережі"', 1000.0, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2, 1, 3),
-    ('Прикладна математика-4. Комп’ютерні мережі', 'Останній семестр для групи "Прикладна математика-4" з дисципліни "Комп’ютерні мережі"', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3, 1, 3),
-    ('Дошка 2-го викладача', NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 4, 3, 5);
+INSERT INTO boards (title, name, description, total_score, created_by, created, updated_by, updated, group_id, subject_id, user_id) VALUES
+    ('Інформатики-4. Комп’ютерні мережі', '1-й семестр', '', 100.0, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1, 1, 3),
+    ('Інформатики-4. Системне програмування', NULL, NULL, 100.0, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1, 2, 3),
+    ('Прикладна математика-3. Комп’ютерні мережі', '2-й семестр', 'Згенерований журнал для групи "Прикладна математика-3" і предмету "Комп’ютерні мережі"', 1000.0, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2, 1, 3),
+    ('Прикладна математика-4. Комп’ютерні мережі', NULL, 'Останній семестр для групи "Прикладна математика-4" з дисципліни "Комп’ютерні мережі"', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3, 1, 3),
+    ('Дошка 2-го викладача', NULL, NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 4, 3, 5);
 
 -- day_types
 INSERT INTO day_types (type, score, description, expiry, created_by, created, updated_by, updated, board_id) VALUES

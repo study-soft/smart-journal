@@ -16,11 +16,10 @@ import java.util.Optional;
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
-    @Query("select b.id, b.name, b.description, b.totalScore, b.createdBy, b.created, b.updatedBy, b.updated" +
-        " from Board b where b.user.login = ?#{principal.username}")
-    List<Object[]> findAllByUserIsCurrentUser();
+    @Query("select b from Board b where b.user.login = ?#{principal.username}")
+    List<Board> findAllByUserIsCurrentUser();
 
-    @Query("select board from Board board where board.id =:id")
+    @Query("select b from Board b left join fetch b.students s left join fetch s.days d where b.id =:id")
     Optional<Board> findByIdEager(@Param("id") Long id);
 
 }

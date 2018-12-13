@@ -1,9 +1,7 @@
 package com.studysoft.smartjournal.web.rest;
 
 import com.studysoft.smartjournal.domain.Board;
-import com.studysoft.smartjournal.domain.User;
 import com.studysoft.smartjournal.repository.BoardRepository;
-import com.studysoft.smartjournal.repository.UserRepository;
 import com.studysoft.smartjournal.security.SecurityUtils;
 import com.studysoft.smartjournal.service.BoardService;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
@@ -93,7 +91,7 @@ public class BoardResource {
     @GetMapping("/boards")
     public List<Board> getAllBoards() {
         log.debug("REST request to get all Boards");
-        return boardService.findAllByUserIsCurrentUser();
+        return boardRepository.findAllByUserIsCurrentUser();
     }
 
     /**
@@ -105,7 +103,7 @@ public class BoardResource {
     @GetMapping("/boards/{id}")
     public ResponseEntity<Board> getBoard(@PathVariable Long id) {
         log.debug("REST request to get Board : {}", id);
-        Board board = boardRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(ENTITY_NAME));
+        Board board = boardRepository.findByIdEager(id).orElseThrow(() -> new EntityNotFoundException(ENTITY_NAME));
         if (board.getUser() != null &&
             !board.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
             throw new BadRequestAlertException("Requested id does not belong to current user", ENTITY_NAME, "accessDenied");
