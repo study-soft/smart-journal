@@ -15,6 +15,10 @@
             "detail": {
                 "title": "Board"
             },
+            "validation": {
+                "boardExists": "Board for such group and subject already exists!"
+            },
+            "title": "Title",
             "name": "Name",
             "description": "Description",
             "createdDate": "Created",

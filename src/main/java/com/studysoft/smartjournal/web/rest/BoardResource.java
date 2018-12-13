@@ -16,6 +16,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * REST controller for managing Board.
@@ -49,6 +50,13 @@ public class BoardResource {
         log.debug("REST request to save Board : {}", board);
         if (board.getId() != null) {
             throw new BadRequestAlertException("A new board cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+
+        Optional<Board> dbBoard = boardRepository.
+            findByGroupIdAndSubjectId(board.getGroup().getId(), board.getSubject().getId());
+        if (dbBoard.isPresent()) {
+            //TODO: localized message in alert
+            throw new BadRequestAlertException("Board for such group and subject already exists", ENTITY_NAME, "boardExists");
         }
 
         boardService.setCurrentUser(board);

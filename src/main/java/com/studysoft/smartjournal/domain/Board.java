@@ -26,7 +26,10 @@ public class Board extends AbstractAuditingEntity implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "name", nullable = false)
+    @Column(name = "title", nullable = false, unique = true)
+    private String title;
+
+    @Column(name = "name")
     private String name;
 
     @Column(name = "description")
@@ -60,6 +63,19 @@ public class Board extends AbstractAuditingEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Board title(String title) {
+        this.title = title;
+        return this;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getName() {
@@ -214,6 +230,7 @@ public class Board extends AbstractAuditingEntity implements Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder(getClass().getSimpleName() + "{");
         sb.append("id='").append(id).append("'");
+        sb.append(", title='").append(title).append("'");
         sb.append(", name='").append(name).append("'");
         sb.append(", description='").append(description).append("'");
         sb.append(", totalScore='").append(totalScore).append("'");

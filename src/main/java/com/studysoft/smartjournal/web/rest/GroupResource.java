@@ -92,7 +92,7 @@ public class GroupResource {
      */
     @GetMapping("/groups")
     public List<Group> getAllGroups() {
-        log.debug("REST request to get all Parties");
+        log.debug("REST request to get all Groups");
         return groupRepository.findAllByUserIsCurrentUser();
     }
 

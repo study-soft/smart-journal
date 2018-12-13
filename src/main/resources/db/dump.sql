@@ -217,13 +217,15 @@ INSERT INTO _groups (name, description, created_by, created, updated_by, updated
     ('Інформатики-4', 'Тестова група для перевірки роботи розумного журналу. Пишу багато символів в описі, щоб перевірити, як це буде виглядати на сторінці. Ліміт сиволів - 65535, тому в мене ще є великий запас. Бла-бла-бла...', 'system', CURRENT_TIMESTAMP(3), NULL, NULL, 3),
     ('Прикладна математика-3', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3),
     ('Прикладна математика-4', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3),
-    ('Група 2-го викладача', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 5);
+    ('Група 2-го викладача', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 5),
+    ('Комп’ютерні науки', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3);
 
 -- subjects
 INSERT INTO subjects (name, description, created_by, created, updated_by, updated, user_id) VALUES
     ('Комп’ютерні мережі', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3),
     ('Системне програмування', 'Системне програмування та операційні системи', 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3),
-    ('Предмет 2-го викладача', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 5);
+    ('Предмет 2-го викладача', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 5),
+    ('Математичний аналіз', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3);
 
 -- groups_subjects
 INSERT INTO groups_subjects (groups_id, subjects_id) VALUES

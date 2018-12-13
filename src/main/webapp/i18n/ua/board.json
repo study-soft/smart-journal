@@ -2,27 +2,31 @@
     "smartjournalApp": {
         "board": {
             "home": {
-                "title": "Boards",
-                "createLabel": "Створити новий Board",
-                "createOrEditLabel": "Створити чи редагувати Board"
+                "title": "Дошки",
+                "createLabel": "Створити нову дошку",
+                "createOrEditLabel": "Створити чи редагувати дошку"
             },
-            "created": "Новий Board створений з ідентифікатором {{ param }}",
-            "updated": "Board оновлений з ідентифікатором {{ param }}",
-            "deleted": "Board видалений з ідентифікатором {{ param }}",
+            "created": "Нова дошка створена з ідентифікатором {{ param }}",
+            "updated": "Дошка оновлена з ідентифікатором {{ param }}",
+            "deleted": "Дошка видалена з ідентифікатором {{ param }}",
             "delete": {
-                "question": "Ви впевнені, що хочете видалити Board {{ id }}?"
+                "question": "Ви впевнені, що хочете видалити дошку {{ id }}?"
             },
             "detail": {
-                "title": "Board"
+                "title": "Дошка"
             },
-            "name": "Name",
-            "description": "Description",
-            "createdDate": "Created",
-            "updatedDate": "Updated",
-            "group": "Party",
-            "subject": "Subject",
-            "student": "Student",
-            "dayType": "Day Type"
+            "validation": {
+                "boardExists": "Дошка для такої групи та предмета вже існує!"
+            },
+            "name": "Ім’я",
+            "title": "Заголовок",
+            "description": "Опис",
+            "createdDate": "Створено",
+            "updatedDate": "Оновлено",
+            "group": "Група",
+            "subject": "Предмет",
+            "student": "Студент",
+            "dayType": "Тип дня"
         }
     }
 }

@@ -22,4 +22,6 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @Query("select b from Board b left join fetch b.students s left join fetch s.days d where b.id =:id")
     Optional<Board> findByIdEager(@Param("id") Long id);
 
+    Optional<Board> findByGroupIdAndSubjectId(Long groupId, Long subjectId);
+
 }
