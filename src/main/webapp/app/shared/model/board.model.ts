@@ -14,7 +14,6 @@ export class Board {
         public updated?: Moment,
         public group?: Group,
         public subject?: Subject,
-        public students?: Student[],
         public dayTypes?: DayType[]
     ) {}
 }

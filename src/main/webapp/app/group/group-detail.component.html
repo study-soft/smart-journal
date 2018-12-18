@@ -1,18 +1,10 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="group">
-            <h2><span jhiTranslate="smartjournalApp.group.detail.title">Group</span> {{group.id}}</h2>
+            <h2>{{group.name}}</h2>
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="smartjournalApp.group.name">Name</span></dt>
-                <dd>
-                    <span>{{group.name}}</span>
-                </dd>
-                <dt><span jhiTranslate="smartjournalApp.group.description">Description</span></dt>
-                <dd>
-                    <span>{{group.description}}</span>
-                </dd>
                 <dt><span jhiTranslate="smartjournalApp.group.createdDate">Created</span></dt>
                 <dd>
                     <span>{{group.created}}</span>
@@ -21,11 +13,24 @@
                 <dd>
                     <span>{{group.updated}}</span>
                 </dd>
-                <dt><span jhiTranslate="smartjournalApp.group.subject">Subject</span></dt>
+                <dt><span jhiTranslate="smartjournalApp.group.description">Description</span></dt>
                 <dd>
-                    <span *ngFor="let subject of group.subjects; let last = last">
-                        <a [routerLink]="['/subject', subject?.id, 'view' ]">{{subject.id}}</a>{{last ? '' : ', '}}
-                    </span>
+                    <span>{{group.description}}</span>
+                </dd>
+                <dt><span>Subjects that you teach in this group</span></dt>
+                <dd>
+                    <div class="list-group" *ngIf="group.subjects && group.subjects.length !== 0; else noGroups">
+                        <button class="list-group-item list-group-item-action bg-light"
+                                *ngFor="let subject of group.subjects"
+                                [routerLink]="['/subject', subject.id, 'view']">
+                            {{subject.name}}
+                        </button>
+                    </div>
+                    <ng-template #noGroups>
+                        <div class="alert alert-primary" role="alert">
+                            You do not teach any subject in this group
+                        </div>
+                    </ng-template>
                 </dd>
             </dl>
 

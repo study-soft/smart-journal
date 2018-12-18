@@ -196,6 +196,22 @@ entity detail page css
     }
 }
 
+.row .jh-entity-details {
+    dd {
+        margin-top: 5px;
+        margin-bottom: 20px;
+    }
+
+    .list-group, .alert {
+        margin-top: 15px;
+        margin-bottom: 30px;
+    }
+}
+
+.jh-entity-details .list-group-item {
+    cursor: pointer;
+}
+
 /* ==========================================================================
 ui bootstrap tweaks
 ========================================================================== */

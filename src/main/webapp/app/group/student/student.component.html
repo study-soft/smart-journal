@@ -18,7 +18,6 @@
             <th><span jhiTranslate="smartjournalApp.student.firstName">First Name</span></th>
             <th><span jhiTranslate="smartjournalApp.student.lastName">Last Name</span></th>
             <th><span jhiTranslate="smartjournalApp.student.middleName">Middle Name</span></th>
-            <th><span jhiTranslate="smartjournalApp.student.rating">Rating</span></th>
             <th><span jhiTranslate="smartjournalApp.student.board">Board</span></th>
             <th></th>
             </tr>
@@ -29,7 +28,6 @@
                 <td>{{student.firstName}}</td>
                 <td>{{student.lastName}}</td>
                 <td>{{student.middleName}}</td>
-                <td>{{student.rating}}</td>
                 <td>
                     <div *ngIf="student.board">
                         <a [routerLink]="['../board', student.board?.id, 'view' ]" >{{student.board?.id}}</a>

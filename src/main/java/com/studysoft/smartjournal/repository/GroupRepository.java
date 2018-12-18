@@ -23,10 +23,9 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
     @Query(value = "select distinct g from Group g left join fetch g.subjects")
     List<Group> findAllEager();
 
-    @Query("select g from Group g left join fetch g.subjects where g.id =:id")
+    @Query("select g from Group g left join fetch g.subjects left join fetch g.students where g.id =:id")
     Optional<Group> findOneEager(@Param("id") Long id);
 
     @Query("select distinct g from Group g where g.user.login = ?#{principal.username}")
     List<Group> findAllByUserIsCurrentUser();
-
 }

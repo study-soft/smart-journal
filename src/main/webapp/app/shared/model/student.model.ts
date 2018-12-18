@@ -7,7 +7,6 @@ export class Student {
         public firstName?: string,
         public lastName?: string,
         public middleName?: string,
-        public rating?: number,
         public days?: Day[],
         public board?: Board
     ) {}
