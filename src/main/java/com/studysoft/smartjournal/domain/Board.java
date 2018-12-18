@@ -40,22 +40,18 @@ public class Board extends AbstractAuditingEntity implements Serializable {
 
     @OneToOne    @JoinColumn(unique = true)
     @JsonIgnoreProperties({"createdBy", "created", "updatedBy", "updated"})
-    private Group group;
-
-    @OneToOne    @JoinColumn(unique = true)
-    @JsonIgnoreProperties({"createdBy", "created", "updatedBy", "updated"})
     private Subject subject;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
-    private User user;
 
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
     private Set<DayType> dayTypes = new HashSet<>();
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
-    @OrderBy("last_name, first_name ASC")
-    private Set<Student> students = new HashSet<>();
+    @OneToOne    @JoinColumn(unique = true)
+    @JsonIgnoreProperties({"createdBy", "created", "updatedBy", "updated"})
+    private Group group;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private User user;
 
     public Long getId() {
         return id;
@@ -156,31 +152,6 @@ public class Board extends AbstractAuditingEntity implements Serializable {
         this.user = user;
     }
 
-    public Set<Student> getStudents() {
-        return students;
-    }
-
-    public Board students(Set<Student> students) {
-        this.students = students;
-        return this;
-    }
-
-    public Board addStudent(Student student) {
-        this.students.add(student);
-        student.setBoard(this);
-        return this;
-    }
-
-    public Board removeStudent(Student student) {
-        this.students.remove(student);
-        student.setBoard(null);
-        return this;
-    }
-
-    public void setStudents(Set<Student> students) {
-        this.students = students;
-    }
-
     public Set<DayType> getDayTypes() {
         return dayTypes;
     }
@@ -226,6 +197,7 @@ public class Board extends AbstractAuditingEntity implements Serializable {
         return Objects.hashCode(getId());
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(getClass().getSimpleName() + "{");

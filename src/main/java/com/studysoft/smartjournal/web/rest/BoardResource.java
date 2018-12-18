@@ -55,7 +55,6 @@ public class BoardResource {
         Optional<Board> dbBoard = boardRepository.
             findByGroupIdAndSubjectId(board.getGroup().getId(), board.getSubject().getId());
         if (dbBoard.isPresent()) {
-            //TODO: localized message in alert
             throw new BadRequestAlertException("Board for such group and subject already exists", ENTITY_NAME, "boardExists");
         }
 
@@ -92,7 +91,7 @@ public class BoardResource {
     }
 
     /**
-     * GET  /boards : get all the boards.
+     * GET  /boards : get all the boards of current user.
      *
      * @return the ResponseEntity with status 200 (OK) and the list of boards in body
      */

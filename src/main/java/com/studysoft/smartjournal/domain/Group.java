@@ -35,6 +35,10 @@ public class Group extends AbstractAuditingEntity implements Serializable {
     @JsonIgnore
     private User user;
 
+    @OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
+    @OrderBy("last_name, first_name ASC")
+    private Set<Student> students = new HashSet<>();
+
     @ManyToMany(mappedBy = "groups")
     private Set<Subject> subjects = new HashSet<>();
 
@@ -85,6 +89,31 @@ public class Group extends AbstractAuditingEntity implements Serializable {
         this.user = user;
     }
 
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public Group students(Set<Student> students) {
+        this.students = students;
+        return this;
+    }
+
+    public Group addStudent(Student student) {
+        this.students.add(student);
+        student.setGroup(this);
+        return this;
+    }
+
+    public Group removeStudent(Student student) {
+        this.students.remove(student);
+        student.setGroup(null);
+        return this;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
+    }
+
     public Set<Subject> getSubjects() {
         return subjects;
     }
@@ -130,6 +159,7 @@ public class Group extends AbstractAuditingEntity implements Serializable {
         return Objects.hashCode(getId());
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(getClass().getSimpleName() + "{");

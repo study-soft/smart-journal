@@ -86,7 +86,7 @@ public class SubjectResource {
     }
 
     /**
-     * GET  /subjects : get all the subjects.
+     * GET  /subjects : get all the subjects of current user.
      *
      * @return the ResponseEntity with status 200 (OK) and the list of subjects in body
      */

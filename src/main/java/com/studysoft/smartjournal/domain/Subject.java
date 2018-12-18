@@ -132,6 +132,7 @@ public class Subject extends AbstractAuditingEntity implements Serializable {
         return Objects.hashCode(getId());
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(getClass().getSimpleName() + "{");

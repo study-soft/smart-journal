@@ -1,8 +1,10 @@
 package com.studysoft.smartjournal.web.rest;
 
 import com.studysoft.smartjournal.domain.Group;
+import com.studysoft.smartjournal.domain.Student;
 import com.studysoft.smartjournal.domain.User;
 import com.studysoft.smartjournal.repository.GroupRepository;
+import com.studysoft.smartjournal.repository.StudentRepository;
 import com.studysoft.smartjournal.repository.UserRepository;
 import com.studysoft.smartjournal.security.SecurityUtils;
 import com.studysoft.smartjournal.service.GroupService;
@@ -32,11 +34,14 @@ public class GroupResource {
 
     private final GroupRepository groupRepository;
     private final GroupService groupService;
+    private final StudentRepository studentRepository;
 
     public GroupResource(GroupRepository groupRepository,
-                         GroupService groupService) {
+                         GroupService groupService,
+                         StudentRepository studentRepository) {
         this.groupRepository = groupRepository;
         this.groupService = groupService;
+        this.studentRepository = studentRepository;
     }
 
     /**
@@ -86,7 +91,7 @@ public class GroupResource {
     }
 
     /**
-     * GET  /groups : get all the parties.
+     * GET  /groups : get all the groups of current user.
      *
      * @return the ResponseEntity with status 200 (OK) and the list of parties in body
      */
@@ -125,5 +130,73 @@ public class GroupResource {
 
         groupRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+     * GET  /groups/:id/students : get students of "id" group.
+     *
+     * @param id the id of the group which students to retrieve
+     * @return the ResponseEntity with status 200 (OK) and the list of students in body
+     */
+    @GetMapping("/groups/{id}/students")
+    public List<Student> getGroupStudents(@PathVariable Long id) {
+        log.debug("REST request to get students of group : {}", id);
+        return studentRepository.findAllByGroupId(id);
+    }
+
+    /**
+     * POST  /groups/{id}/students : Create a new student.
+     *
+     * @param id the id of group
+     * @param student the student to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new student, or with status 400 (Bad Request) if the student has already an ID
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PostMapping("/groups/{id}/students")
+    public ResponseEntity<Student> createStudent(@PathVariable Long id, @Valid @RequestBody Student student) throws URISyntaxException {
+        if (student.getId() != null) {
+            throw new BadRequestAlertException("A new student cannot already have an ID", "student", "idexists");
+        }
+        Student result = studentRepository.save(student);
+        return ResponseEntity.created(new URI("/api/groups/" + id +"/students/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert("student", result.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * PUT  /groups/:id/students : Updates an existing student.
+     *
+     * @param id the id of group
+     * @param student the student to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated student,
+     * or with status 400 (Bad Request) if the student is not valid,
+     * or with status 500 (Internal Server Error) if the student couldn't be updated
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PutMapping("/groups/{id}/students")
+    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @Valid @RequestBody Student student) throws URISyntaxException {
+        log.debug("REST request to update Student : {}", student);
+        if (student.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", "student", "idnull");
+        }
+        Student result = studentRepository.save(student);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert("student", student.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * DELETE  /groups/:id/students/:studentId : delete the "id" student.
+     *
+     * @param groupId the id of group
+     * @param studentId the id of the student to delete
+     * @return the ResponseEntity with status 200 (OK)
+     */
+    @DeleteMapping("/groups/{groupId}/students/{studentId}")
+    public ResponseEntity<Void> deleteStudent(@PathVariable Long groupId, @PathVariable Long studentId) {
+        log.debug("REST request to delete Student : {}", studentId);
+
+        studentRepository.deleteById(studentId);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, studentId.toString())).build();
     }
 }
