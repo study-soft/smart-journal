@@ -21,7 +21,7 @@ public class Group extends AbstractAuditingEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "groupsSeq")
-    @SequenceGenerator(name = "groupsSeq", sequenceName = "groups_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "groupsSeq", sequenceName = "_groups_id_seq", allocationSize = 1)
     private Long id;
 
     @NotNull

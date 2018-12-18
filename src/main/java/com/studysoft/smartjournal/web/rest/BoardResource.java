@@ -52,14 +52,14 @@ public class BoardResource {
             throw new BadRequestAlertException("A new board cannot already have an ID", ENTITY_NAME, "idexists");
         }
 
-        Optional<Board> dbBoard = boardRepository.
-            findByGroupIdAndSubjectId(board.getGroup().getId(), board.getSubject().getId());
+        Optional<Board> dbBoard = boardRepository.findByTitleForCurrentUser(board.getTitle());
         if (dbBoard.isPresent()) {
             throw new BadRequestAlertException("Board for such group and subject already exists", ENTITY_NAME, "boardExists");
         }
 
         boardService.setCurrentUser(board);
         Board result = boardRepository.save(board);
+        boardRepository.fillGroupsSubjects(result.getGroup().getId(), result.getSubject().getId());
 
         return ResponseEntity.created(new URI("/api/boards/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -107,6 +107,7 @@ public class BoardResource {
      * @param id the id of the board to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the board, or with status 404 (Not Found)
      */
+    @SuppressWarnings("Duplicates")
     @GetMapping("/boards/{id}")
     public ResponseEntity<Board> getBoard(@PathVariable Long id) {
         log.debug("REST request to get Board : {}", id);
@@ -128,7 +129,9 @@ public class BoardResource {
     public ResponseEntity<Void> deleteBoard(@PathVariable Long id) {
         log.debug("REST request to delete Board : {}", id);
 
+        Board board = boardRepository.findById(id).get();
         boardRepository.deleteById(id);
+        boardRepository.deleteGroupsSubjects(board.getGroup().getId(), board.getSubject().getId());
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

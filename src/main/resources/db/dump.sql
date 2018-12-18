@@ -2,10 +2,10 @@
 
 -- _groups
 DROP TABLE IF EXISTS _groups CASCADE;
-DROP SEQUENCE IF EXISTS groups_id_seq CASCADE;
+DROP SEQUENCE IF EXISTS _groups_id_seq CASCADE;
 CREATE TABLE _groups (
     id BIGSERIAL PRIMARY KEY,
-    name VARCHAR(255) UNIQUE NOT NULL,
+    name VARCHAR(255) NOT NULL,
     description VARCHAR(65535),
     created_by VARCHAR(50) NOT NULL,
     created TIMESTAMP,
@@ -19,7 +19,7 @@ DROP TABLE IF EXISTS subjects CASCADE;
 DROP SEQUENCE IF EXISTS subjects_id_seq CASCADE;
 CREATE TABLE subjects (
     id BIGSERIAL PRIMARY KEY,
-    name VARCHAR(255) UNIQUE NOT NULL,
+    name VARCHAR(255) NOT NULL,
     description VARCHAR(65535),
     created_by VARCHAR(50) NOT NULL,
     created TIMESTAMP,
@@ -40,7 +40,7 @@ DROP TABLE IF EXISTS boards CASCADE;
 DROP SEQUENCE IF EXISTS boards_id_seq CASCADE;
 CREATE TABLE boards (
     id BIGSERIAL PRIMARY KEY,
-    title VARCHAR(255) UNIQUE NOT NULL,
+    title VARCHAR(255) NOT NULL,
     name VARCHAR(255),
     description VARCHAR(65535),
     total_score DOUBLE PRECISION,

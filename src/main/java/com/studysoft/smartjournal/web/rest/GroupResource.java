@@ -20,6 +20,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * REST controller for managing group.
@@ -58,6 +59,7 @@ public class GroupResource {
             throw new BadRequestAlertException("A new group cannot already have an ID", ENTITY_NAME, "idexists");
         }
 
+        groupService.checkNameExists(group);
         groupService.setCurrentUser(group);
         Group result = groupRepository.save(group);
 
@@ -82,6 +84,7 @@ public class GroupResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
 
+        groupService.checkNameExists(group);
         groupService.setCurrentUser(group);
         Group result = groupRepository.save(group);
 
@@ -107,6 +110,7 @@ public class GroupResource {
      * @param id the id of the group to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the group, or with status 404 (Not Found)
      */
+    @SuppressWarnings("Duplicates")
     @GetMapping("/groups/{id}")
     public ResponseEntity<Group> getGroup(@PathVariable Long id) {
         log.debug("REST request to get group : {}", id);
