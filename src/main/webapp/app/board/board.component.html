@@ -14,74 +14,13 @@
     <div *ngIf="boards">
         <div *ngFor="let board of boards; let i = index; trackBy: trackId">
             <div *ngIf="i % 2 === 0" class="row">
-                <div class="col-lg-6 p-3">
+                <div class="col-lg-6 p-3 p-md-4">
                     <jhi-board-child [board]="board"></jhi-board-child>
                 </div>
-                <div class="col-lg-6 p-3" *ngIf="i !== boards.length - 1">
+                <div class="col-lg-6 p-3 p-md-4" *ngIf="i !== boards.length - 1">
                     <jhi-board-child [board]="boards[i + 1]"></jhi-board-child>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-<!--<div class="table-responsive" *ngIf="boards">-->
-<!--<table class="table table-striped">-->
-<!--<thead>-->
-<!--<tr>-->
-<!--<th><span jhiTranslate="global.field.id">ID</span></th>-->
-<!--<th><span jhiTranslate="smartjournalApp.board.name">Name</span></th>-->
-<!--<th><span jhiTranslate="smartjournalApp.board.description">Description</span></th>-->
-<!--<th><span jhiTranslate="smartjournalApp.board.createdDate">Created</span></th>-->
-<!--<th><span jhiTranslate="smartjournalApp.board.updatedDate">Updated</span></th>-->
-<!--<th><span jhiTranslate="smartjournalApp.board.group">Group</span></th>-->
-<!--<th><span jhiTranslate="smartjournalApp.board.subject">Subject</span></th>-->
-<!--<th></th>-->
-<!--</tr>-->
-<!--</thead>-->
-<!--<tbody>-->
-<!--<tr *ngFor="let board of boards ;trackBy: trackId">-->
-<!--<td><a [routerLink]="['/board', board.id, 'view' ]">{{board.id}}</a></td>-->
-<!--<td>{{board.name}}</td>-->
-<!--<td>{{board.description}}</td>-->
-<!--<td>{{board.created | date:'medium'}}</td>-->
-<!--<td>{{board.updated | date:'medium'}}</td>-->
-<!--<td>-->
-<!--<div *ngIf="board.group">-->
-<!--<a [routerLink]="['../party', board.group?.id, 'view' ]">{{board.group?.id}}</a>-->
-<!--</div>-->
-<!--</td>-->
-<!--<td>-->
-<!--<div *ngIf="board.subject">-->
-<!--<a [routerLink]="['../subject', board.subject?.id, 'view' ]">{{board.subject?.id}}</a>-->
-<!--</div>-->
-<!--</td>-->
-<!--<td class="text-right">-->
-<!--<div class="btn-group flex-btn-group-container">-->
-<!--<button type="submit"-->
-<!--[routerLink]="['/board', board.id, 'view' ]"-->
-<!--class="btn btn-info btn-sm">-->
-<!--<fa-icon [icon]="'eye'"></fa-icon>-->
-<!--<span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>-->
-<!--</button>-->
-<!--<button type="submit"-->
-<!--[routerLink]="['/board', board.id, 'edit']"-->
-<!--class="btn btn-primary btn-sm">-->
-<!--<fa-icon [icon]="'pencil-alt'"></fa-icon>-->
-<!--<span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>-->
-<!--</button>-->
-<!--<button type="submit"-->
-<!--[routerLink]="['/', { outlets: { popup: 'board/'+ board.id + '/delete'} }]"-->
-<!--replaceUrl="true"-->
-<!--queryParamsHandling="merge"-->
-<!--class="btn btn-danger btn-sm">-->
-<!--<fa-icon [icon]="'times'"></fa-icon>-->
-<!--<span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>-->
-<!--</button>-->
-<!--</div>-->
-<!--</td>-->
-<!--</tr>-->
-<!--</tbody>-->
-<!--</table>-->
-<!--</div>-->

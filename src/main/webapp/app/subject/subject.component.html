@@ -10,16 +10,15 @@
         </button>
     </h2>
     <jhi-alert></jhi-alert>
-    <br/>
-
+    <hr/>
 </div>
 <div *ngIf="subjects">
     <div *ngFor="let subject of subjects; let i = index; trackBy: trackId">
         <div *ngIf="i % 2 === 0" class="row">
-            <div class="col-lg-6 p-3">
+            <div class="col-lg-6 p-3 p-md-4">
                 <jhi-subject-child [subject]="subject"></jhi-subject-child>
             </div>
-            <div class="col-lg-6 p-3" *ngIf="i !== subjects.length - 1">
+            <div class="col-lg-6 p-3 p-md-4" *ngIf="i !== subjects.length - 1">
                 <jhi-subject-child [subject]="subjects[i + 1]"></jhi-subject-child>
             </div>
         </div>

@@ -10,6 +10,11 @@
                         [(ngModel)]="board.id" readonly />
                 </div>
                 <div class="form-group">
+                    <label for="field_title" jhiTranslate="global.field.id">Title</label>
+                    <input type="text" class="form-control" id="field_title" name="title"
+                           [(ngModel)]="board.title" readonly />
+                </div>
+                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="smartjournalApp.board.name" for="field_name">Name</label>
                     <input type="text" class="form-control" name="name" id="field_name"
                         [(ngModel)]="board.name" required/>
