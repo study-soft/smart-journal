@@ -19,7 +19,8 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @Query("select b from Board b where b.user.login = ?#{principal.username}")
     List<Board> findAllByUserIsCurrentUser();
 
-    @Query("select b from Board b left join fetch b.students s left join fetch s.days d where b.id =:id")
+    @Query("select b from Board b left join fetch b.group g left join fetch g.students s " +
+        "left join fetch s.days d left join fetch b.dayTypes dt where b.id =:id")
     Optional<Board> findByIdEager(@Param("id") Long id);
 
     Optional<Board> findByGroupIdAndSubjectId(Long groupId, Long subjectId);

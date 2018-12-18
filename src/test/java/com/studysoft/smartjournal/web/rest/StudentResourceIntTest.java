@@ -91,8 +91,7 @@ public class StudentResourceIntTest {
         Student student = new Student()
             .firstName(DEFAULT_FIRST_NAME)
             .lastName(DEFAULT_LAST_NAME)
-            .middleName(DEFAULT_MIDDLE_NAME)
-            .rating(DEFAULT_RATING);
+            .middleName(DEFAULT_MIDDLE_NAME);
         return student;
     }
 
@@ -119,7 +118,6 @@ public class StudentResourceIntTest {
         assertThat(testStudent.getFirstName()).isEqualTo(DEFAULT_FIRST_NAME);
         assertThat(testStudent.getLastName()).isEqualTo(DEFAULT_LAST_NAME);
         assertThat(testStudent.getMiddleName()).isEqualTo(DEFAULT_MIDDLE_NAME);
-        assertThat(testStudent.getRating()).isEqualTo(DEFAULT_RATING);
     }
 
     @Test
@@ -234,8 +232,7 @@ public class StudentResourceIntTest {
         updatedStudent
             .firstName(UPDATED_FIRST_NAME)
             .lastName(UPDATED_LAST_NAME)
-            .middleName(UPDATED_MIDDLE_NAME)
-            .rating(UPDATED_RATING);
+            .middleName(UPDATED_MIDDLE_NAME);
 
         restStudentMockMvc.perform(put("/api/students")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -249,7 +246,6 @@ public class StudentResourceIntTest {
         assertThat(testStudent.getFirstName()).isEqualTo(UPDATED_FIRST_NAME);
         assertThat(testStudent.getLastName()).isEqualTo(UPDATED_LAST_NAME);
         assertThat(testStudent.getMiddleName()).isEqualTo(UPDATED_MIDDLE_NAME);
-        assertThat(testStudent.getRating()).isEqualTo(UPDATED_RATING);
     }
 
     @Test

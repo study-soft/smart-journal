@@ -35,16 +35,13 @@ public class Student implements Serializable {
     @Column(name = "middle_name")
     private String middleName;
 
-    @Column(name = "rating")
-    private Double rating;
-
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
     @OrderBy("date ASC")
     private Set<Day> days = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
-    private Board board;
+    private Group group;
 
     public Long getId() {
         return id;
@@ -93,19 +90,6 @@ public class Student implements Serializable {
         this.middleName = middleName;
     }
 
-    public Double getRating() {
-        return rating;
-    }
-
-    public Student rating(Double rating) {
-        this.rating = rating;
-        return this;
-    }
-
-    public void setRating(Double rating) {
-        this.rating = rating;
-    }
-
     public Set<Day> getDays() {
         return days;
     }
@@ -131,17 +115,17 @@ public class Student implements Serializable {
         this.days = days;
     }
 
-    public Board getBoard() {
-        return board;
+    public Group getGroup() {
+        return group;
     }
 
-    public Student board(Board board) {
-        this.board = board;
+    public Student group(Group group) {
+        this.group = group;
         return this;
     }
 
-    public void setBoard(Board board) {
-        this.board = board;
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     @Override
@@ -171,9 +155,8 @@ public class Student implements Serializable {
         sb.append(", firstName='").append(firstName).append("'");
         sb.append(", lastName='").append(lastName).append("'");
         sb.append(", middleName='").append(middleName).append("'");
-        sb.append(", rating='").append(rating).append("'");
-        if (board != null) {
-            sb.append(", boardId='").append(board.getId()).append("'");
+        if (group != null) {
+            sb.append(", groupId='").append(group.getId()).append("'");
         }
         sb.append("}");
         return sb.toString();
