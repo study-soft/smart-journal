@@ -16,10 +16,10 @@
 <div *ngIf="subjects">
     <div *ngFor="let subject of subjects; let i = index; trackBy: trackId">
         <div *ngIf="i % 2 === 0" class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-6 p-3">
                 <jhi-subject-child [subject]="subject"></jhi-subject-child>
             </div>
-            <div *ngIf="i !== subjects.length - 1" class="col-lg-6">
+            <div class="col-lg-6 p-3" *ngIf="i !== subjects.length - 1">
                 <jhi-subject-child [subject]="subjects[i + 1]"></jhi-subject-child>
             </div>
         </div>

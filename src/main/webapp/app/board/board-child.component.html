@@ -1,12 +1,15 @@
-<div class="card bg-light m-3 shadow">
+<div class="card bg-light shadow h-100">
+    <h5 class="card-header">{{board.title}}</h5>
     <div class="card-body">
-        <h5 class="card-title">{{board.name}}</h5>
+        <h6 class="card-title">{{board.name}}</h6>
         <p>
             <small>Created: {{board.created | date: 'medium'}}</small>
             <br/>
             <small *ngIf="board.updated">Updated: {{board.updated | date: 'medium'}}</small>
         </p>
         <p class="card-text">{{board.description}}</p>
+    </div>
+    <div class="card-footer">
         <button type="submit"
                 [routerLink]="['/board', board.id, 'view' ]"
                 class="btn btn-info">

@@ -7,6 +7,7 @@ import { DayType } from 'app/shared/model//day-type.model';
 export class Board {
     constructor(
         public id?: number,
+        public title?: string,
         public name?: string,
         public description?: string,
         public created?: Moment,

@@ -13,10 +13,10 @@
     <div *ngIf="groups">
         <div *ngFor="let group of groups; let i = index; trackBy: trackId">
             <div *ngIf="i % 2 === 0" class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-6 p-3">
                     <jhi-group-child [group]="group"></jhi-group-child>
                 </div>
-                <div *ngIf="i !== groups.length - 1" class="col-lg-6">
+                <div class="col-lg-6 p-3" *ngIf="i !== groups.length - 1">
                     <jhi-group-child [group]="groups[i + 1]"></jhi-group-child>
                 </div>
             </div>
