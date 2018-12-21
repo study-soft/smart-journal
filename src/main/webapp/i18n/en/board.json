@@ -26,7 +26,9 @@
             "group": "Party",
             "subject": "Subject",
             "student": "Student",
-            "dayType": "Day Type"
+            "dayType": "Day Type",
+
+            "defaultDescription": "Normal pair(lesson), visiting is estimated"
         }
     }
 }

@@ -1,7 +1,14 @@
 package com.studysoft.smartjournal.web.rest;
 
 import com.studysoft.smartjournal.domain.Board;
+import com.studysoft.smartjournal.domain.Day;
+import com.studysoft.smartjournal.domain.DayType;
+import com.studysoft.smartjournal.domain.Student;
+import com.studysoft.smartjournal.domain.enumeration.Type;
 import com.studysoft.smartjournal.repository.BoardRepository;
+import com.studysoft.smartjournal.repository.DayRepository;
+import com.studysoft.smartjournal.repository.DayTypeRepository;
+import com.studysoft.smartjournal.repository.StudentRepository;
 import com.studysoft.smartjournal.security.SecurityUtils;
 import com.studysoft.smartjournal.service.BoardService;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
@@ -9,12 +16,15 @@ import com.studysoft.smartjournal.web.rest.errors.EntityNotFoundException;
 import com.studysoft.smartjournal.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,22 +41,31 @@ public class BoardResource {
 
     private final BoardRepository boardRepository;
     private final BoardService boardService;
+    private final StudentRepository studentRepository;
 
     public BoardResource(BoardRepository boardRepository,
-                         BoardService boardService) {
+                         BoardService boardService,
+                         StudentRepository studentRepository) {
         this.boardRepository = boardRepository;
         this.boardService = boardService;
+        this.studentRepository = studentRepository;
     }
 
     /**
-     * POST  /boards : Create a new board.
+     * POST  /boards : Create a new board. Create days for board if parameters <i>fromDate, toDate, days</i> exist
      *
      * @param board the board to create
+     * @param dateFrom date from which create days
+     * @param dateTo date to which create days
+     * @param days days of week for which create days
      * @return the ResponseEntity with status 201 (Created) and with body the new board, or with status 400 (Bad Request) if the board has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/boards")
-    public ResponseEntity<Board> createBoard(@Valid @RequestBody Board board) throws URISyntaxException {
+    public ResponseEntity<Board> createBoard(@Valid @RequestBody Board board,
+                                             @RequestParam(name = "from", required = false) LocalDate dateFrom,
+                                             @RequestParam(name = "to", required = false) LocalDate dateTo,
+                                             @RequestParam(name = "days", required = false) List<Integer> days) throws URISyntaxException {
         log.debug("REST request to save Board : {}", board);
         if (board.getId() != null) {
             throw new BadRequestAlertException("A new board cannot already have an ID", ENTITY_NAME, "idexists");
@@ -60,6 +79,15 @@ public class BoardResource {
         boardService.setCurrentUser(board);
         Board result = boardRepository.save(board);
         boardRepository.fillGroupsSubjects(result.getGroup().getId(), result.getSubject().getId());
+
+        if (dateFrom != null && dateTo != null && days != null && !days.isEmpty()) {
+            List<LocalDate> dates = boardService.generateSchedule(dateFrom, dateTo, days);
+            List<Student> students = studentRepository.findAllByGroupId(board.getGroup().getId());
+
+            if (!dates.isEmpty() && ! students.isEmpty()) {
+                boardService.fillBoard(board, students, dates);
+            }
+        }
 
         return ResponseEntity.created(new URI("/api/boards/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -125,13 +153,16 @@ public class BoardResource {
      * @param id the id of the board to delete
      * @return the ResponseEntity with status 200 (OK)
      */
+    //TODO: add deleting board with dayTypes and (..?)
     @DeleteMapping("/boards/{id}")
     public ResponseEntity<Void> deleteBoard(@PathVariable Long id) {
         log.debug("REST request to delete Board : {}", id);
 
-        Board board = boardRepository.findById(id).get();
-        boardRepository.deleteById(id);
-        boardRepository.deleteGroupsSubjects(board.getGroup().getId(), board.getSubject().getId());
+        Optional<Board> board = boardRepository.findById(id);
+        if (board.isPresent()) {
+            boardRepository.deleteById(id);
+            boardRepository.deleteGroupsSubjects(board.get().getGroup().getId(), board.get().getSubject().getId());
+        }
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }
