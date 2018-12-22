@@ -30,4 +30,7 @@ public interface SubjectRepository extends JpaRepository<Subject, Long> {
 
     @Query("select distinct s from Subject s where s.user.login = ?#{principal.username}")
     List<Subject> findAllByUserIsCurrentUser();
+
+    @Query("select s from Subject s where s.name =:name and s.user.login = ?#{principal.username}")
+    Optional<Subject> findByNameForCurrentUser(@Param("name") String name);
 }

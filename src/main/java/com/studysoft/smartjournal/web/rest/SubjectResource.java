@@ -53,6 +53,7 @@ public class SubjectResource {
             throw new BadRequestAlertException("A new subject cannot already have an ID", ENTITY_NAME, "idexists");
         }
 
+        subjectService.checkNameExists(subject);
         subjectService.setCurrentUser(subject);
         Subject result = subjectRepository.save(subject);
 
@@ -77,6 +78,7 @@ public class SubjectResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
 
+        subjectService.checkNameExists(subject);
         subjectService.setCurrentUser(subject);
         Subject result = subjectRepository.save(subject);
 
@@ -102,6 +104,7 @@ public class SubjectResource {
      * @param id the id of the subject to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the subject, or with status 404 (Not Found)
      */
+    @SuppressWarnings("Duplicates")
     @GetMapping("/subjects/{id}")
     public ResponseEntity<?> getSubject(@PathVariable Long id) {
         log.debug("REST request to get Subject : {}", id);
