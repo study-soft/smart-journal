@@ -196,20 +196,22 @@ entity detail page css
     }
 }
 
-.row .jh-entity-details {
-    dd {
-        margin-top: 5px;
-        margin-bottom: 20px;
+@import "spacing_minins.scss";
+
+.jh-entity-details {
+    dt {
+        @include mt(3);
+        @include mb(1);
     }
 
-    .list-group, .alert {
-        margin-top: 15px;
-        margin-bottom: 30px;
+    .alert {
+        @include mt(3);
+        @include mb(3);
     }
-}
 
-.jh-entity-details .list-group-item {
-    cursor: pointer;
+    .list-group-item {
+        cursor: pointer;
+    }
 }
 
 /* ==========================================================================
@@ -241,4 +243,18 @@ ui bootstrap tweaks
 
 .shadowed {
     box-shadow: 0 1px 5px rgba(0,0,0,0.5);
+}
+
+ul[role='tablist'] {
+    @include mb(2);
+}
+
+.nav-link[role='tab'] {
+    border: 1px solid #007bff;
+    @include mr(2);
+}
+
+.list-group {
+    @include mt(3);
+    @include mb(3);
 }
