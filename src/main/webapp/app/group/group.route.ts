@@ -10,6 +10,7 @@ import { GroupComponent } from 'app/group/group.component';
 import { GroupDetailComponent } from 'app/group/group-detail.component';
 import { GroupUpdateComponent } from 'app/group/group-update.component';
 import { GroupDeletePopupComponent } from 'app/group/group-delete-dialog.component';
+import { StudentUpdateDialogComponent } from 'app/group/student-update-dialog/student-update-dialog.component';
 
 @Injectable({ providedIn: 'root' })
 export class GroupResolve implements Resolve<Group> {
@@ -88,5 +89,9 @@ export const groupPopupRoute: Routes = [
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
+    },
+    {
+        path: 'student/:id/edit',
+        component: StudentUpdateDialogComponent,
     }
 ];

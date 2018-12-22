@@ -1,0 +1,30 @@
+<dl class="row-md jh-entity-details">
+    <dt><span jhiTranslate="smartjournalApp.group.createdDate">Created</span></dt>
+    <dd>
+        <span>{{group.created}}</span>
+    </dd>
+    <dt><span jhiTranslate="smartjournalApp.group.updatedDate">Updated</span></dt>
+    <dd>
+        <span>{{group.updated}}</span>
+    </dd>
+    <dt><span jhiTranslate="smartjournalApp.group.description">Description</span></dt>
+    <dd>
+        <span>{{group.description}}</span>
+    </dd>
+    <dt><span>Subjects that you teach in this group</span></dt>
+    <dd>
+        <div class="list-group"
+             *ngIf="group.subjects && group.subjects.length !== 0; else noGroups">
+            <button class="list-group-item list-group-item-action bg-light"
+                    *ngFor="let subject of group.subjects"
+                    [routerLink]="['/subject', subject.id, 'view']">
+                {{subject.name}}
+            </button>
+        </div>
+        <ng-template #noGroups>
+            <div class="alert alert-primary" role="alert">
+                You do not teach any subject in this group
+            </div>
+        </ng-template>
+    </dd>
+</dl>

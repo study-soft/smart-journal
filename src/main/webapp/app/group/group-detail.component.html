@@ -1,53 +1,32 @@
 <div class="row justify-content-center">
     <div class="col-md-8">
         <div *ngIf="group">
-            <h2>{{group.name}}</h2>
+            <h2>
+                <span>{{group.name}}</span>
+                <span class="float-right">
+                    <button type="button"
+                            [routerLink]="['/group', group.id, 'edit']"
+                            class="btn btn-primary">
+                        <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+                    </button>
+                    <button type="button"
+                            class="btn btn-primary">
+                        <fa-icon [icon]="'plus'"></fa-icon>&nbsp;<span> Add students</span>
+                    </button>
+                </span>
+            </h2>
             <hr>
             <jhi-alert-error></jhi-alert-error>
-            <ngb-tabset type="pills">
-                <ngb-tab title="Information">
+            <ngb-tabset type="pills" #tabset>
+                <ngb-tab id="information" title="Information">
                     <ng-template ngbTabContent>
-                        <dl class="row-md jh-entity-details">
-                            <dt><span jhiTranslate="smartjournalApp.group.createdDate">Created</span></dt>
-                            <dd>
-                                <span>{{group.created}}</span>
-                            </dd>
-                            <dt><span jhiTranslate="smartjournalApp.group.updatedDate">Updated</span></dt>
-                            <dd>
-                                <span>{{group.updated}}</span>
-                            </dd>
-                            <dt><span jhiTranslate="smartjournalApp.group.description">Description</span></dt>
-                            <dd>
-                                <span>{{group.description}}</span>
-                            </dd>
-                            <dt><span>Subjects that you teach in this group</span></dt>
-                            <dd>
-                                <div class="list-group"
-                                     *ngIf="group.subjects && group.subjects.length !== 0; else noGroups">
-                                    <button class="list-group-item list-group-item-action bg-light"
-                                            *ngFor="let subject of group.subjects"
-                                            [routerLink]="['/subject', subject.id, 'view']">
-                                        {{subject.name}}
-                                    </button>
-                                </div>
-                                <ng-template #noGroups>
-                                    <div class="alert alert-primary" role="alert">
-                                        You do not teach any subject in this group
-                                    </div>
-                                </ng-template>
-                            </dd>
-                        </dl>
+                        <jhi-group-information [group]="group"></jhi-group-information>
                     </ng-template>
                 </ngb-tab>
-                <ngb-tab title="Students">
+                <ngb-tab id="students" title="Students">
                     <ng-template ngbTabContent>
-                        <div *ngIf="group.students && group.students.length !== 0; else noGroups"
-                             class="list-group">
-                            <!--<button class="list-group-item list-group-item-action bg-light"-->
-                                    <!--*ngFor="let student of group.students"-->
-                                    <!--[routerLink]="['/student', student.id, 'view']">-->
-                                <!--{{student.lastName}} {{student.firstName}} {{student.middleName}}-->
-                            <!--</button>-->
+                        <div *ngIf="group.students && group.students.length !== 0; else noGroups">
+                            <jhi-group-students [groupId]="group.id" [students]="group.students"></jhi-group-students>
                         </div>
                         <ng-template #noGroups>
                             <div class="alert alert-primary" role="alert">
@@ -62,12 +41,6 @@
                     (click)="previousState()"
                     class="btn btn-info mt-2">
                 <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
-            </button>
-
-            <button type="button"
-                    [routerLink]="['/group', group.id, 'edit']"
-                    class="btn btn-primary mt-2">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
             </button>
         </div>
     </div>

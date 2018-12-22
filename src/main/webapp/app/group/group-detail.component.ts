@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Group } from 'app/shared/model/group.model';
+import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'jhi-group-detail',
@@ -9,7 +10,9 @@ import { Group } from 'app/shared/model/group.model';
 export class GroupDetailComponent implements OnInit {
     group: Group;
 
-    constructor(private activatedRoute: ActivatedRoute) {}
+    constructor(
+        private activatedRoute: ActivatedRoute
+    ) {}
 
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ group: group }) => {
