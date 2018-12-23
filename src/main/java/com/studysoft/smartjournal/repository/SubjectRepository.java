@@ -18,13 +18,6 @@ import java.util.Optional;
 @Repository
 public interface SubjectRepository extends JpaRepository<Subject, Long> {
 
-    @Query(value = "select distinct s from Subject s left join fetch s.groups",
-        countQuery = "select count(distinct s) from Subject s")
-    Page<Subject> findAllEager(Pageable pageable);
-
-    @Query(value = "select distinct s from Subject s left join fetch s.groups")
-    List<Subject> findAllEager();
-
     @Query("select s from Subject s left join fetch s.groups where s.id =:id")
     Optional<Subject> findOneEager(@Param("id") Long id);
 

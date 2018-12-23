@@ -54,10 +54,10 @@ public class BoardResource {
     /**
      * POST  /boards : Create a new board. Create days for board if parameters <i>fromDate, toDate, days</i> exist
      *
-     * @param board the board to create
+     * @param board    the board to create
      * @param dateFrom date from which create days
-     * @param dateTo date to which create days
-     * @param days days of week for which create days
+     * @param dateTo   date to which create days
+     * @param days     days of week for which create days
      * @return the ResponseEntity with status 201 (Created) and with body the new board, or with status 400 (Bad Request) if the board has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
@@ -77,17 +77,7 @@ public class BoardResource {
         }
 
         boardService.setCurrentUser(board);
-        Board result = boardRepository.save(board);
-        boardRepository.fillGroupsSubjects(result.getGroup().getId(), result.getSubject().getId());
-
-        if (dateFrom != null && dateTo != null && days != null && !days.isEmpty()) {
-            List<LocalDate> dates = boardService.generateSchedule(dateFrom, dateTo, days);
-            List<Student> students = studentRepository.findAllByGroupId(board.getGroup().getId());
-
-            if (!dates.isEmpty() && ! students.isEmpty()) {
-                boardService.fillBoard(board, students, dates);
-            }
-        }
+        Board result = boardService.saveBoard(board, dateFrom, dateTo, days);
 
         return ResponseEntity.created(new URI("/api/boards/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -153,16 +143,13 @@ public class BoardResource {
      * @param id the id of the board to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    //TODO: add deleting board with dayTypes and (..?)
     @DeleteMapping("/boards/{id}")
     public ResponseEntity<Void> deleteBoard(@PathVariable Long id) {
         log.debug("REST request to delete Board : {}", id);
 
-        Optional<Board> board = boardRepository.findById(id);
-        if (board.isPresent()) {
-            boardRepository.deleteById(id);
-            boardRepository.deleteGroupsSubjects(board.get().getGroup().getId(), board.get().getSubject().getId());
-        }
+        Board board = boardRepository.findById(id).orElse(null);
+        boardService.deleteBoard(board);
+
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

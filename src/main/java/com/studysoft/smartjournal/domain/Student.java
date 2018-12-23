@@ -35,7 +35,7 @@ public class Student implements Serializable {
     @Column(name = "middle_name")
     private String middleName;
 
-    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @OrderBy("date ASC")
     private Set<Day> days = new HashSet<>();
 

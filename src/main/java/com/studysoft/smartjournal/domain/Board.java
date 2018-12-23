@@ -42,7 +42,7 @@ public class Board extends AbstractAuditingEntity implements Serializable {
     @JsonIgnoreProperties({"createdBy", "created", "updatedBy", "updated"})
     private Subject subject;
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private Set<DayType> dayTypes = new HashSet<>();
 
     @OneToOne    @JoinColumn(unique = true)
@@ -117,7 +117,7 @@ public class Board extends AbstractAuditingEntity implements Serializable {
         return group;
     }
 
-    public Board party(Group group) {
+    public Board group(Group group) {
         this.group = group;
         return this;
     }
