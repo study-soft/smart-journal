@@ -28,16 +28,8 @@ export class GroupStudentsComponent implements OnInit, OnDestroy {
         private principal: Principal
     ) {}
 
-    loadAll() {
-        this.groupService.queryStudents(this.groupId).subscribe(
-            (res: HttpResponse<Student[]>) => {
-                this.students = res.body;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
-    }
-
     ngOnInit() {
+        console.log('GroupStudentsComponent ngOnInit()');
         this.loadAll();
         this.principal.identity().then(account => {
             this.currentAccount = account;
@@ -47,6 +39,16 @@ export class GroupStudentsComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.eventManager.destroy(this.eventSubscriber);
+    }
+
+    loadAll() {
+        this.groupService.queryStudents(this.groupId).subscribe(
+            (res: HttpResponse<Student[]>) => {
+                console.log('loadAll() students = ', res.body);
+                this.students = res.body;
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
     }
 
     trackId(index: number, item: Student) {
@@ -66,7 +68,8 @@ export class GroupStudentsComponent implements OnInit, OnDestroy {
     }
 
     registerChangeInStudents() {
-        this.eventSubscriber = this.eventManager.subscribe('groupStudentListModification', response => this.loadAll());
+        this.eventSubscriber = this.eventManager.subscribe('groupStudentListModification',
+                response => this.loadAll());
     }
 
     private onError(errorMessage: string) {

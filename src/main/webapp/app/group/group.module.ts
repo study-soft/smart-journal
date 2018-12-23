@@ -35,6 +35,7 @@ const ENTITY_STATES = [...groupRoute, ...groupPopupRoute];
         GroupUpdateComponent,
         GroupDeleteDialogComponent,
         GroupDeletePopupComponent,
+        StudentUpdateDialogComponent,
         StudentDeleteDialogComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

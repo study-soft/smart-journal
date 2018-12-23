@@ -10,7 +10,8 @@
                         <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
                     </button>
                     <button type="button"
-                            class="btn btn-primary">
+                            class="btn btn-info"
+                            (click)="addStudent()">
                         <fa-icon [icon]="'plus'"></fa-icon>&nbsp;<span> Add students</span>
                     </button>
                 </span>
@@ -26,14 +27,7 @@
                 </ngb-tab>
                 <ngb-tab id="students" title="Students">
                     <ng-template ngbTabContent>
-                        <div *ngIf="group.students && group.students.length !== 0; else noGroups">
-                            <jhi-group-students [groupId]="group.id"></jhi-group-students>
-                        </div>
-                        <ng-template #noGroups>
-                            <div class="alert alert-primary" role="alert">
-                                There is no students in this group
-                            </div>
-                        </ng-template>
+                        <jhi-group-students [groupId]="group.id"></jhi-group-students>
                     </ng-template>
                 </ngb-tab>
             </ngb-tabset>

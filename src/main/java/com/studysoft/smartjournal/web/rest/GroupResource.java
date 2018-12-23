@@ -92,7 +92,6 @@ public class GroupResource {
             groupService.checkNameExists(group);
         }
 
-        groupService.checkNameExists(group);
         groupService.setCurrentUser(group);
         Group result = groupRepository.save(group);
 
@@ -167,6 +166,9 @@ public class GroupResource {
         if (student.getId() != null) {
             throw new BadRequestAlertException("A new student cannot already have an ID", "student", "idexists");
         }
+        Group group = new Group();
+        group.setId(id);
+        student.setGroup(group);
         Student result = studentRepository.save(student);
         return ResponseEntity.created(new URI("/api/groups/" + id +"/students/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("student", result.getId().toString()))
@@ -210,6 +212,6 @@ public class GroupResource {
         log.debug("REST request to delete Student : {}", studentId);
         groupService.checkStudent(studentId, groupId);
         studentRepository.deleteById(studentId);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, studentId.toString())).build();
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("student", studentId.toString())).build();
     }
 }

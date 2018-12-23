@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Student } from 'app/shared/model/student.model';
 import { StudentService } from 'app/group/student';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiAlertService } from 'ng-jhipster';
+import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 import { Observable } from 'rxjs';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { GroupService } from 'app/group';
@@ -21,9 +21,13 @@ export class StudentUpdateDialogComponent implements OnInit {
         private groupService: GroupService,
         private activeModal: NgbActiveModal,
         private jhiAlertService: JhiAlertService,
+        private eventManager: JhiEventManager
     ) {}
 
     ngOnInit() {
+        if (!this.student) {
+            this.student = {};
+        }
         this.isSaving = false;
         console.log('StudentUpdateDialogComponent on init: groupId = ' + this.groupId);
     }
@@ -47,7 +51,16 @@ export class StudentUpdateDialogComponent implements OnInit {
 
     private onSaveSuccess() {
         this.isSaving = false;
+        this.eventManager.broadcast({
+            name: 'groupStudentListModification',
+            content: 'Updated a student in the group'
+        });
+        this.eventManager.broadcast({
+            name: 'navigateToStudentsTab',
+            content: 'Navigate to "Students" tab after creating a student'
+        });
         this.clear();
+
     }
 
     private onSaveError() {
