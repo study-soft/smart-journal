@@ -8,6 +8,7 @@ import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
 import { Group } from 'app/shared/model/group.model';
 import { Student } from 'app/shared/model/student.model';
+import { log } from 'app/shared/decorator/log';
 
 type GroupResponseType = HttpResponse<Group>;
 type GroupArrayResponseType = HttpResponse<Group[]>;

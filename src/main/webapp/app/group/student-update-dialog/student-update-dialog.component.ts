@@ -24,6 +24,7 @@ export class StudentUpdateDialogComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        this.isSaving = false;
         console.log('StudentUpdateDialogComponent on init: groupId = ' + this.groupId);
     }
 

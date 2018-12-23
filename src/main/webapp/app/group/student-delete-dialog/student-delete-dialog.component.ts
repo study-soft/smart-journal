@@ -28,8 +28,8 @@ export class StudentDeleteDialogComponent implements OnInit {
     confirmDelete(groupId: number, studentId: number) {
         this.groupService.deleteStudent(groupId, studentId).subscribe(response => {
             this.eventManager.broadcast({
-                name: 'studentListModification',
-                content: 'Deleted an student'
+                name: 'groupStudentListModification',
+                content: 'Deleted an student from group'
             });
             this.activeModal.dismiss(true);
         });

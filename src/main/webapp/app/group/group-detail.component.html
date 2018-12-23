@@ -15,8 +15,9 @@
                     </button>
                 </span>
             </h2>
-            <hr>
+            <jhi-alert></jhi-alert>
             <jhi-alert-error></jhi-alert-error>
+            <hr>
             <ngb-tabset type="pills" #tabset>
                 <ngb-tab id="information" title="Information">
                     <ng-template ngbTabContent>
@@ -26,7 +27,7 @@
                 <ngb-tab id="students" title="Students">
                     <ng-template ngbTabContent>
                         <div *ngIf="group.students && group.students.length !== 0; else noGroups">
-                            <jhi-group-students [groupId]="group.id" [students]="group.students"></jhi-group-students>
+                            <jhi-group-students [groupId]="group.id"></jhi-group-students>
                         </div>
                         <ng-template #noGroups>
                             <div class="alert alert-primary" role="alert">

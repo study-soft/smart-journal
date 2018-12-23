@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { SERVER_API_URL } from 'app/app.constants';
 import { Subject } from 'app/shared/model/subject.model';
 import { createRequestOption } from 'app/shared';
+import { log } from 'app/shared/decorator/log';
 
 type EntityResponseType = HttpResponse<Subject>;
 type EntityArrayResponseType = HttpResponse<Subject[]>;
@@ -24,6 +25,7 @@ export class SubjectService {
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
+    @log
     update(subject: Subject): Observable<EntityResponseType> {
         const copy = this.convertDateFromClient(subject);
         return this.http
