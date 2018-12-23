@@ -177,6 +177,9 @@ public class GroupResource {
         if (student.getId() == null) {
             throw new BadRequestAlertException("Invalid id", "student", "idnull");
         }
+        Group group = new Group();
+        group.setId(id);
+        student.setGroup(group);
         Student result = studentRepository.save(student);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("student", student.getId().toString()))
