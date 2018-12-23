@@ -2,6 +2,7 @@ package com.studysoft.smartjournal.web.rest;
 
 import com.studysoft.smartjournal.domain.Group;
 import com.studysoft.smartjournal.domain.Student;
+import com.studysoft.smartjournal.domain.Subject;
 import com.studysoft.smartjournal.domain.User;
 import com.studysoft.smartjournal.repository.BoardRepository;
 import com.studysoft.smartjournal.repository.GroupRepository;
@@ -78,11 +79,17 @@ public class GroupResource {
      * or with status 500 (Internal Server Error) if the group couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
+    @SuppressWarnings("Duplicates")
     @PutMapping("/groups")
     public ResponseEntity<Group> updateGroup(@Valid @RequestBody Group group) throws URISyntaxException {
         log.debug("REST request to update group : {}", group);
         if (group.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+
+        Optional<Group> dbGroup = groupRepository.findById(group.getId());
+        if (dbGroup.isPresent() && !dbGroup.get().getName().equals(group.getName())) {
+            groupService.checkNameExists(group);
         }
 
         groupService.checkNameExists(group);

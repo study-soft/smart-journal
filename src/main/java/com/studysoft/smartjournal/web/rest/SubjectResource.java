@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * REST controller for managing Subject.
@@ -71,6 +72,7 @@ public class SubjectResource {
      * or with status 500 (Internal Server Error) if the subject couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
+    @SuppressWarnings("Duplicates")
     @PutMapping("/subjects")
     public ResponseEntity<Subject> updateSubject(@Valid @RequestBody Subject subject) throws URISyntaxException {
         log.debug("REST request to update Subject : {}", subject);
@@ -78,7 +80,11 @@ public class SubjectResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
 
-        subjectService.checkNameExists(subject);
+        Optional<Subject> dbSubject = subjectRepository.findById(subject.getId());
+        if (dbSubject.isPresent() && !dbSubject.get().getName().equals(subject.getName())) {
+            subjectService.checkNameExists(subject);
+        }
+
         subjectService.setCurrentUser(subject);
         Subject result = subjectRepository.save(subject);
 
