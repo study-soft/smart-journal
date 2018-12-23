@@ -70,6 +70,12 @@ public class GroupService {
         }
     }
 
+    /**
+     * Checks if student belongs to group
+     *
+     * @param studentId id of student to check
+     * @param groupId id of group in which check
+     */
     public void checkStudent(Long studentId, Long groupId) {
         Student student = studentRepository.findById(studentId).orElseThrow(() -> new EntityNotFoundException("student"));
         if (!student.getGroup().getId().equals(groupId)) {

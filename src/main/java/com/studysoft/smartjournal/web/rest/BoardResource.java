@@ -1,24 +1,16 @@
 package com.studysoft.smartjournal.web.rest;
 
 import com.studysoft.smartjournal.domain.Board;
-import com.studysoft.smartjournal.domain.Day;
 import com.studysoft.smartjournal.domain.DayType;
-import com.studysoft.smartjournal.domain.Student;
-import com.studysoft.smartjournal.domain.enumeration.Type;
 import com.studysoft.smartjournal.repository.BoardRepository;
-import com.studysoft.smartjournal.repository.DayRepository;
 import com.studysoft.smartjournal.repository.DayTypeRepository;
 import com.studysoft.smartjournal.repository.StudentRepository;
-import com.studysoft.smartjournal.security.SecurityUtils;
 import com.studysoft.smartjournal.service.BoardService;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
 import com.studysoft.smartjournal.web.rest.errors.EntityNotFoundException;
-import com.studysoft.smartjournal.web.rest.errors.InternalServerErrorException;
 import com.studysoft.smartjournal.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,14 +34,14 @@ public class BoardResource {
 
     private final BoardRepository boardRepository;
     private final BoardService boardService;
-    private final StudentRepository studentRepository;
+    private final DayTypeRepository dayTypeRepository;
 
     public BoardResource(BoardRepository boardRepository,
                          BoardService boardService,
-                         StudentRepository studentRepository) {
+                         DayTypeRepository dayTypeRepository) {
         this.boardRepository = boardRepository;
         this.boardService = boardService;
-        this.studentRepository = studentRepository;
+        this.dayTypeRepository = dayTypeRepository;
     }
 
     /**
@@ -148,5 +140,74 @@ public class BoardResource {
         boardService.checkCurrentUser(board);
         boardService.deleteBoard(board);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+     * POST  /boards/:id/tasks : Create a new dayType.
+     *
+     * @param id the id of board
+     * @param dayType the dayType to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new dayType, or with status 400 (Bad Request) if the dayType has already an ID
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PostMapping("boards/{id}/tasks")
+    public ResponseEntity<DayType> createDayType(@PathVariable Long id, @Valid @RequestBody DayType dayType) throws URISyntaxException {
+        log.debug("REST request to save DayType : {}", dayType);
+        if (dayType.getId() != null) {
+            throw new BadRequestAlertException("A new dayType cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        DayType result = dayTypeRepository.save(dayType);
+        return ResponseEntity.created(new URI("/api/boards/" + id + "/tasks/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * PUT  /boards/:id/tasks : Updates an existing dayType.
+     *
+     * @param id the id of board
+     * @param dayType the dayType to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated dayType,
+     * or with status 400 (Bad Request) if the dayType is not valid,
+     * or with status 500 (Internal Server Error) if the dayType couldn't be updated
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PutMapping("/boards/{id}/tasks")
+    public ResponseEntity<DayType> updateDayType(@PathVariable Long id, @Valid @RequestBody DayType dayType) throws URISyntaxException {
+        log.debug("REST request to update DayType : {}", dayType);
+        if (dayType.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        DayType result = dayTypeRepository.save(dayType);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, dayType.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * GET  /boards/:id/tasks : get all the dayTypes.
+     *
+     * @param id the id of board
+     * @return the ResponseEntity with status 200 (OK) and the list of dayTypes in body
+     */
+    @GetMapping("/boards/{id}/tasks")
+    public List<DayType> getAllDayTypes(@PathVariable Long id) {
+        log.debug("REST request to get all DayTypes");
+        return dayTypeRepository.findAllByBoardId(id);
+    }
+
+    /**
+     * DELETE  /boards/:boardId/tasks/:dayTypeId : delete the "id" dayType.
+     *
+     * @param boardId the id of board
+     * @param dayTypeId the id of the dayType to delete
+     * @return the ResponseEntity with status 200 (OK)
+     */
+    @DeleteMapping("/boards/{boardId}/tasks/{dayTypeId}")
+    public ResponseEntity<Void> deleteDayType(@PathVariable Long boardId, @PathVariable Long dayTypeId) {
+        log.debug("REST request to delete DayType : {}", dayTypeId);
+        boardService.checkDayType(dayTypeId, boardId);
+        dayTypeRepository.deleteById(dayTypeId);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("dayType", dayTypeId.toString())).build();
     }
 }

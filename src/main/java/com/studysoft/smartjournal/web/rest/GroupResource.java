@@ -142,18 +142,6 @@ public class GroupResource {
     }
 
     /**
-     * GET  /groups/:id/students : get students of "id" group.
-     *
-     * @param id the id of the group which students to retrieve
-     * @return the ResponseEntity with status 200 (OK) and the list of students in body
-     */
-    @GetMapping("/groups/{id}/students")
-    public List<Student> getGroupStudents(@PathVariable Long id) {
-        log.debug("REST request to get students of group : {}", id);
-        return studentRepository.findAllByGroupId(id);
-    }
-
-    /**
      * POST  /groups/{id}/students : Create a new student.
      *
      * @param id the id of group
@@ -198,6 +186,18 @@ public class GroupResource {
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("student", student.getId().toString()))
             .body(result);
+    }
+
+    /**
+     * GET  /groups/:id/students : get students of "id" group.
+     *
+     * @param id the id of the group which students to retrieve
+     * @return the ResponseEntity with status 200 (OK) and the list of students in body
+     */
+    @GetMapping("/groups/{id}/students")
+    public List<Student> getGroupStudents(@PathVariable Long id) {
+        log.debug("REST request to get students of group : {}", id);
+        return studentRepository.findAllByGroupId(id);
     }
 
     /**

@@ -38,4 +38,6 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     void deleteGroupsSubjects(@Param("groupId") Long groupId, @Param("subjectId") Long subjectId);
 
     void deleteAllByGroupId(Long groupId);
+
+    void deleteAllBySubjectId(Long subjectId);
 }
