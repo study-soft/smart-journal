@@ -16,7 +16,7 @@ import { GroupService } from 'app/group';
 })
 export class GroupStudentsComponent implements OnInit, OnDestroy {
     @Input() groupId: number;
-    students: Student[];
+    students: Student[] = [new Student()];
     currentAccount: any;
     eventSubscriber: Subscription;
 

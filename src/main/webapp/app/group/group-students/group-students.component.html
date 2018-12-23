@@ -1,4 +1,4 @@
-<div *ngIf="students.length !== 0; else noGroups" class="table-responsive">
+<div *ngIf="students && students.length !== 0; else noGroups" class="table-responsive">
     <table class="table table-striped">
         <thead>
         <tr>

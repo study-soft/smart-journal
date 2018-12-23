@@ -16,11 +16,7 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
     @ViewChild('tabset')
     private tabs: NgbTabset;
 
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private modalService: NgbModal,
-        private eventManager: JhiEventManager
-    ) {}
+    constructor(private activatedRoute: ActivatedRoute, private modalService: NgbModal, private eventManager: JhiEventManager) {}
 
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ group: group }) => {
@@ -31,7 +27,9 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
+        if (this.eventSubscriber) {
+            this.eventManager.destroy(this.eventSubscriber);
+        }
     }
 
     previousState() {
