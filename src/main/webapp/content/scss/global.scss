@@ -98,6 +98,7 @@ Custom alerts for notification
 .alerts {
     .alert {
         text-overflow: ellipsis;
+
         pre {
             background: none;
             border: none;
@@ -106,22 +107,28 @@ Custom alerts for notification
             padding: 0;
             margin: 0;
         }
+
         .popover pre {
             font-size: 10px;
         }
     }
+
     .toast {
         position: fixed;
         width: 100%;
+
         &.left {
             left: 5px;
         }
+
         &.right {
             right: 5px;
         }
+
         &.top {
             top: 55px;
         }
+
         &.bottom {
             bottom: 55px;
         }
@@ -151,6 +158,7 @@ http://stackoverflow.com/questions/19562903/remove-padding-from-columns-in-boots
         }
     }
 }
+
 @include no-padding('left');
 @include no-padding('right');
 @include no-padding('top');
@@ -188,6 +196,7 @@ entity detail page css
         dt {
             margin-bottom: 15px;
         }
+
         dd {
             border-bottom: 1px solid #eee;
             padding-left: 180px;
@@ -242,16 +251,16 @@ ui bootstrap tweaks
 }
 
 .shadowed {
-    box-shadow: 0 1px 5px rgba(0,0,0,0.5);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
 }
 
 ul[role='tablist'] {
-    @include mb(2);
+    @include mb(3);
 }
 
 .nav-link[role='tab'] {
     border: 1px solid #007bff;
-    @include mr(2);
+    @include mr(3);
 }
 
 .list-group {
