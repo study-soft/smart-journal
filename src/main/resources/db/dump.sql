@@ -254,6 +254,8 @@ INSERT INTO day_types (type, score, description, expiry, created_by, created, up
     ('MODULE', 15.0, 'Підсумковий модуль №1. Багатопоточність', 5, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
     ('MODULE', 15.0, 'Підсумковий модуль №2. Прикладні програми в системному програмуванні', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
     ('EXAM', 20.0, 'Семестровий екзамен', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
+    ('SIMPLE', 2.0, NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3),
+    ('SIMPLE', 1.0, NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 4),
     ('SIMPLE', 0.0, NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 5);
 
 -- students
@@ -283,9 +285,10 @@ INSERT INTO students (first_name, last_name, middle_name, group_id) VALUES
     ('Софія', 'Іванченко', 'Петрівна', 3),
     ('B''ячеслав', 'Сергієнко', 'Петрович', 3),
     ('Павло', 'Янович', 'Антоненко', 3),
-    ('Валерій', 'Овсієнко', 'Федорович', 3);
+    ('Валерій', 'Овсієнко', 'Федорович', 3),
+    ('Олексій', 'Трохименко', NULL, 4);
 
--- days (group with id = 1)
+-- days (board with id = 1)
 INSERT INTO days (date, result, student_id, day_type_id) VALUES
     (CURRENT_DATE - integer '28', 0.0, 1, 1),
     (CURRENT_DATE - integer '28', 1.0, 2, 1),
@@ -407,11 +410,23 @@ INSERT INTO days (date, result, student_id, day_type_id) VALUES
     (CURRENT_DATE + integer '42', NULL, 8, 4),
     (CURRENT_DATE + integer '42', NULL, 9, 4),
     (CURRENT_DATE + integer '42', NULL, 10, 4),
-    --(group with id = 2)-------------------
-    (CURRENT_DATE + integer '7', NULL, 11, 6),
-    (CURRENT_DATE + integer '7', NULL, 12, 6),
-    (CURRENT_DATE + integer '7', NULL, 13, 6),
-    (CURRENT_DATE + integer '7', NULL, 14, 6),
-    (CURRENT_DATE + integer '7', NULL, 15, 6),
-    (CURRENT_DATE + integer '7', NULL, 16, 6),
-    (CURRENT_DATE + integer '7', NULL, 17, 6);
+    --(board with id = 2)-------------------
+    (CURRENT_DATE + integer '7', NULL, 1, 6),
+    (CURRENT_DATE + integer '7', NULL, 2, 6),
+    (CURRENT_DATE + integer '7', NULL, 3, 6),
+    (CURRENT_DATE + integer '7', NULL, 4, 6),
+    (CURRENT_DATE + integer '7', NULL, 5, 6),
+    (CURRENT_DATE + integer '7', NULL, 6, 6),
+    (CURRENT_DATE + integer '7', NULL, 7, 6),
+    (CURRENT_DATE + integer '7', NULL, 8, 6),
+    (CURRENT_DATE + integer '7', NULL, 9, 6),
+    (CURRENT_DATE + integer '7', NULL, 10, 6),
+    --(board with id = 3)-------------------
+    (CURRENT_DATE - integer '7', 0.0, 11, 15),
+    (CURRENT_DATE - integer '7', 1.0, 12, 15),
+    (CURRENT_DATE - integer '7', 2.0, 13, 15),
+    (CURRENT_DATE - integer '7', 0.0, 14, 15),
+    (CURRENT_DATE - integer '7', 1.0, 15, 15),
+    (CURRENT_DATE - integer '7', 2.0, 16, 15),
+    (CURRENT_DATE - integer '7', 0.0, 17, 15),
+    (CURRENT_DATE - integer '7', 1.0, 18, 15);

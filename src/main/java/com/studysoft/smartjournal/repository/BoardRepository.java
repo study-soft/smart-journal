@@ -37,5 +37,5 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @Query(value = "delete from groups_subjects where groups_id =:groupId and subjects_id=:subjectId", nativeQuery = true)
     void deleteGroupsSubjects(@Param("groupId") Long groupId, @Param("subjectId") Long subjectId);
 
-    void deleteByGroupId(Long groupId);
+    void deleteAllByGroupId(Long groupId);
 }

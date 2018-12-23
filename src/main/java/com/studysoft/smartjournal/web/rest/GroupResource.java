@@ -198,7 +198,7 @@ public class GroupResource {
     @DeleteMapping("/groups/{groupId}/students/{studentId}")
     public ResponseEntity<Void> deleteStudent(@PathVariable Long groupId, @PathVariable Long studentId) {
         log.debug("REST request to delete Student : {}", studentId);
-
+        groupService.checkStudent(studentId, groupId);
         studentRepository.deleteById(studentId);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, studentId.toString())).build();
     }
