@@ -1,10 +1,7 @@
 package com.studysoft.smartjournal.web.rest;
 
 import com.studysoft.smartjournal.domain.Subject;
-import com.studysoft.smartjournal.domain.User;
 import com.studysoft.smartjournal.repository.SubjectRepository;
-import com.studysoft.smartjournal.repository.UserRepository;
-import com.studysoft.smartjournal.security.SecurityUtils;
 import com.studysoft.smartjournal.service.SubjectService;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
 import com.studysoft.smartjournal.web.rest.errors.EntityNotFoundException;
@@ -20,6 +17,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
+import static com.studysoft.smartjournal.service.util.Constants.ENTITY_SUBJECT;
+
 /**
  * REST controller for managing Subject.
  */
@@ -29,13 +28,12 @@ public class SubjectResource {
 
     private final Logger log = LoggerFactory.getLogger(SubjectResource.class);
 
-    private static final String ENTITY_NAME = "subject";
-
     private final SubjectRepository subjectRepository;
+
     private final SubjectService subjectService;
 
-    public SubjectResource(SubjectRepository subjectRepository,
-                           SubjectService subjectService) {
+    public SubjectResource(SubjectRepository subjectRepository, SubjectService subjectService) {
+
         this.subjectRepository = subjectRepository;
         this.subjectService = subjectService;
     }
@@ -51,7 +49,7 @@ public class SubjectResource {
     public ResponseEntity<Subject> createSubject(@Valid @RequestBody Subject subject) throws URISyntaxException {
         log.debug("REST request to save Subject : {}", subject);
         if (subject.getId() != null) {
-            throw new BadRequestAlertException("A new subject cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("A new subject cannot already have an ID", ENTITY_SUBJECT, "idexists");
         }
 
         subjectService.checkNameExists(subject);
@@ -59,7 +57,7 @@ public class SubjectResource {
         Subject result = subjectRepository.save(subject);
 
         return ResponseEntity.created(new URI("/api/subjects/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_SUBJECT, result.getId().toString()))
             .body(result);
     }
 
@@ -77,7 +75,7 @@ public class SubjectResource {
     public ResponseEntity<Subject> updateSubject(@Valid @RequestBody Subject subject) throws URISyntaxException {
         log.debug("REST request to update Subject : {}", subject);
         if (subject.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+            throw new BadRequestAlertException("Invalid id", ENTITY_SUBJECT, "idnull");
         }
 
         Optional<Subject> dbSubject = subjectRepository.findById(subject.getId());
@@ -89,7 +87,7 @@ public class SubjectResource {
         Subject result = subjectRepository.save(subject);
 
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, subject.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_SUBJECT, subject.getId().toString()))
             .body(result);
     }
 
@@ -114,7 +112,7 @@ public class SubjectResource {
     @GetMapping("/subjects/{id}")
     public ResponseEntity<?> getSubject(@PathVariable Long id) {
         log.debug("REST request to get Subject : {}", id);
-        Subject subject = subjectRepository.findOneEager(id).orElseThrow(() -> new EntityNotFoundException(ENTITY_NAME));
+        Subject subject = subjectRepository.findOneEager(id).orElseThrow(() -> new EntityNotFoundException(ENTITY_SUBJECT));
         subjectService.checkCurrentUser(subject);
         return ResponseEntity.ok(subject);
     }
@@ -128,9 +126,9 @@ public class SubjectResource {
     @DeleteMapping("/subjects/{id}")
     public ResponseEntity<Void> deleteSubject(@PathVariable Long id) {
         log.debug("REST request to delete Subject : {}", id);
-        Subject subject = subjectRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(ENTITY_NAME));
+        Subject subject = subjectRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(ENTITY_SUBJECT));
         subjectService.checkCurrentUser(subject);
         subjectService.deleteSubject(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_SUBJECT, id.toString())).build();
     }
 }

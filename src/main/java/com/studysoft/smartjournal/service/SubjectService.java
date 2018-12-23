@@ -13,18 +13,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+import static com.studysoft.smartjournal.service.util.Constants.ENTITY_SUBJECT;
+
 @Service
 public class SubjectService {
 
-    private static final String ENTITY_NAME = "group";
-
     private final UserRepository userRepository;
+
     private final SubjectRepository subjectRepository;
+
     private final BoardRepository boardRepository;
 
-    public SubjectService(UserRepository userRepository,
-                          SubjectRepository subjectRepository,
-                          BoardRepository boardRepository) {
+    public SubjectService(UserRepository userRepository, SubjectRepository subjectRepository, BoardRepository boardRepository) {
+
         this.userRepository = userRepository;
         this.subjectRepository = subjectRepository;
         this.boardRepository = boardRepository;
@@ -33,7 +34,7 @@ public class SubjectService {
     /**
      * Set user from current session to field user of subject
      *
-     * @param subject board to set
+     * @param subject the subject to set
      */
     public void setCurrentUser(Subject subject) {
         User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().orElse(""))
@@ -44,12 +45,12 @@ public class SubjectService {
     /**
      * Checks that subject belongs to user from current session
      *
-     * @param subject subject to check
+     * @param subject the subject to check
      */
     public void checkCurrentUser(Subject subject) {
         if (subject.getUser() != null &&
             !subject.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
-            throw new BadRequestAlertException("Requested id does not belong to current user", ENTITY_NAME, "accessDenied");
+            throw new BadRequestAlertException("Requested id does not belong to current user", ENTITY_SUBJECT, "accessDenied");
         }
     }
 
@@ -57,19 +58,19 @@ public class SubjectService {
     /**
      * Checks if there is a subject with the same name for current user
      *
-     * @param subject subject to check
+     * @param subject the subject to check
      */
     public void checkNameExists(Subject subject) {
         Optional<Subject> dbSubject = subjectRepository.findByNameForCurrentUser(subject.getName());
         if (dbSubject.isPresent()) {
-            throw new BadRequestAlertException("Subject with this name is already exists", ENTITY_NAME, "nameexists");
+            throw new BadRequestAlertException("Subject with this name is already exists", ENTITY_SUBJECT, "nameexists");
         }
     }
 
     /**
-     * Delete subject and all boards that use this subject in one transaction
+     * Delete the subject and all boards that use this subject in one transaction
      *
-     * @param subjectId id of subject to delete
+     * @param subjectId the id of the subject to delete
      */
     @Transactional
     public void deleteSubject(Long subjectId) {

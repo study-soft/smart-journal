@@ -2,13 +2,8 @@ package com.studysoft.smartjournal.web.rest;
 
 import com.studysoft.smartjournal.domain.Group;
 import com.studysoft.smartjournal.domain.Student;
-import com.studysoft.smartjournal.domain.Subject;
-import com.studysoft.smartjournal.domain.User;
-import com.studysoft.smartjournal.repository.BoardRepository;
 import com.studysoft.smartjournal.repository.GroupRepository;
 import com.studysoft.smartjournal.repository.StudentRepository;
-import com.studysoft.smartjournal.repository.UserRepository;
-import com.studysoft.smartjournal.security.SecurityUtils;
 import com.studysoft.smartjournal.service.GroupService;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
 import com.studysoft.smartjournal.web.rest.errors.EntityNotFoundException;
@@ -24,6 +19,9 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
+import static com.studysoft.smartjournal.service.util.Constants.ENTITY_GROUP;
+import static com.studysoft.smartjournal.service.util.Constants.ENTITY_STUDENT;
+
 /**
  * REST controller for managing group.
  */
@@ -33,15 +31,14 @@ public class GroupResource {
 
     private final Logger log = LoggerFactory.getLogger(GroupResource.class);
 
-    private static final String ENTITY_NAME = "group";
-
     private final GroupRepository groupRepository;
+
     private final GroupService groupService;
+
     private final StudentRepository studentRepository;
 
-    public GroupResource(GroupRepository groupRepository,
-                         GroupService groupService,
-                         StudentRepository studentRepository) {
+    public GroupResource(GroupRepository groupRepository, GroupService groupService, StudentRepository studentRepository) {
+
         this.groupRepository = groupRepository;
         this.groupService = groupService;
         this.studentRepository = studentRepository;
@@ -58,7 +55,7 @@ public class GroupResource {
     public ResponseEntity<Group> createGroup(@Valid @RequestBody Group group) throws URISyntaxException {
         log.debug("REST request to save group : {}", group);
         if (group.getId() != null) {
-            throw new BadRequestAlertException("A new group cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("A new group cannot already have an ID", ENTITY_GROUP, "idexists");
         }
 
         groupService.checkNameExists(group);
@@ -66,7 +63,7 @@ public class GroupResource {
         Group result = groupRepository.save(group);
 
         return ResponseEntity.created(new URI("/api/parties/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_GROUP, result.getId().toString()))
             .body(result);
     }
 
@@ -84,7 +81,7 @@ public class GroupResource {
     public ResponseEntity<Group> updateGroup(@Valid @RequestBody Group group) throws URISyntaxException {
         log.debug("REST request to update group : {}", group);
         if (group.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+            throw new BadRequestAlertException("Invalid id", ENTITY_GROUP, "idnull");
         }
 
         Optional<Group> dbGroup = groupRepository.findById(group.getId());
@@ -96,7 +93,7 @@ public class GroupResource {
         Group result = groupRepository.save(group);
 
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, group.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_GROUP, group.getId().toString()))
             .body(result);
     }
 
@@ -121,7 +118,7 @@ public class GroupResource {
     @GetMapping("/groups/{id}")
     public ResponseEntity<Group> getGroup(@PathVariable Long id) {
         log.debug("REST request to get group : {}", id);
-        Group group = groupRepository.findOneEager(id).orElseThrow(() -> new EntityNotFoundException(ENTITY_NAME));
+        Group group = groupRepository.findOneEager(id).orElseThrow(() -> new EntityNotFoundException(ENTITY_GROUP));
         groupService.checkCurrentUser(group);
         return ResponseEntity.ok(group);
     }
@@ -135,16 +132,16 @@ public class GroupResource {
     @DeleteMapping("/groups/{id}")
     public ResponseEntity<Void> deleteGroup(@PathVariable Long id) {
         log.debug("REST request to delete group : {}", id);
-        Group group = groupRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(ENTITY_NAME));
+        Group group = groupRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(ENTITY_GROUP));
         groupService.checkCurrentUser(group);
         groupService.deleteGroup(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_GROUP, id.toString())).build();
     }
 
     /**
      * POST  /groups/{id}/students : Create a new student.
      *
-     * @param id the id of group
+     * @param id the id of the group
      * @param student the student to create
      * @return the ResponseEntity with status 201 (Created) and with body the new student, or with status 400 (Bad Request) if the student has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
@@ -152,21 +149,21 @@ public class GroupResource {
     @PostMapping("/groups/{id}/students")
     public ResponseEntity<Student> createStudent(@PathVariable Long id, @Valid @RequestBody Student student) throws URISyntaxException {
         if (student.getId() != null) {
-            throw new BadRequestAlertException("A new student cannot already have an ID", "student", "idexists");
+            throw new BadRequestAlertException("A new student cannot already have an ID", ENTITY_STUDENT, "idexists");
         }
         Group group = new Group();
         group.setId(id);
         student.setGroup(group);
         Student result = studentRepository.save(student);
         return ResponseEntity.created(new URI("/api/groups/" + id +"/students/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("student", result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_STUDENT, result.getId().toString()))
             .body(result);
     }
 
     /**
      * PUT  /groups/:id/students : Updates an existing student.
      *
-     * @param id the id of group
+     * @param id the id of the group
      * @param student the student to update
      * @return the ResponseEntity with status 200 (OK) and with body the updated student,
      * or with status 400 (Bad Request) if the student is not valid,
@@ -177,14 +174,14 @@ public class GroupResource {
     public ResponseEntity<Student> updateStudent(@PathVariable Long id, @Valid @RequestBody Student student) throws URISyntaxException {
         log.debug("REST request to update Student : {}", student);
         if (student.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", "student", "idnull");
+            throw new BadRequestAlertException("Invalid id", ENTITY_STUDENT, "idnull");
         }
         Group group = new Group();
         group.setId(id);
         student.setGroup(group);
         Student result = studentRepository.save(student);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert("student", student.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_STUDENT, student.getId().toString()))
             .body(result);
     }
 
@@ -203,7 +200,7 @@ public class GroupResource {
     /**
      * DELETE  /groups/:id/students/:studentId : delete the "id" student.
      *
-     * @param groupId the id of group
+     * @param groupId the id of the group
      * @param studentId the id of the student to delete
      * @return the ResponseEntity with status 200 (OK)
      */
@@ -212,6 +209,6 @@ public class GroupResource {
         log.debug("REST request to delete Student : {}", studentId);
         groupService.checkStudent(studentId, groupId);
         studentRepository.deleteById(studentId);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("student", studentId.toString())).build();
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_STUDENT, studentId.toString())).build();
     }
 }
