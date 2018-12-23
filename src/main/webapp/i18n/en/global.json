@@ -138,7 +138,7 @@
         "idexists": "A new {{ entityName }} cannot already have an ID",
         "nameexists": "{{ entityName }} with this name is already exists",
         "idnull": "Invalid ID",
-        "accessDenied": "You have no permission to view this page"
+        "accessDenied": "You have no permission to view this page or perform such operation"
     },
     "footer": "This is your footer"
 }
