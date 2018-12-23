@@ -35,7 +35,7 @@ public class Group extends AbstractAuditingEntity implements Serializable {
     @JsonIgnore
     private User user;
 
-    @OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "group", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @OrderBy("last_name, first_name ASC")
     private Set<Student> students = new HashSet<>();
 

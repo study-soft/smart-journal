@@ -16,13 +16,6 @@ import java.util.Optional;
 @Repository
 public interface GroupRepository extends JpaRepository<Group, Long> {
 
-    @Query(value = "select distinct g from Group g left join fetch g.subjects",
-        countQuery = "select count(distinct g) from Group g")
-    Page<Group> findAllEager(Pageable pageable);
-
-    @Query(value = "select distinct g from Group g left join fetch g.subjects")
-    List<Group> findAllEager();
-
     @Query("select g from Group g left join fetch g.subjects where g.id =:id")
     Optional<Group> findOneEager(@Param("id") Long id);
 

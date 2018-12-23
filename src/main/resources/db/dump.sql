@@ -285,7 +285,7 @@ INSERT INTO students (first_name, last_name, middle_name, group_id) VALUES
     ('Павло', 'Янович', 'Антоненко', 3),
     ('Валерій', 'Овсієнко', 'Федорович', 3);
 
--- days (board with id = 1)
+-- days (group with id = 1)
 INSERT INTO days (date, result, student_id, day_type_id) VALUES
     (CURRENT_DATE - integer '28', 0.0, 1, 1),
     (CURRENT_DATE - integer '28', 1.0, 2, 1),
@@ -406,4 +406,12 @@ INSERT INTO days (date, result, student_id, day_type_id) VALUES
     (CURRENT_DATE + integer '42', NULL, 7, 4),
     (CURRENT_DATE + integer '42', NULL, 8, 4),
     (CURRENT_DATE + integer '42', NULL, 9, 4),
-    (CURRENT_DATE + integer '42', NULL, 10, 4);
+    (CURRENT_DATE + integer '42', NULL, 10, 4),
+    --(group with id = 2)-------------------
+    (CURRENT_DATE + integer '7', NULL, 11, 6),
+    (CURRENT_DATE + integer '7', NULL, 12, 6),
+    (CURRENT_DATE + integer '7', NULL, 13, 6),
+    (CURRENT_DATE + integer '7', NULL, 14, 6),
+    (CURRENT_DATE + integer '7', NULL, 15, 6),
+    (CURRENT_DATE + integer '7', NULL, 16, 6),
+    (CURRENT_DATE + integer '7', NULL, 17, 6);

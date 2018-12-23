@@ -36,7 +36,7 @@ public class Day implements Serializable {
     @JsonIgnore
     private Student student;
 
-    @OneToOne()    @JoinColumn(unique = true)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"createdBy", "created", "updatedBy", "updated"})
     private DayType dayType;
 

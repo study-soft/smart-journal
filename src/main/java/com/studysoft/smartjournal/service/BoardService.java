@@ -2,14 +2,14 @@ package com.studysoft.smartjournal.service;
 
 import com.studysoft.smartjournal.domain.*;
 import com.studysoft.smartjournal.domain.enumeration.Type;
-import com.studysoft.smartjournal.repository.DayRepository;
-import com.studysoft.smartjournal.repository.DayTypeRepository;
-import com.studysoft.smartjournal.repository.UserRepository;
+import com.studysoft.smartjournal.repository.*;
 import com.studysoft.smartjournal.security.SecurityUtils;
 import com.studysoft.smartjournal.web.rest.errors.EntityNotFoundException;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -22,16 +22,22 @@ import java.util.List;
 public class BoardService {
 
     private final UserRepository userRepository;
+    private final BoardRepository boardRepository;
+    private final StudentRepository studentRepository;
     private final DayTypeRepository dayTypeRepository;
     private final DayRepository dayRepository;
     private final MessageSource messageSource;
 
 
     public BoardService(UserRepository userRepository,
+                        BoardRepository boardRepository,
+                        StudentRepository studentRepository,
                         DayTypeRepository dayTypeRepository,
                         DayRepository dayRepository,
                         MessageSource messageSource) {
         this.userRepository = userRepository;
+        this.boardRepository = boardRepository;
+        this.studentRepository = studentRepository;
         this.dayTypeRepository = dayTypeRepository;
         this.dayRepository = dayRepository;
         this.messageSource = messageSource;
@@ -83,18 +89,36 @@ public class BoardService {
         return dates;
     }
 
+    @Transactional
+    public Board saveBoard(Board board, LocalDate dateFrom, LocalDate dateTo, List<Integer> days) {
+        Board result = saveBoard(board);
+
+        if (dateFrom != null && dateTo != null && days != null && !days.isEmpty()) {
+            List<LocalDate> dates = generateSchedule(dateFrom, dateTo, days);
+            List<Student> students = studentRepository.findAllByGroupId(board.getGroup().getId());
+
+            if (!dates.isEmpty() && !students.isEmpty()) {
+                fillBoard(board, students, dates);
+            }
+        }
+
+        return result;
+    }
+
     /**
-     * Create days for students of current board of default {@link DayType} (DayType.SIMPLE)
+     * Create days for students of current board of default {@link DayType} (DayType.SIMPLE).
+     * Save it all to database in one transaction
      *
      * @param board the board to fill
      * @param students the students of current board
      * @param dates the dates of current board
      */
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void fillBoard(Board board, List<Student> students, List<LocalDate> dates) {
         DayType dayType = new DayType() // create default dayType
             .type(Type.SIMPLE)
             .score(1.0)
-            .description(messageSource.getMessage("smartjournalApp.board.defaultDescription",
+            .description(messageSource.getMessage("board.create.dayType.description",
                 null, LocaleContextHolder.getLocale())) // TODO: i18n
 //            .description("smartjournalApp.board.defaultDescription")
             .board(board);
@@ -110,6 +134,30 @@ public class BoardService {
                 dayRepository.save(day);
             });
         });
+    }
+
+    /**
+     * Save board and fill table groups_subjects in one transaction
+     *
+     * @param board board to save
+     * @return saved board
+     */
+    @Transactional
+    public Board saveBoard(Board board) {
+        Board result = boardRepository.save(board);
+        boardRepository.fillGroupsSubjects(result.getGroup().getId(), result.getSubject().getId());
+        return result;
+    }
+
+    /**
+     * Delete board and entry from groups_subjects in one transaction
+     *
+     * @param board board to delete
+     */
+    @Transactional
+    public void deleteBoard(Board board) {
+        boardRepository.delete(board);
+        boardRepository.deleteGroupsSubjects(board.getGroup().getId(), board.getSubject().getId());
     }
 
 }

@@ -1,6 +1,7 @@
 package com.studysoft.smartjournal.repository;
 
 import com.studysoft.smartjournal.domain.Board;
+import com.studysoft.smartjournal.domain.Group;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -30,11 +31,11 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     @Modifying
     @Query(value = "insert into groups_subjects(groups_id, subjects_id) values (:groupId, :subjectId)", nativeQuery = true)
-    @Transactional
     void fillGroupsSubjects(@Param("groupId") Long groupId, @Param("subjectId") Long subjectId);
 
     @Modifying
     @Query(value = "delete from groups_subjects where groups_id =:groupId and subjects_id=:subjectId", nativeQuery = true)
-    @Transactional
     void deleteGroupsSubjects(@Param("groupId") Long groupId, @Param("subjectId") Long subjectId);
+
+    void deleteByGroup(Group group);
 }

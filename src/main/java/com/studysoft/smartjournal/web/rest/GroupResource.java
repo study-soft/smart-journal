@@ -3,6 +3,7 @@ package com.studysoft.smartjournal.web.rest;
 import com.studysoft.smartjournal.domain.Group;
 import com.studysoft.smartjournal.domain.Student;
 import com.studysoft.smartjournal.domain.User;
+import com.studysoft.smartjournal.repository.BoardRepository;
 import com.studysoft.smartjournal.repository.GroupRepository;
 import com.studysoft.smartjournal.repository.StudentRepository;
 import com.studysoft.smartjournal.repository.UserRepository;
@@ -132,7 +133,9 @@ public class GroupResource {
     public ResponseEntity<Void> deleteGroup(@PathVariable Long id) {
         log.debug("REST request to delete group : {}", id);
 
-        groupRepository.deleteById(id);
+        Group group = groupRepository.findById(id).orElse(null);
+        groupService.deleteGroup(group);
+
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 

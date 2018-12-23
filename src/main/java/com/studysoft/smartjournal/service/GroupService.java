@@ -2,12 +2,14 @@ package com.studysoft.smartjournal.service;
 
 import com.studysoft.smartjournal.domain.Group;
 import com.studysoft.smartjournal.domain.User;
+import com.studysoft.smartjournal.repository.BoardRepository;
 import com.studysoft.smartjournal.repository.GroupRepository;
 import com.studysoft.smartjournal.repository.UserRepository;
 import com.studysoft.smartjournal.security.SecurityUtils;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
 import com.studysoft.smartjournal.web.rest.errors.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -18,11 +20,14 @@ public class GroupService {
 
     private final UserRepository userRepository;
     private final GroupRepository groupRepository;
+    private final BoardRepository boardRepository;
 
     public GroupService(UserRepository userRepository,
-                        GroupRepository groupRepository) {
+                        GroupRepository groupRepository,
+                        BoardRepository boardRepository) {
         this.userRepository = userRepository;
         this.groupRepository = groupRepository;
+        this.boardRepository = boardRepository;
     }
 
     /**
@@ -46,5 +51,11 @@ public class GroupService {
         if (dbGroup.isPresent()) {
             throw new BadRequestAlertException("Group with this name is already exists", ENTITY_NAME, "nameexists");
         }
+    }
+
+    @Transactional
+    public void deleteGroup(Group group) {
+        boardRepository.deleteByGroup(group);
+        groupRepository.delete(group);
     }
 }

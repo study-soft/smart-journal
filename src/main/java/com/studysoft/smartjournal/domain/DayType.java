@@ -9,6 +9,7 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
+import java.util.Set;
 
 import com.studysoft.smartjournal.domain.enumeration.Type;
 
@@ -44,6 +45,9 @@ public class DayType extends AbstractAuditingEntity implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Board board;
+
+    @OneToMany(mappedBy = "dayType", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private Set<Day> days;
 
     public Long getId() {
         return id;
@@ -116,6 +120,31 @@ public class DayType extends AbstractAuditingEntity implements Serializable {
 
     public void setBoard(Board board) {
         this.board = board;
+    }
+
+    public Set<Day> getDays() {
+        return days;
+    }
+
+    public DayType days(Set<Day> days) {
+        this.days = days;
+        return this;
+    }
+
+    public DayType addDay(Day day) {
+        this.days.add(day);
+        day.setDayType(this);
+        return this;
+    }
+
+    public DayType removeDay(Day day) {
+        this.days.remove(day);
+        day.setDayType(null);
+        return this;
+    }
+
+    public void setDays(Set<Day> days) {
+        this.days = days;
     }
 
     @Override
