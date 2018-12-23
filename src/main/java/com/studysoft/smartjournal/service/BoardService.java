@@ -69,6 +69,14 @@ public class BoardService {
         }
     }
 
+    public void checkDayType(Long dayTypeId, Long boardId) {
+        DayType dayType = dayTypeRepository.findById(dayTypeId).orElseThrow(() -> new EntityNotFoundException("dayType"));
+        if (!dayType.getBoard().getId().equals(boardId)) {
+            throw new BadRequestAlertException("DayType with id '" + dayTypeId + "' does not belong to current board",
+                ENTITY_NAME, "accessDenied");
+        }
+    }
+
     /**
      * Save board and fill table groups_subjects in one transaction.
      * If parameters <i>dateFrom, dateTo, days</i> exist, generate schedule for this board

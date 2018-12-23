@@ -130,7 +130,7 @@ public class SubjectResource {
         log.debug("REST request to delete Subject : {}", id);
         Subject subject = subjectRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(ENTITY_NAME));
         subjectService.checkCurrentUser(subject);
-        subjectRepository.deleteById(id);
+        subjectService.deleteSubject(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

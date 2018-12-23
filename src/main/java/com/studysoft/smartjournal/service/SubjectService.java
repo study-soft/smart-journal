@@ -1,14 +1,15 @@
 package com.studysoft.smartjournal.service;
 
-import com.studysoft.smartjournal.domain.Group;
 import com.studysoft.smartjournal.domain.Subject;
 import com.studysoft.smartjournal.domain.User;
+import com.studysoft.smartjournal.repository.BoardRepository;
 import com.studysoft.smartjournal.repository.SubjectRepository;
 import com.studysoft.smartjournal.repository.UserRepository;
 import com.studysoft.smartjournal.security.SecurityUtils;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
 import com.studysoft.smartjournal.web.rest.errors.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -19,11 +20,14 @@ public class SubjectService {
 
     private final UserRepository userRepository;
     private final SubjectRepository subjectRepository;
+    private final BoardRepository boardRepository;
 
     public SubjectService(UserRepository userRepository,
-                          SubjectRepository subjectRepository) {
+                          SubjectRepository subjectRepository,
+                          BoardRepository boardRepository) {
         this.userRepository = userRepository;
         this.subjectRepository = subjectRepository;
+        this.boardRepository = boardRepository;
     }
 
     /**
@@ -60,5 +64,16 @@ public class SubjectService {
         if (dbSubject.isPresent()) {
             throw new BadRequestAlertException("Subject with this name is already exists", ENTITY_NAME, "nameexists");
         }
+    }
+
+    /**
+     * Delete subject and all boards that use this subject in one transaction
+     *
+     * @param subjectId id of subject to delete
+     */
+    @Transactional
+    public void deleteSubject(Long subjectId) {
+        boardRepository.deleteAllBySubjectId(subjectId);
+        subjectRepository.deleteById(subjectId);
     }
 }
