@@ -42,6 +42,18 @@ public class GroupService {
     }
 
     /**
+     * Checks that group belongs to user from current session
+     *
+     * @param group group to check
+     */
+    public void checkCurrentUser(Group group) {
+        if (group.getUser() != null &&
+            !group.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
+            throw new BadRequestAlertException("Requested id does not belong to current user", ENTITY_NAME, "accessDenied");
+        }
+    }
+
+    /**
      * Checks if there is a group with the same name for current user
      *
      * @param group group to check
@@ -54,8 +66,8 @@ public class GroupService {
     }
 
     @Transactional
-    public void deleteGroup(Group group) {
-        boardRepository.deleteByGroup(group);
-        groupRepository.delete(group);
+    public void deleteGroup(Long groupId) {
+//        boardRepository.deleteByGroupId(groupId);
+        groupRepository.deleteById(groupId);
     }
 }

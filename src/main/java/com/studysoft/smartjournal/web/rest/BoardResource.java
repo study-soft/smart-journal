@@ -13,6 +13,7 @@ import com.studysoft.smartjournal.security.SecurityUtils;
 import com.studysoft.smartjournal.service.BoardService;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
 import com.studysoft.smartjournal.web.rest.errors.EntityNotFoundException;
+import com.studysoft.smartjournal.web.rest.errors.InternalServerErrorException;
 import com.studysoft.smartjournal.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -130,10 +131,7 @@ public class BoardResource {
     public ResponseEntity<Board> getBoard(@PathVariable Long id) {
         log.debug("REST request to get Board : {}", id);
         Board board = boardRepository.findByIdEager(id).orElseThrow(() -> new EntityNotFoundException(ENTITY_NAME));
-        if (board.getUser() != null &&
-            !board.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
-            throw new BadRequestAlertException("Requested id does not belong to current user", ENTITY_NAME, "accessDenied");
-        }
+        boardService.checkCurrentUser(board);
         return ResponseEntity.ok(board);
     }
 
@@ -146,10 +144,9 @@ public class BoardResource {
     @DeleteMapping("/boards/{id}")
     public ResponseEntity<Void> deleteBoard(@PathVariable Long id) {
         log.debug("REST request to delete Board : {}", id);
-
-        Board board = boardRepository.findById(id).orElse(null);
+        Board board = boardRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(ENTITY_NAME));
+        boardService.checkCurrentUser(board);
         boardService.deleteBoard(board);
-
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

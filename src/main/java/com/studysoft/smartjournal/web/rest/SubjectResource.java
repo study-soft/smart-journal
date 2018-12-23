@@ -109,10 +109,7 @@ public class SubjectResource {
     public ResponseEntity<?> getSubject(@PathVariable Long id) {
         log.debug("REST request to get Subject : {}", id);
         Subject subject = subjectRepository.findOneEager(id).orElseThrow(() -> new EntityNotFoundException(ENTITY_NAME));
-        if (subject.getUser() != null &&
-            !subject.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
-            throw new BadRequestAlertException("Requested id does not belong to current user", ENTITY_NAME, "accessDenied");
-        }
+        subjectService.checkCurrentUser(subject);
         return ResponseEntity.ok(subject);
     }
 
@@ -125,7 +122,8 @@ public class SubjectResource {
     @DeleteMapping("/subjects/{id}")
     public ResponseEntity<Void> deleteSubject(@PathVariable Long id) {
         log.debug("REST request to delete Subject : {}", id);
-
+        Subject subject = subjectRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(ENTITY_NAME));
+        subjectService.checkCurrentUser(subject);
         subjectRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }

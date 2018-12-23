@@ -116,10 +116,7 @@ public class GroupResource {
     public ResponseEntity<Group> getGroup(@PathVariable Long id) {
         log.debug("REST request to get group : {}", id);
         Group group = groupRepository.findOneEager(id).orElseThrow(() -> new EntityNotFoundException(ENTITY_NAME));
-        if (group.getUser() != null &&
-            !group.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
-            throw new BadRequestAlertException("Requested id does not belong to current user", ENTITY_NAME, "accessDenied");
-        }
+        groupService.checkCurrentUser(group);
         return ResponseEntity.ok(group);
     }
 
@@ -132,10 +129,9 @@ public class GroupResource {
     @DeleteMapping("/groups/{id}")
     public ResponseEntity<Void> deleteGroup(@PathVariable Long id) {
         log.debug("REST request to delete group : {}", id);
-
-        Group group = groupRepository.findById(id).orElse(null);
-        groupService.deleteGroup(group);
-
+        Group group = groupRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(ENTITY_NAME));
+        groupService.checkCurrentUser(group);
+        groupService.deleteGroup(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 

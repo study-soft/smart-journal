@@ -1,5 +1,6 @@
 package com.studysoft.smartjournal.service;
 
+import com.studysoft.smartjournal.domain.Group;
 import com.studysoft.smartjournal.domain.Subject;
 import com.studysoft.smartjournal.domain.User;
 import com.studysoft.smartjournal.repository.SubjectRepository;
@@ -34,6 +35,18 @@ public class SubjectService {
         User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().orElse(""))
             .orElseThrow(() -> new EntityNotFoundException("user", "no authorized user in current session"));
         subject.setUser(user);
+    }
+
+    /**
+     * Checks that subject belongs to user from current session
+     *
+     * @param subject subject to check
+     */
+    public void checkCurrentUser(Subject subject) {
+        if (subject.getUser() != null &&
+            !subject.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
+            throw new BadRequestAlertException("Requested id does not belong to current user", ENTITY_NAME, "accessDenied");
+        }
     }
 
 
