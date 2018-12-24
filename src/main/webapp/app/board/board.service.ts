@@ -2,15 +2,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
-import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { map } from 'rxjs/operators';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
 import { Board } from 'app/shared/model/board.model';
+import { Day } from 'app/shared/model/day.model';
+import { DayType } from 'app/shared/model/day-type.model';
 
-type EntityResponseType = HttpResponse<Board>;
-type EntityArrayResponseType = HttpResponse<Board[]>;
+type BoardResponseType = HttpResponse<Board>;
+type BoardArrayResponseType = HttpResponse<Board[]>;
+type DayResponseType = HttpResponse<Day>;
+type DayArrayResponseType = HttpResponse<Day[]>;
+type DayTypeResponseType = HttpResponse<DayType>;
+type DayTypeArrayResponseType = HttpResponse<DayType[]>;
 
 @Injectable({ providedIn: 'root' })
 export class BoardService {
@@ -18,35 +23,97 @@ export class BoardService {
 
     constructor(private http: HttpClient) {}
 
-    create(board: Board): Observable<EntityResponseType> {
+    create(board: Board): Observable<BoardResponseType> {
         const copy = this.convertDateFromClient(board);
         return this.http
             .post<Board>(this.resourceUrl, copy, { observe: 'response' })
-            .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+            .pipe(map((res: BoardResponseType) => this.convertDateFromServer(res)));
     }
 
-    update(board: Board): Observable<EntityResponseType> {
+    update(board: Board): Observable<BoardResponseType> {
         const copy = this.convertDateFromClient(board);
         return this.http
             .put<Board>(this.resourceUrl, copy, { observe: 'response' })
-            .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+            .pipe(map((res: BoardResponseType) => this.convertDateFromServer(res)));
     }
 
-    find(id: number): Observable<EntityResponseType> {
+    find(id: number): Observable<BoardResponseType> {
         return this.http
             .get<Board>(`${this.resourceUrl}/${id}`, { observe: 'response' })
-            .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+            .pipe(map((res: BoardResponseType) => this.convertDateFromServer(res)));
     }
 
-    query(req?: any): Observable<EntityArrayResponseType> {
+    query(req?: any): Observable<BoardArrayResponseType> {
         const options = createRequestOption(req);
         return this.http
             .get<Board[]>(this.resourceUrl, { params: options, observe: 'response' })
-            .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+            .pipe(map((res: BoardArrayResponseType) => this.convertDateArrayFromServer(res)));
     }
 
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    }
+
+    createDay(boardId: number, day: Day): Observable<DayResponseType> {
+        const copy = this.convertDateFromClient(day);
+        return this.http
+            .post<Day>(`${this.resourceUrl}/${boardId}/days`, copy, { observe: 'response' })
+            .pipe(map((res: DayResponseType) => this.convertDateFromServer(res)));
+    }
+
+    updateDay(boardId: number, day: Day): Observable<DayResponseType> {
+        const copy = this.convertDateFromClient(day);
+        return this.http
+            .put<Day>(`${this.resourceUrl}/${boardId}/days`, copy, { observe: 'response' })
+            .pipe(map((res: DayResponseType) => this.convertDateFromServer(res)));
+    }
+
+    findDay(boardId: number, dayId: number): Observable<DayResponseType> {
+        return this.http
+            .get<Day>(`${this.resourceUrl}/${boardId}/days/${dayId}`, { observe: 'response' })
+            .pipe(map((res: DayResponseType) => this.convertDateFromServer(res)));
+    }
+
+    queryDays(boardId: number, req?: any): Observable<DayArrayResponseType> {
+        const options = createRequestOption(req);
+        return this.http
+            .get<Day[]>(`${this.resourceUrl}/${boardId}/days`, { params: options, observe: 'response' })
+            .pipe(map((res: DayArrayResponseType) => this.convertDateArrayFromServer(res)));
+    }
+
+    deleteDay(boardId: number, dayId: number): Observable<HttpResponse<any>> {
+        return this.http.delete<any>(`${this.resourceUrl}/${boardId}/days/${dayId}`, { observe: 'response' });
+    }
+
+    createDayType(boardId: number, dayType: DayType): Observable<DayTypeResponseType> {
+        const copy = this.convertDateFromClient(dayType);
+        return this.http
+            .post<DayType>(`${this.resourceUrl}/${boardId}/tasks`, copy, { observe: 'response' })
+            .pipe(map((res: DayTypeResponseType) => this.convertDateFromServer(res)));
+    }
+
+    updateDayType(boardId: number, dayType: DayType): Observable<DayTypeResponseType> {
+        const copy = this.convertDateFromClient(dayType);
+        return this.http
+            .put<DayType>(`${this.resourceUrl}/${boardId}/tasks`, copy, { observe: 'response' })
+            .pipe(map((res: DayTypeResponseType) => this.convertDateFromServer(res)));
+    }
+
+    findDayType(boardId: number, dayTypeId: number): Observable<DayTypeResponseType> {
+        return this.http
+            .get<DayType>(`${this.resourceUrl}/${boardId}/tasks/${dayTypeId}`, { observe: 'response' })
+            .pipe(map((res: DayTypeResponseType) => this.convertDateFromServer(res)));
+    }
+
+    queryDayType(boardId: number, req?: any): Observable<DayTypeArrayResponseType> {
+        const options = createRequestOption(req);
+        return this.http
+            .get<DayType[]>(`${this.resourceUrl}/${boardId}/tasks`, { params: options, observe: 'response' })
+            .pipe(map((res: DayTypeArrayResponseType) => this.convertDateArrayFromServer(res)));
+    }
+
+    deleteDayType(boardId: number, dayTypeId: number): Observable<HttpResponse<any>> {
+        return this.http.delete<any>(`${this.resourceUrl}/${boardId}/tasks/${dayTypeId}`, { observe: 'response' });
     }
 
     protected convertDateFromClient(board: Board): Board {
@@ -57,7 +124,7 @@ export class BoardService {
         return copy;
     }
 
-    protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
+    protected convertDateFromServer(res: BoardResponseType): BoardResponseType {
         if (res.body) {
             res.body.created = res.body.created != null ? moment(res.body.created) : null;
             res.body.updated = res.body.updated != null ? moment(res.body.updated) : null;
@@ -65,7 +132,7 @@ export class BoardService {
         return res;
     }
 
-    protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
+    protected convertDateArrayFromServer(res: BoardArrayResponseType): BoardArrayResponseType {
         if (res.body) {
             res.body.forEach((board: Board) => {
                 board.created = board.created != null ? moment(board.created) : null;
