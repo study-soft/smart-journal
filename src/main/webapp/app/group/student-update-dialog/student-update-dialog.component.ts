@@ -56,7 +56,7 @@ export class StudentUpdateDialogComponent implements OnInit {
             content: 'Updated a student in the group'
         });
         this.eventManager.broadcast({
-            name: 'navigateToStudentsTab',
+            name: 'navigationToStudentsTab',
             content: 'Navigate to "Students" tab after creating a student'
         });
         this.clear();
