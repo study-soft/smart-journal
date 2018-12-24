@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 import static com.studysoft.smartjournal.service.util.Constants.ENTITY_SUBJECT;
+import static com.studysoft.smartjournal.service.util.Constants.ENTITY_USER;
 
 @Service
 public class SubjectService {
@@ -38,7 +39,7 @@ public class SubjectService {
      */
     public void setCurrentUser(Subject subject) {
         User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().orElse(""))
-            .orElseThrow(() -> new EntityNotFoundException("user", "no authorized user in current session"));
+            .orElseThrow(() -> new EntityNotFoundException(ENTITY_USER, "no authorized user in current session"));
         subject.setUser(user);
     }
 

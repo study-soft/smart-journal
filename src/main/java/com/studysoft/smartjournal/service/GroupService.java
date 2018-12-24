@@ -15,8 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-import static com.studysoft.smartjournal.service.util.Constants.ENTITY_GROUP;
-import static com.studysoft.smartjournal.service.util.Constants.ENTITY_STUDENT;
+import static com.studysoft.smartjournal.service.util.Constants.*;
 
 @Service
 public class GroupService {
@@ -45,7 +44,7 @@ public class GroupService {
      */
     public void setCurrentUser(Group group) {
         User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().orElse(""))
-            .orElseThrow(() -> new EntityNotFoundException("user", "no authorized user in current session"));
+            .orElseThrow(() -> new EntityNotFoundException(ENTITY_USER, "no authorized user in current session"));
         group.setUser(user);
     }
 

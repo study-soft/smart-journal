@@ -18,8 +18,7 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.studysoft.smartjournal.service.util.Constants.ENTITY_BOARD;
-import static com.studysoft.smartjournal.service.util.Constants.ENTITY_DAYTYPE;
+import static com.studysoft.smartjournal.service.util.Constants.*;
 
 @Service
 public class BoardService {
@@ -55,7 +54,7 @@ public class BoardService {
      */
     public void setCurrentUser(Board board) {
         User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().orElse(""))
-            .orElseThrow(() -> new EntityNotFoundException("user", "no authorized user in current session"));
+            .orElseThrow(() -> new EntityNotFoundException(ENTITY_USER, "no authorized user in current session"));
         board.setUser(user);
     }
 
@@ -187,6 +186,30 @@ public class BoardService {
     public void deleteBoard(Board board) {
         boardRepository.deleteById(board.getId());
         boardRepository.deleteGroupsSubjects(board.getGroup().getId(), board.getSubject().getId());
+    }
+
+    /**
+     * Save the same days for all the students of the board in one transaction
+     *
+     * @param boardId the id of board
+     * @param day the day to save
+     * @return the list of saved days
+     */
+    @Transactional
+    public List<Day> saveDays(Long boardId, Day day) {
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> new EntityNotFoundException(ENTITY_BOARD));
+        List<Student> students = studentRepository.findAllByGroupId(board.getGroup().getId());
+        List<Day> savedDays = new ArrayList<>();
+
+        if (!students.isEmpty()) {
+            students.forEach(student -> {
+                day.setStudent(student);
+                Day savedDay = dayRepository.save(day);
+                savedDays.add(savedDay);
+            });
+        }
+
+        return savedDays;
     }
 
 }

@@ -6,6 +6,7 @@ import com.studysoft.smartjournal.domain.DayType;
 import com.studysoft.smartjournal.repository.BoardRepository;
 import com.studysoft.smartjournal.repository.DayRepository;
 import com.studysoft.smartjournal.repository.DayTypeRepository;
+import com.studysoft.smartjournal.repository.StudentRepository;
 import com.studysoft.smartjournal.service.BoardService;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
 import com.studysoft.smartjournal.web.rest.errors.EntityNotFoundException;
@@ -40,6 +41,7 @@ public class BoardResource {
     private final DayTypeRepository dayTypeRepository;
 
     private final DayRepository dayRepository;
+
 
     public BoardResource(BoardRepository boardRepository, BoardService boardService, DayTypeRepository dayTypeRepository,
                          DayRepository dayRepository) {
@@ -151,7 +153,7 @@ public class BoardResource {
     /**
      * POST  /boards/:id/tasks : Create a new dayType.
      *
-     * @param id the id of the board
+     * @param id      the id of the board
      * @param dayType the dayType to create
      * @return the ResponseEntity with status 201 (Created) and with body the new dayType, or with status 400 (Bad Request) if the dayType has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
@@ -171,7 +173,7 @@ public class BoardResource {
     /**
      * PUT  /boards/:id/tasks : Updates an existing dayType.
      *
-     * @param id the id of the board
+     * @param id      the id of the board
      * @param dayType the dayType to update
      * @return the ResponseEntity with status 200 (OK) and with body the updated dayType,
      * or with status 400 (Bad Request) if the dayType is not valid,
@@ -205,7 +207,7 @@ public class BoardResource {
     /**
      * DELETE  /boards/:boardId/tasks/:dayTypeId : delete the "id" dayType.
      *
-     * @param boardId the id of the board
+     * @param boardId   the id of the board
      * @param dayTypeId the id of the dayType to delete
      * @return the ResponseEntity with status 200 (OK)
      */
@@ -218,54 +220,61 @@ public class BoardResource {
     }
 
     /**
-     * POST  /boards/:id/days : Create a new day.
+     * POST  /boards/:id/days : Create a new days.
      *
-     * @param id the id of the board
+     * @param id  the id of the board
      * @param day the day to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new day, or with status 400 (Bad Request) if the day has already an ID
+     * @return the ResponseEntity with status 200 (Ok) and with body the new days, or with status 400 (Bad Request) if the day has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    // TODO
     @PostMapping("/boards/{id}/days")
-    public ResponseEntity<Day> createDay(@PathVariable Long id, @Valid @RequestBody Day day) throws URISyntaxException {
+    public ResponseEntity<List<Day>> createDay(@PathVariable Long id, @Valid @RequestBody Day day) throws URISyntaxException {
         log.debug("REST request to save Day : {}", day);
         if (day.getId() != null) {
             throw new BadRequestAlertException("A new day cannot already have an ID", ENTITY_DAY, "idexists");
         }
-        Day result = dayRepository.save(day);
-        return ResponseEntity.created(new URI("/api/boards/" + id + "/days/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_DAY, result.getId().toString()))
-            .body(result);
+        List<Day> days = boardService.saveDays(id, day);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_DAY, days.stream().map(Day::getId).toString()))
+            .body(days);
     }
 
     /**
-     * PUT  /boards/:id/days : Updates an existing day.
+     * PUT  /boards/:id/days : Updates an existing days.
      *
-     * @param id the id of the board
+     * @param id  the id of the board
      * @param day the day to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated day,
+     * @return the ResponseEntity with status 200 (OK) and with body the updated days,
      * or with status 400 (Bad Request) if the day is not valid,
-     * or with status 500 (Internal Server Error) if the day couldn't be updated
+     * or with status 500 (Internal Server Error) if the days couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    // TODO
     @PutMapping("/boards/{id}/days")
-    public ResponseEntity<Day> updateDay(@PathVariable Long id, @Valid @RequestBody Day day) throws URISyntaxException {
+    public ResponseEntity<List<Day>> updateDay(@PathVariable Long id, @Valid @RequestBody Day day) throws URISyntaxException {
         log.debug("REST request to update Day : {}", day);
         if (day.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_DAY, "idnull");
         }
-        Day result = dayRepository.save(day);
+        List<Day> days = boardService.saveDays(id, day);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_DAY, day.getId().toString()))
-            .body(result);
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_DAY, days.stream().map(Day::getId).toString()))
+            .body(days);
+    }
+
+    @PatchMapping("/boards/{id}/days")
+    public ResponseEntity<?> updateResult(@PathVariable Long id, @Valid @RequestBody List<Day> days) {
+
+        return ResponseEntity.noContent()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_DAY, days.stream()
+                .map(Day::getId)
+                .toString())).build();
     }
 
     /**
      * DELETE  /boards/:boardId/days/:dayId : delete the "id" day.
      *
      * @param boardId the id of the board
-     * @param dayId the id of the day to delete
+     * @param dayId   the id of the day to delete
      * @return the ResponseEntity with status 200 (OK)
      */
     // TODO
