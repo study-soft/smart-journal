@@ -44,6 +44,11 @@ public class Day implements Serializable {
         return id;
     }
 
+    public Day id(Long id) {
+        this.id = id;
+        return this;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

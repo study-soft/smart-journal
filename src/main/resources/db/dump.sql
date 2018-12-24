@@ -85,11 +85,12 @@ DROP TABLE IF EXISTS days CASCADE;
 DROP SEQUENCE IF EXISTS days_id_seq CASCADE;
 CREATE TABLE days (
     id BIGSERIAL PRIMARY KEY,
-    date DATE NOT NULL,
+    date DATE NOT NULL, --TODO: move field date to dayType
     result DOUBLE PRECISION,
     student_id BIGINT NOT NULL,
     day_type_id BIGINT NOT NULL
 );
+
 -- authorities
 DROP TABLE IF EXISTS authorities CASCADE;
 CREATE TABLE authorities (

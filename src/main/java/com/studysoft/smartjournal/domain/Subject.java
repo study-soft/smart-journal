@@ -44,6 +44,11 @@ public class Subject extends AbstractAuditingEntity implements Serializable {
         return id;
     }
 
+    public Subject id(Long id) {
+        this.id = id;
+        return this;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

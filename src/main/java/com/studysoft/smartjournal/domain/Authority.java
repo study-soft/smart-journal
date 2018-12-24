@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * An authority (a security role) used by Spring Security.
@@ -27,6 +28,11 @@ public class Authority implements Serializable {
         return name;
     }
 
+    public Authority name(String name) {
+        this.name = name;
+        return this;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -42,7 +48,7 @@ public class Authority implements Serializable {
 
         Authority authority = (Authority) o;
 
-        return !(name != null ? !name.equals(authority.name) : authority.name != null);
+        return Objects.equals(name, authority.name);
     }
 
     @Override

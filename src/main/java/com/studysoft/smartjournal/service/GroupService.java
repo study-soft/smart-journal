@@ -3,10 +3,7 @@ package com.studysoft.smartjournal.service;
 import com.studysoft.smartjournal.domain.Group;
 import com.studysoft.smartjournal.domain.Student;
 import com.studysoft.smartjournal.domain.User;
-import com.studysoft.smartjournal.repository.BoardRepository;
-import com.studysoft.smartjournal.repository.GroupRepository;
-import com.studysoft.smartjournal.repository.StudentRepository;
-import com.studysoft.smartjournal.repository.UserRepository;
+import com.studysoft.smartjournal.repository.*;
 import com.studysoft.smartjournal.security.SecurityUtils;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
 import com.studysoft.smartjournal.web.rest.errors.EntityNotFoundException;
@@ -28,13 +25,16 @@ public class GroupService {
 
     private final StudentRepository studentRepository;
 
+    private final DayRepository dayRepository;
+
     public GroupService(UserRepository userRepository, GroupRepository groupRepository, BoardRepository boardRepository,
-                        StudentRepository studentRepository) {
+                        StudentRepository studentRepository, DayRepository dayRepository) {
 
         this.userRepository = userRepository;
         this.groupRepository = groupRepository;
         this.boardRepository = boardRepository;
         this.studentRepository = studentRepository;
+        this.dayRepository = dayRepository;
     }
 
     /**
@@ -84,6 +84,13 @@ public class GroupService {
             throw new BadRequestAlertException("Student with id '" + studentId + "' does not belong to current group",
                 ENTITY_STUDENT, "accessDenied");
         }
+    }
+
+    @Transactional
+    public Student saveStudent(Long groupId, Student student) {
+        student.setGroup(new Group().id(groupId));
+        Student result = studentRepository.save(student);
+        return result;
     }
 
     /**

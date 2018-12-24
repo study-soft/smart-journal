@@ -151,10 +151,7 @@ public class GroupResource {
         if (student.getId() != null) {
             throw new BadRequestAlertException("A new student cannot already have an ID", ENTITY_STUDENT, "idexists");
         }
-        Group group = new Group();
-        group.setId(id);
-        student.setGroup(group);
-        Student result = studentRepository.save(student);
+        Student result = groupService.saveStudent(id, student);
         return ResponseEntity.created(new URI("/api/groups/" + id +"/students/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_STUDENT, result.getId().toString()))
             .body(result);

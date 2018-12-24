@@ -86,7 +86,7 @@ public class BoardService {
 
     /**
      * Save board and fill table groups_subjects in one transaction.
-     * If parameters <i>dateFrom, dateTo, days</i> exist, generate schedule for this board
+     * If parameters <i>dateFrom, dateTo, days</i> exist and at least one student in the group exist, generate schedule for this board
      *
      * @param board the board to save
      * @param dateFrom date from which generate schedule
@@ -100,10 +100,10 @@ public class BoardService {
         boardRepository.fillGroupsSubjects(result.getGroup().getId(), result.getSubject().getId());
 
         if (dateFrom != null && dateTo != null && days != null && !days.isEmpty()) {
-            List<LocalDate> dates = generateSchedule(dateFrom, dateTo, days);
             List<Student> students = studentRepository.findAllByGroupId(board.getGroup().getId());
 
-            if (!dates.isEmpty() && !students.isEmpty()) {
+            if (!students.isEmpty()) {
+                List<LocalDate> dates = generateSchedule(dateFrom, dateTo, days);
                 fillBoard(board, students, dates);
             }
         }

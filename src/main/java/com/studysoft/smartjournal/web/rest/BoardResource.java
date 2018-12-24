@@ -261,6 +261,7 @@ public class BoardResource {
             .body(days);
     }
 
+    // TODO
     @PatchMapping("/boards/{id}/days")
     public ResponseEntity<?> updateResult(@PathVariable Long id, @Valid @RequestBody List<Day> days) {
 
