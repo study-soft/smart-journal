@@ -1,3 +1,22 @@
-<p>
-  board-journal works!
-</p>
+<div class="table-responsive" *ngIf="group.students">
+    <table class="table table-striped table-bordered">
+        <thead>
+        <tr class="text-center">
+            <th>Student</th>
+            <th colspan="100%">Scores</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td></td>
+            <td *ngFor=" let day of group.students[0].days" class="text-center">
+                {{day.date | date: 'dd.MM'}}
+            </td>
+        </tr>
+        <tr *ngFor="let student of group.students">
+            <td>{{student.lastName}} {{student.firstName}}</td>
+            <td *ngFor="let day of student.days" class="text-center">{{day.result}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

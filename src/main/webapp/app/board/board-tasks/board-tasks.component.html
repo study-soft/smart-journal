@@ -1,3 +1,34 @@
-<p>
-  board-tasks works!
-</p>
+<dl class="row-md jh-entity-details">
+    <dt><span>Title</span></dt>
+    <dd>
+        <span>{{board.title}}</span>
+    </dd>
+    <dt><span jhiTranslate="smartjournalApp.board.name">Name</span></dt>
+    <dd>
+        <span>{{board.name}}</span>
+    </dd>
+    <dt><span jhiTranslate="smartjournalApp.board.description">Description</span></dt>
+    <dd>
+        <span>{{board.description}}</span>
+    </dd>
+    <dt><span jhiTranslate="smartjournalApp.board.createdDate">Created</span></dt>
+    <dd>
+        <span>{{board.created}}</span>
+    </dd>
+    <dt><span jhiTranslate="smartjournalApp.board.updatedDate">Updated</span></dt>
+    <dd>
+        <span>{{board.updated}}</span>
+    </dd>
+    <dt><span jhiTranslate="smartjournalApp.board.group">Group</span></dt>
+    <dd>
+        <div *ngIf="board.group">
+            <a [routerLink]="['/group', board.group?.id, 'view']">{{board.group?.id}}</a>
+        </div>
+    </dd>
+    <dt><span jhiTranslate="smartjournalApp.board.subject">Subject</span></dt>
+    <dd>
+        <div *ngIf="board.subject">
+            <a [routerLink]="['/subject', board.subject?.id, 'view']">{{board.subject?.id}}</a>
+        </div>
+    </dd>
+</dl>
