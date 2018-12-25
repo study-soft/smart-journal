@@ -74,7 +74,7 @@ public class BoardService {
      * Checks if the dayType belongs to the board
      *
      * @param dayTypeId the id of the dayType
-     * @param boardId the id of the board
+     * @param boardId   the id of the board
      */
     public void checkDayType(Long dayTypeId, Long boardId) {
         DayType dayType = dayTypeRepository.findById(dayTypeId).orElseThrow(() -> new EntityNotFoundException("dayType"));
@@ -88,10 +88,10 @@ public class BoardService {
      * Save board and fill table groups_subjects in one transaction.
      * If parameters <i>dateFrom, dateTo, days</i> exist and at least one student in the group exist, generate schedule for this board
      *
-     * @param board the board to save
+     * @param board    the board to save
      * @param dateFrom date from which generate schedule
-     * @param dateTo date to which generate schedule
-     * @param days days of week which include to schedule
+     * @param dateTo   date to which generate schedule
+     * @param days     days of week which include to schedule
      * @return saved board
      */
     @Transactional
@@ -115,8 +115,8 @@ public class BoardService {
      * Generate schedule for specified period and days of week
      *
      * @param dateFrom date from which generate schedule
-     * @param dateTo date to which generate schedule
-     * @param days days of week which include to schedule
+     * @param dateTo   date to which generate schedule
+     * @param days     days of week which include to schedule
      * @return the list of dates
      */
     private List<LocalDate> generateSchedule(LocalDate dateFrom, LocalDate dateTo, List<Integer> days) {
@@ -132,7 +132,7 @@ public class BoardService {
             LocalDate originDateFrom = dateFrom;
             while (true) {
                 LocalDate nextDay = dateFrom.with(TemporalAdjusters.next(DayOfWeek.of(day)));
-                if (nextDay.isBefore(dateTo) || nextDay.equals(dateTo)){
+                if (nextDay.isBefore(dateTo) || nextDay.equals(dateTo)) {
                     dates.add(nextDay);
                     dateFrom = nextDay;
                 } else {
@@ -150,9 +150,9 @@ public class BoardService {
      * Create days for students of the current board of default {@link DayType} (DayType.SIMPLE).
      * Save it all to database in one transaction
      *
-     * @param board the board to fill
+     * @param board    the board to fill
      * @param students the students of the current board
-     * @param dates the dates of the current board
+     * @param dates    the dates of the current board
      */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void fillBoard(Board board, List<Student> students, List<LocalDate> dates) {
@@ -192,7 +192,7 @@ public class BoardService {
      * Save the same days for all the students of the board in one transaction
      *
      * @param boardId the id of board
-     * @param day the day to save
+     * @param day     the day to save
      * @return the list of saved days
      */
     @Transactional

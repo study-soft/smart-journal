@@ -1,5 +1,6 @@
 package com.studysoft.smartjournal.service;
 
+import com.studysoft.smartjournal.domain.Day;
 import com.studysoft.smartjournal.domain.Group;
 import com.studysoft.smartjournal.domain.Student;
 import com.studysoft.smartjournal.domain.User;
@@ -10,7 +11,9 @@ import com.studysoft.smartjournal.web.rest.errors.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static com.studysoft.smartjournal.service.util.Constants.*;
 
@@ -76,7 +79,7 @@ public class GroupService {
      * Checks if the student belongs to the group
      *
      * @param studentId the id of the student to check
-     * @param groupId the id of the group in which check
+     * @param groupId   the id of the group in which check
      */
     public void checkStudent(Long studentId, Long groupId) {
         Student student = studentRepository.findById(studentId).orElseThrow(() -> new EntityNotFoundException("student"));
@@ -86,10 +89,29 @@ public class GroupService {
         }
     }
 
+    /**
+     * Save the student and days for him with result = null in one transaction
+     *
+     * @param groupId the id of group
+     * @param student the student to save
+     * @return saved student
+     */
     @Transactional
     public Student saveStudent(Long groupId, Student student) {
         student.setGroup(new Group().id(groupId));
+        Set<Day> days = studentRepository.findAllByGroupId(groupId).get(0).getDays();
         Student result = studentRepository.save(student);
+
+        if (!days.isEmpty()) {
+            days.forEach(day -> {
+                Day newDay = new Day()
+                    .date(day.getDate())
+                    .student(student)
+                    .dayType(day.getDayType());
+                dayRepository.save(newDay);
+            });
+        }
+
         return result;
     }
 
