@@ -52,7 +52,7 @@ public class GroupService {
     }
 
     /**
-     * Checks that group belongs to user from current session
+     * Check that group belongs to user from current session
      *
      * @param group the group to check
      */
@@ -64,7 +64,7 @@ public class GroupService {
     }
 
     /**
-     * Checks if there is a group with the same name for current user
+     * Check if there is a group with the same name for current user
      *
      * @param group the group to check
      */
@@ -76,13 +76,13 @@ public class GroupService {
     }
 
     /**
-     * Checks if the student belongs to the group
+     * Check if the student belongs to the group
      *
      * @param studentId the id of the student to check
      * @param groupId   the id of the group in which check
      */
     public void checkStudent(Long studentId, Long groupId) {
-        Student student = studentRepository.findById(studentId).orElseThrow(() -> new EntityNotFoundException("student"));
+        Student student = studentRepository.findById(studentId).orElseThrow(() -> new EntityNotFoundException(ENTITY_STUDENT));
         if (!student.getGroup().getId().equals(groupId)) {
             throw new BadRequestAlertException("Student with id '" + studentId + "' does not belong to current group",
                 ENTITY_STUDENT, "accessDenied");
@@ -90,7 +90,7 @@ public class GroupService {
     }
 
     /**
-     * Save the student and days for him with result = null in one transaction
+     * Save the student and days for him as in group mate with result = null in one transaction
      *
      * @param groupId the id of group
      * @param student the student to save

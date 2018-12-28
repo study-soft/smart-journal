@@ -44,7 +44,7 @@ public class SubjectService {
     }
 
     /**
-     * Checks that subject belongs to user from current session
+     * Check that subject belongs to user from current session
      *
      * @param subject the subject to check
      */
@@ -57,7 +57,7 @@ public class SubjectService {
 
 
     /**
-     * Checks if there is a subject with the same name for current user
+     * Check if there is a subject with the same name for current user
      *
      * @param subject the subject to check
      */

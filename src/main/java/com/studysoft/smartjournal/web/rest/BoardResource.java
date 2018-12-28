@@ -6,7 +6,6 @@ import com.studysoft.smartjournal.domain.DayType;
 import com.studysoft.smartjournal.repository.BoardRepository;
 import com.studysoft.smartjournal.repository.DayRepository;
 import com.studysoft.smartjournal.repository.DayTypeRepository;
-import com.studysoft.smartjournal.repository.StudentRepository;
 import com.studysoft.smartjournal.service.BoardService;
 import com.studysoft.smartjournal.web.rest.errors.BadRequestAlertException;
 import com.studysoft.smartjournal.web.rest.errors.EntityNotFoundException;
@@ -164,6 +163,7 @@ public class BoardResource {
         if (dayType.getId() != null) {
             throw new BadRequestAlertException("A new dayType cannot already have an ID", ENTITY_DAYTYPE, "idexists");
         }
+        dayType.setBoard(new Board().id(id));
         DayType result = dayTypeRepository.save(dayType);
         return ResponseEntity.created(new URI("/api/boards/" + id + "/tasks/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_DAYTYPE, result.getId().toString()))
@@ -186,6 +186,7 @@ public class BoardResource {
         if (dayType.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_DAYTYPE, "idnull");
         }
+        dayType.setBoard(new Board().id(id));
         DayType result = dayTypeRepository.save(dayType);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_DAYTYPE, dayType.getId().toString()))
@@ -261,28 +262,38 @@ public class BoardResource {
             .body(days);
     }
 
-    // TODO
-    @PatchMapping("/boards/{id}/days")
-    public ResponseEntity<?> updateResult(@PathVariable Long id, @Valid @RequestBody List<Day> days) {
-
-        return ResponseEntity.noContent()
+    /**
+     * PUT /boards/:id/days/result : Updates the result of existing days
+     *
+     * @param id   the id of the board
+     * @param days the days to update
+     * @return the ResponseEntity with status 204 (No content)
+     * or with status 400 (Bad Request) if the result of the day is not valid,
+     * or with status 500 (Internal Server Error) if the result of the days couldn't be updated
+     */
+    @PutMapping("/boards/{id}/days/result")
+    public ResponseEntity<List<Day>> updateResult(@PathVariable Long id, @Valid @RequestBody List<Day> days) {
+        List<Day> updatedDays = boardService.updateResult(id, days);
+        return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_DAY, days.stream()
                 .map(Day::getId)
-                .toString())).build();
+                .toString()))
+            .body(updatedDays);
     }
 
     /**
-     * DELETE  /boards/:boardId/days/:dayId : delete the "id" day.
+     * DELETE  /boards/:boardId/days/:dayId : delete the day for each student in the group.
      *
      * @param boardId the id of the board
      * @param dayId   the id of the day to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    // TODO
     @DeleteMapping("/boards/{boardId}/days/{dayId}")
     public ResponseEntity<Void> deleteDay(@PathVariable Long boardId, @PathVariable Long dayId) {
         log.debug("REST request to delete Day : {}", dayId);
-        dayRepository.deleteById(dayId);
+        boardService.checkDay(dayId, boardId);
+        boardService.deleteDays(dayId);
+        //TODO: deletion alert for day ids, not id
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_DAY, dayId.toString())).build();
     }
 }

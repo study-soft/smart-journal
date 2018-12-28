@@ -59,7 +59,7 @@ public class BoardService {
     }
 
     /**
-     * Checks that board belongs to user from current session
+     * Check that board belongs to user from current session
      *
      * @param board board to check
      */
@@ -71,16 +71,31 @@ public class BoardService {
     }
 
     /**
-     * Checks if the dayType belongs to the board
+     * Check if the dayType belongs to the board
      *
      * @param dayTypeId the id of the dayType
      * @param boardId   the id of the board
      */
     public void checkDayType(Long dayTypeId, Long boardId) {
-        DayType dayType = dayTypeRepository.findById(dayTypeId).orElseThrow(() -> new EntityNotFoundException("dayType"));
+        DayType dayType = dayTypeRepository.findById(dayTypeId).orElseThrow(() -> new EntityNotFoundException(ENTITY_DAYTYPE));
         if (!dayType.getBoard().getId().equals(boardId)) {
             throw new BadRequestAlertException("DayType with id '" + dayTypeId + "' does not belong to current board",
                 ENTITY_DAYTYPE, "accessDenied");
+        }
+    }
+
+    /**
+     * Check if the day belongs to the board
+     *
+     * @param dayId   the id of the day
+     * @param boardId the id of the board
+     */
+    public void checkDay(Long dayId, Long boardId) {
+        Day day = dayRepository.findById(dayId).orElseThrow(() -> new EntityNotFoundException(ENTITY_DAY));
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> new EntityNotFoundException(ENTITY_BOARD));
+        if (!day.getStudent().getGroup().getId().equals(board.getGroup().getId())) {
+            throw new BadRequestAlertException("Day with id '" + dayId + "' does not belong to current board",
+                ENTITY_DAY, "accessDenied");
         }
     }
 
@@ -178,17 +193,6 @@ public class BoardService {
     }
 
     /**
-     * Delete the board and entry from groups_subjects in one transaction
-     *
-     * @param board the board to delete
-     */
-    @Transactional
-    public void deleteBoard(Board board) {
-        boardRepository.deleteById(board.getId());
-        boardRepository.deleteGroupsSubjects(board.getGroup().getId(), board.getSubject().getId());
-    }
-
-    /**
      * Save the same days for all the students of the board in one transaction
      *
      * @param boardId the id of board
@@ -210,6 +214,48 @@ public class BoardService {
         }
 
         return savedDays;
+    }
+
+    /**
+     * Update the days
+     *
+     * @param boardId the id of the board
+     * @param days the days to update
+     * @return the list of updated days
+     */
+    @Transactional
+    public List<Day> updateResult(Long boardId, List<Day> days) {
+        List<Day> updatedDays = new ArrayList<>();
+        if (days != null && !days.isEmpty()) {
+            days.forEach(day -> {
+                Day updatedDay = dayRepository.save(day);
+                updatedDays.add(updatedDay);
+            });
+        }
+        return updatedDays;
+    }
+
+    /**
+     * Delete the board and entry from groups_subjects in one transaction
+     *
+     * @param board the board to delete
+     */
+    @Transactional
+    public void deleteBoard(Board board) {
+        boardRepository.deleteById(board.getId());
+        boardRepository.deleteGroupsSubjects(board.getGroup().getId(), board.getSubject().getId());
+    }
+
+    /**
+     * Delete day for each student in the group with the same date as in the day with specified id
+     *
+     * @param dayId the id of fay
+     */
+    @Transactional
+    public void deleteDays(Long dayId) {
+        Day day = dayRepository.findById(dayId).orElseThrow(() -> new EntityNotFoundException(ENTITY_DAY));
+        List<Student> students = studentRepository.findAllByGroupId(day.getStudent().getGroup().getId());
+        students.forEach(student -> dayRepository.deleteByDateAndStudentId(day.getDate(), student.getId()));
     }
 
 }
