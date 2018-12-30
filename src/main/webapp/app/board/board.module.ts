@@ -13,6 +13,8 @@ import { BoardChildComponent } from './board-child.component';
 import { BoardJournalComponent } from './board-journal/board-journal.component';
 import { BoardTasksComponent } from './board-tasks/board-tasks.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { JournalDetailComponent } from './board-journal/journal-detail/journal-detail.component';
+import { JournalUpdateComponent } from './board-journal/journal-update/journal-update.component';
 
 const ENTITY_STATES = [...boardRoute, ...boardPopupRoute];
 
@@ -26,7 +28,9 @@ const ENTITY_STATES = [...boardRoute, ...boardPopupRoute];
         BoardDeletePopupComponent,
         BoardChildComponent,
         BoardJournalComponent,
-        BoardTasksComponent
+        BoardTasksComponent,
+        JournalDetailComponent,
+        JournalUpdateComponent
     ],
     entryComponents: [BoardComponent, BoardUpdateComponent, BoardDeleteDialogComponent, BoardDeletePopupComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

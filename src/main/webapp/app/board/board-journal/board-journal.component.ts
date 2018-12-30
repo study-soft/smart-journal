@@ -1,35 +1,34 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Group } from 'app/shared/model/group.model';
-import { Day } from 'app/shared/model/day.model';
-
-const NUMBER_REGEX: RegExp = /^\d*\.?\d*$/g;
+import { JhiEventManager } from 'ng-jhipster';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'jhi-board-journal',
     templateUrl: './board-journal.component.html',
     styles: []
 })
-export class BoardJournalComponent implements OnInit {
+export class BoardJournalComponent implements OnInit, OnDestroy {
     @Input() group: Group;
     isEditing = false;
-    formValid = true;
+    eventSubscriber: Subscription;
 
-    constructor() {}
+    constructor(private eventManager: JhiEventManager) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.registerChangeEditingState();
+    }
 
-    handleKeyup(event, day: Day) {
-        const value = event.target.innerHTML;
-        console.log('value string: ' + value);
-        console.log('value number: ' + Number(value));
-        if (value.match(NUMBER_REGEX)) {
-            console.log('valid');
-            this.formValid = true;
-            event.target.classList.remove('alert-danger');
-        } else {
-            this.formValid = false;
-            // event.target.className += ' alert-danger';
-            event.target.classList.add('alert-danger');
-        }
+    ngOnDestroy() {
+        this.eventManager.destroy(this.eventSubscriber);
+    }
+
+    registerChangeEditingState() {
+        this.eventSubscriber = this.eventManager.subscribe('changeJournalEditing', ({ content }) => {
+            console.log('on changeJournalEditing: content = ', content);
+            if (content !== null && content !== undefined && typeof content === 'boolean') {
+                this.isEditing = content;
+            }
+        });
     }
 }
