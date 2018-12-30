@@ -1,11 +1,10 @@
 <div *ngIf="students">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-        <jhi-alert-error></jhi-alert-error>
+    <form name="editForm" role="form" novalidate (ngSubmit)="updateDays()" #editForm="ngForm">
         <div class="mb-3">
             <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="disableEditingState()">
                 <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
             </button>
-            <button type="submit" id="save-entity" [disabled]="!formValid" class="btn btn-primary">
+            <button type="submit" id="save-entity" [disabled]="!formValid || isUpdating" class="btn btn-primary">
                 <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
             </button>
         </div>
@@ -29,7 +28,9 @@
                     <td>{{student.lastName}} {{student.firstName}}</td>
                     <td *ngFor="let day of student.days" class="text-center" contenteditable="true"
                         data-valid="true"
-                        (keyup)="handleKeyup($event.target, day)">{{day.result}}</td>
+                        (keyup)="handleKeyup($event.target)"
+                        (blur)="handleBlur($event.target, day)"
+                        (focus)="handleFocus($event.target)">{{day.result}}</td>
                 </tr>
                 </tbody>
             </table>

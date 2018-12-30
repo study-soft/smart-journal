@@ -9,6 +9,7 @@ import { createRequestOption } from 'app/shared';
 import { Board } from 'app/shared/model/board.model';
 import { Day } from 'app/shared/model/day.model';
 import { DayType } from 'app/shared/model/day-type.model';
+import { log } from 'app/shared/decorator/log';
 
 type BoardResponseType = HttpResponse<Board>;
 type BoardArrayResponseType = HttpResponse<Board[]>;
@@ -66,6 +67,13 @@ export class BoardService {
         return this.http
             .put<Day>(`${this.resourceUrl}/${boardId}/days`, copy, { observe: 'response' })
             .pipe(map((res: DayResponseType) => this.convertDateFromServer(res)));
+    }
+
+    updateDaysResults(boardId: number, days: Day[]): Observable<DayArrayResponseType> {
+        // const copy = this.convertDateFromClient(days);
+        console.log(`PUT ${this.resourceUrl}/${boardId}/days `, days);
+        return this.http
+            .patch<Day[]>(`${this.resourceUrl}/${boardId}/days`, days, { observe: 'response' });
     }
 
     findDay(boardId: number, dayId: number): Observable<DayResponseType> {

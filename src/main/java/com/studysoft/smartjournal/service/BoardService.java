@@ -219,20 +219,13 @@ public class BoardService {
     /**
      * Update the days
      *
-     * @param boardId the id of the board
      * @param days the days to update
-     * @return the list of updated days
      */
     @Transactional
-    public List<Day> updateResult(Long boardId, List<Day> days) {
-        List<Day> updatedDays = new ArrayList<>();
+    public void updateResult(List<Day> days) {
         if (days != null && !days.isEmpty()) {
-            days.forEach(day -> {
-                Day updatedDay = dayRepository.save(day);
-                updatedDays.add(updatedDay);
-            });
+            days.forEach(day -> dayRepository.updateDayResult(day.getId(), day.getResult()));
         }
-        return updatedDays;
     }
 
     /**

@@ -263,7 +263,7 @@ public class BoardResource {
     }
 
     /**
-     * PUT /boards/:id/days/result : Updates the result of existing days
+     * PATCH /boards/:id/days : Updates the result of existing days
      *
      * @param id   the id of the board
      * @param days the days to update
@@ -271,14 +271,15 @@ public class BoardResource {
      * or with status 400 (Bad Request) if the result of the day is not valid,
      * or with status 500 (Internal Server Error) if the result of the days couldn't be updated
      */
-    @PutMapping("/boards/{id}/days/result")
+    @PatchMapping("/boards/{id}/days")
     public ResponseEntity<List<Day>> updateResult(@PathVariable Long id, @Valid @RequestBody List<Day> days) {
-        List<Day> updatedDays = boardService.updateResult(id, days);
+        log.debug("REST request to update Days results : {}", days);
+        boardService.updateResult(days);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_DAY, days.stream()
                 .map(Day::getId)
                 .toString()))
-            .body(updatedDays);
+            .body(days);
     }
 
     /**

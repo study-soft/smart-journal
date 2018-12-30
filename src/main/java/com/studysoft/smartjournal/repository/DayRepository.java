@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 /**
@@ -19,5 +20,9 @@ public interface DayRepository extends JpaRepository<Day, Long> {
     @Modifying
     @Query(value = "delete from days where date =:date and student_id =:studentId", nativeQuery = true)
     void deleteByDateAndStudentId(@Param("date") LocalDate date, @Param("studentId") Long studentId);
+
+    @Modifying
+    @Query(value = "update Day d set d.result = :result where d.id = :dayId")
+    void updateDayResult(@Param("dayId") Long dayId, @Param("result") Double result);
 
 }
