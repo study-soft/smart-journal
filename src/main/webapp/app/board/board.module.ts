@@ -12,11 +12,12 @@ import { DayTypeModule } from 'app/board/day-type/day-type.module';
 import { BoardChildComponent } from './board-child.component';
 import { BoardJournalComponent } from './board-journal/board-journal.component';
 import { BoardTasksComponent } from './board-tasks/board-tasks.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const ENTITY_STATES = [...boardRoute, ...boardPopupRoute];
 
 @NgModule({
-    imports: [SharedModule, DayModule, DayTypeModule, RouterModule.forChild(ENTITY_STATES)],
+    imports: [SharedModule, DayModule, DayTypeModule, FormsModule, ReactiveFormsModule, RouterModule.forChild(ENTITY_STATES)],
     declarations: [
         BoardComponent,
         BoardDetailComponent,

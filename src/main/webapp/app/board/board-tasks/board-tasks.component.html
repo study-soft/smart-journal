@@ -32,3 +32,14 @@
         </div>
     </dd>
 </dl>
+<div *ngFor="let task of board.dayTypes">
+    <div class="alert alert-info">
+        <p>Type: {{task.type}}</p>
+        <p>Name: {{task.name}}</p>
+        <p>Created: {{task.created | date: 'mediumDate'}}</p>
+        <p>Updated: {{task.updated | date: 'mediumDate'}}</p>
+        <p>Score: {{task.score}}</p>
+        <p>Expiry: {{task.expiry}}</p>
+        <p>Description: {{task.description}}</p>
+    </div>
+</div>
