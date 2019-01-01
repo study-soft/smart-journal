@@ -29,7 +29,7 @@ export class DayTypeResolve implements Resolve<DayType> {
 
 export const dayTypeRoute: Routes = [
     {
-        path: 'day-type',
+        path: 'board/:id/task',
         component: DayTypeComponent,
         data: {
             authorities: ['ROLE_USER'],
@@ -38,7 +38,7 @@ export const dayTypeRoute: Routes = [
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'day-type/:id/view',
+        path: 'board/:boardId/task/:id/view',
         component: DayTypeDetailComponent,
         resolve: {
             dayType: DayTypeResolve
@@ -50,7 +50,7 @@ export const dayTypeRoute: Routes = [
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'day-type/new',
+        path: 'board/:id/task/new',
         component: DayTypeUpdateComponent,
         resolve: {
             dayType: DayTypeResolve
@@ -62,7 +62,7 @@ export const dayTypeRoute: Routes = [
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'day-type/:id/edit',
+        path: 'board/:boardId/task/:id/edit',
         component: DayTypeUpdateComponent,
         resolve: {
             dayType: DayTypeResolve
@@ -77,7 +77,7 @@ export const dayTypeRoute: Routes = [
 
 export const dayTypePopupRoute: Routes = [
     {
-        path: 'day-type/:id/delete',
+        path: 'board/:boardId/task/:id/delete',
         component: DayTypeDeletePopupComponent,
         resolve: {
             dayType: DayTypeResolve

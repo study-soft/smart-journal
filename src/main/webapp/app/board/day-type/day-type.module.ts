@@ -17,7 +17,7 @@ const ENTITY_STATES = [...dayTypeRoute, ...dayTypePopupRoute];
 @NgModule({
     imports: [SharedModule, RouterModule.forChild(ENTITY_STATES)],
     declarations: [
-        DayTypeComponent,
+        // DayTypeComponent,
         DayTypeDetailComponent,
         DayTypeUpdateComponent,
         DayTypeDeleteDialogComponent,

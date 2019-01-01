@@ -15,6 +15,8 @@ import { BoardTasksComponent } from './board-tasks/board-tasks.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JournalDetailComponent } from './board-journal/journal-detail/journal-detail.component';
 import { JournalUpdateComponent } from './board-journal/journal-update/journal-update.component';
+import { DayTypeComponent } from 'app/board/day-type';
+import { BoardInformationComponent } from './board-information/board-information.component';
 
 const ENTITY_STATES = [...boardRoute, ...boardPopupRoute];
 
@@ -30,7 +32,9 @@ const ENTITY_STATES = [...boardRoute, ...boardPopupRoute];
         BoardJournalComponent,
         BoardTasksComponent,
         JournalDetailComponent,
-        JournalUpdateComponent
+        JournalUpdateComponent,
+        DayTypeComponent,
+        BoardInformationComponent
     ],
     entryComponents: [BoardComponent, BoardUpdateComponent, BoardDeleteDialogComponent, BoardDeletePopupComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

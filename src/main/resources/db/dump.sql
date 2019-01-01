@@ -60,6 +60,7 @@ CREATE TABLE day_types (
     id BIGSERIAL PRIMARY KEY,
     type VARCHAR(255) NOT NULL,
     score DOUBLE PRECISION NOT NULL,
+    name VARCHAR(255) NOT NULL,
     description VARCHAR(65535),
     expiry INT,
     created_by VARCHAR(50) NOT NULL,
@@ -85,7 +86,7 @@ DROP TABLE IF EXISTS days CASCADE;
 DROP SEQUENCE IF EXISTS days_id_seq CASCADE;
 CREATE TABLE days (
     id BIGSERIAL PRIMARY KEY,
-    date DATE NOT NULL, --TODO: move field date to dayType
+    date DATE NOT NULL,
     result DOUBLE PRECISION,
     student_id BIGINT NOT NULL,
     day_type_id BIGINT NOT NULL
@@ -240,24 +241,24 @@ INSERT INTO boards (title, name, description, total_score, created_by, created, 
     ('Дошка 2-го викладача', NULL, NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 4, 3, 5);
 
 -- day_types
-INSERT INTO day_types (type, score, description, expiry, created_by, created, updated_by, updated, board_id) VALUES
-    ('SIMPLE', 1.0, 'Звичайна пара', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1),
-    ('LAB', 5.0, 'Лабараторна робота', 3, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1),
-    ('MODULE', 10.0, 'Модуль', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1),
-    ('EXAM', 20.0, 'Екзамен', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1),
-    ('TEST', 3.0, NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1),
-    ('SIMPLE', 1.5, 'Звичайна пара, відвідування якої оцінюється', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
-    ('LAB', 8.0, 'Лабараторна робота №1. Багатопоточність в прикладних системах', 5, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
-    ('LAB', 5.0, 'Лабараторна робота №2. Задача про обідаючих філософів', 5, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
-    ('LAB', 5.0, 'Лабараторна робота №3. XML-парсер', 5, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
-    ('LAB', 7.0, 'Лабараторна робота №4. Імітатор шедулера операційної системи', 5, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
-    ('LAB', 10.0, 'Лабараторна робота №5. Генетичні алгоритми', 5, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
-    ('MODULE', 15.0, 'Підсумковий модуль №1. Багатопоточність', 5, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
-    ('MODULE', 15.0, 'Підсумковий модуль №2. Прикладні програми в системному програмуванні', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
-    ('EXAM', 20.0, 'Семестровий екзамен', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
-    ('SIMPLE', 2.0, NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3),
-    ('SIMPLE', 1.0, NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 4),
-    ('SIMPLE', 0.0, NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 5);
+INSERT INTO day_types (type, score, name, description, expiry, created_by, created, updated_by, updated, board_id) VALUES
+    ('SIMPLE', 1.0, 'Відвідування', 'Звичайна пара', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1),
+    ('LAB', 5.0, 'Лабараторна робота', NULL, 3, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1),
+    ('MODULE', 10.0, 'Модуль', NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1),
+    ('EXAM', 20.0, 'Екзамен', NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1),
+    ('TEST', 3.0, 'Тест', NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1),
+    ('SIMPLE', 1.5, 'Пара', 'Звичайна пара, відвідування якої оцінюється', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
+    ('LAB', 8.0, 'Лабараторна робота №1. Багатопоточність в прикладних системах', NULL, 5, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
+    ('LAB', 5.0, 'Лабараторна робота №2. Задача про обідаючих філософів', NULL, 5, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
+    ('LAB', 5.0, 'Лабараторна робота №3. XML-парсер', NULL, 5, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
+    ('LAB', 7.0, 'Лабараторна робота №4. Імітатор шедулера операційної системи', NULL, 5, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
+    ('LAB', 10.0, 'Лабараторна робота №5. Генетичні алгоритми', NULL, 5, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
+    ('MODULE', 15.0, 'Підсумковий модуль №1. Багатопоточність', NULL, 5, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
+    ('MODULE', 15.0, 'Підсумковий модуль №2. Прикладні програми в системному програмуванні', NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
+    ('EXAM', 20.0, 'Семестровий екзамен', NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
+    ('SIMPLE', 2.0, 'Пара', 'Звичайна пара, відвідування якої оцінюється', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3),
+    ('SIMPLE', 1.0, 'Пара', 'Звичайна пара, відвідування якої оцінюється', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 4),
+    ('SIMPLE', 0.0, 'Звичайна пара', 'Звичайна пара, відвідування якої НЕ оцінюється', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 5);
 
 -- students
 INSERT INTO students (first_name, last_name, middle_name, group_id) VALUES

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
@@ -6,13 +6,15 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { DayType } from 'app/shared/model/day-type.model';
 import { Principal } from 'app/core';
 import { DayTypeService } from './day-type.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'jhi-day-type',
     templateUrl: './day-type.component.html'
 })
 export class DayTypeComponent implements OnInit, OnDestroy {
-    dayTypes: DayType[];
+    @Input() dayTypes: DayType[];
+    boardId: number;
     currentAccount: any;
     eventSubscriber: Subscription;
 
@@ -20,7 +22,8 @@ export class DayTypeComponent implements OnInit, OnDestroy {
         private dayTypeService: DayTypeService,
         private jhiAlertService: JhiAlertService,
         private eventManager: JhiEventManager,
-        private principal: Principal
+        private principal: Principal,
+        private activatedRoute: ActivatedRoute
     ) {}
 
     loadAll() {
@@ -33,7 +36,7 @@ export class DayTypeComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.loadAll();
+        this.boardId = this.activatedRoute.snapshot.params['id'];
         this.principal.identity().then(account => {
             this.currentAccount = account;
         });

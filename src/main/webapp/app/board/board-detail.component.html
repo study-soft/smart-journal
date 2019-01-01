@@ -1,8 +1,18 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="board">
-            <h2><span jhiTranslate="smartjournalApp.board.detail.title">Board</span> {{board.id}}</h2>
-            <hr>
+            <h2>
+                <span>{{ board.title }}</span>
+                <span class="float-right">
+                    <button type="button" [routerLink]="['/board', board.id, 'edit']" class="btn btn-primary">
+                        <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+                    </button>
+                    <button type="button" [routerLink]="['/board', board.id, 'task', 'new']" class="btn btn-info">
+                        <fa-icon [icon]="'plus'"></fa-icon>&nbsp;<span> Add task</span>
+                    </button>
+                </span>
+            </h2>
+            <hr/>
             <jhi-alert-error></jhi-alert-error>
 
             <ngb-tabset type="pills" #tabset>
@@ -11,23 +21,21 @@
                         <jhi-board-journal [group]="board.group"></jhi-board-journal>
                     </ng-template>
                 </ngb-tab>
+                <ngb-tab id="information" title="Information">
+                    <ng-template ngbTabContent>
+                        <jhi-board-information [board]="board"></jhi-board-information>
+                    </ng-template>
+                </ngb-tab>
                 <ngb-tab id="tasks" title="Tasks">
                     <ng-template ngbTabContent>
-                        <jhi-board-tasks [board]="board"></jhi-board-tasks>
+                        <!--<jhi-board-tasks [board]="board"></jhi-board-tasks>-->
+                        <jhi-day-type [dayTypes]="board.dayTypes"></jhi-day-type>
                     </ng-template>
                 </ngb-tab>
             </ngb-tabset>
 
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
+            <button type="submit" (click)="previousState()" class="btn btn-info">
                 <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
-            </button>
-
-            <button type="button"
-                    [routerLink]="['/board', board.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
             </button>
         </div>
     </div>

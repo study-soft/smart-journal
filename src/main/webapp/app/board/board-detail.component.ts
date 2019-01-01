@@ -6,7 +6,6 @@ import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 import { BoardService } from 'app/board/board.service';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Day } from 'app/shared/model/day.model';
 
 @Component({
     selector: 'jhi-board-detail',

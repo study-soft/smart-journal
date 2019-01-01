@@ -1,70 +1,39 @@
-<div>
-    <h2 id="page-heading">
-        <span jhiTranslate="smartjournalApp.dayType.home.title">Day Types</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-day-type" [routerLink]="['/day-type/new']">
-            <fa-icon [icon]="'plus'"></fa-icon>
-            <span  jhiTranslate="smartjournalApp.dayType.home.createLabel">
-            Create new Day Type
-            </span>
-        </button>
-    </h2>
-    <jhi-alert></jhi-alert>
-    <br/>
-    <div class="table-responsive" *ngIf="dayTypes">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-            <th><span jhiTranslate="global.field.id">ID</span></th>
+<div class="table-responsive" *ngIf="dayTypes">
+    <table class="table table-striped">
+        <thead>
+        <tr>
             <th><span jhiTranslate="smartjournalApp.dayType.type">Type</span></th>
+            <th><span>Name</span></th>
             <th><span jhiTranslate="smartjournalApp.dayType.score">Score</span></th>
-            <th><span jhiTranslate="smartjournalApp.dayType.description">Description</span></th>
             <th><span jhiTranslate="smartjournalApp.dayType.expiry">Expiry</span></th>
-            <th><span jhiTranslate="smartjournalApp.dayType.createdDate">Created</span></th>
-            <th><span jhiTranslate="smartjournalApp.dayType.updatedDate">Updated</span></th>
-            <th><span jhiTranslate="smartjournalApp.dayType.board">Board</span></th>
             <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let dayType of dayTypes ;trackBy: trackId">
-                <td><a [routerLink]="['/day-type', dayType.id, 'view' ]">{{dayType.id}}</a></td>
-                <td jhiTranslate="{{'smartjournalApp.Type.' + dayType.type}}">{{dayType.type}}</td>
-                <td>{{dayType.score}}</td>
-                <td>{{dayType.description}}</td>
-                <td>{{dayType.expiry}}</td>
-                <td>{{dayType.created | date:'medium'}}</td>
-                <td>{{dayType.updated | date:'medium'}}</td>
-                <td>
-                    <div *ngIf="dayType.board">
-                        <a [routerLink]="['../board', dayType.board?.id, 'view' ]" >{{dayType.board?.id}}</a>
-                    </div>
-                </td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['/day-type', dayType.id, 'view' ]"
-                                class="btn btn-info btn-sm">
-                            <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/day-type', dayType.id, 'edit']"
-                                class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'day-type/'+ dayType.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let dayType of dayTypes ;trackBy: trackId">
+            <td jhiTranslate="{{'smartjournalApp.Type.' + dayType.type}}">{{dayType.type}}</td>
+            <td><a [routerLink]="['/board', boardId, 'task', dayType.id, 'view' ]">{{dayType.name}}</a></td>
+            <td>{{dayType.score}}</td>
+            <td>{{dayType.expiry}}</td>
+            <td class="text-right">
+                <div class="btn-group flex-btn-group-container">
+                    <button type="submit"
+                            [routerLink]="['/board', boardId, 'task', dayType.id, 'edit']"
+                            class="btn btn-primary btn-sm">
+                        <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                        <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                    </button>
+                    <button type="submit"
+                            [routerLink]="['/', { outlets: { popup: 'board/' + boardId + '/task'+ dayType.id + '/delete'} }]"
+                            replaceUrl="true"
+                            queryParamsHandling="merge"
+                            class="btn btn-danger btn-sm">
+                        <fa-icon [icon]="'times'"></fa-icon>
+                        <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>

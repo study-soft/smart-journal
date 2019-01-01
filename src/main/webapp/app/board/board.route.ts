@@ -10,6 +10,7 @@ import { BoardUpdateComponent } from './board-update.component';
 import { BoardDeletePopupComponent } from './board-delete-dialog.component';
 import { BoardComponent } from 'app/board/board.component';
 import { BoardService } from 'app/board/board.service';
+import { DayTypeResolve, DayTypeUpdateComponent } from 'app/board/day-type';
 
 @Injectable({ providedIn: 'root' })
 export class BoardResolve implements Resolve<Board> {

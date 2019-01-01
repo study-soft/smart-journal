@@ -36,6 +36,10 @@ public class DayType extends AbstractAuditingEntity implements Serializable {
     @Column(name = "score", nullable = false)
     private Double score;
 
+    @NotNull
+    @Column(name = "name", nullable = false)
+    private String name;
+
     @Column(name = "description")
     private String description;
 
@@ -86,6 +90,19 @@ public class DayType extends AbstractAuditingEntity implements Serializable {
 
     public void setScore(Double score) {
         this.score = score;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public DayType name(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -178,6 +195,7 @@ public class DayType extends AbstractAuditingEntity implements Serializable {
         sb.append("id='").append(id).append("'");
         sb.append(", type='").append(type).append("'");
         sb.append(", score='").append(score).append("'");
+        sb.append(", name='").append(name).append("'");
         sb.append(", description='").append(description).append("'");
         sb.append(", expiry='").append(expiry).append("'");
         if (board != null) {
