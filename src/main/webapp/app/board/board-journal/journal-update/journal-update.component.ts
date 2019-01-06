@@ -90,7 +90,7 @@ export class JournalUpdateComponent implements OnInit {
         });
     }
 
-    private updateDays() {
+    updateDays() {
         this.isUpdating = true;
         console.log('days', this.days);
         this.boardService.updateDaysResults(this.boardId, this.days).subscribe(

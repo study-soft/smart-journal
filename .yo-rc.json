@@ -33,6 +33,8 @@
     "languages": [
       "ua",
       "en"
-    ]
+    ],
+    "herokuAppName": "smartjournal",
+    "herokuDeployType": "git"
   }
 }
