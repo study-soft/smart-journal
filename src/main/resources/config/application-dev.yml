@@ -20,15 +20,12 @@ spring:
         serialization:
             indent-output: true
     datasource:
-#        type: com.zaxxer.hikari.HikariDataSource
-#        url: jdbc:postgresql://localhost:5432/smartjournal
-#        username: postgres
-#        password: password
-#        hikari:
-#            auto-commit: false
-            url: ${DATABASE_URL}
-            username: ${JDBC_DATABASE_USERNAME}
-            password: ${SPRING_DATASOURCE_PASSWORD}
+        type: com.zaxxer.hikari.HikariDataSource
+        url: jdbc:postgresql://localhost:5432/smartjournal
+        username: postgres
+        password: password
+        hikari:
+            auto-commit: false
 
     jpa:
         database-platform: io.github.jhipster.domain.util.FixedPostgreSQL82Dialect
