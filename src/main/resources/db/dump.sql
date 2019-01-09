@@ -215,18 +215,18 @@ INSERT INTO users_authorities (user_id, authority_name) VALUES
 
 -- _groups
 INSERT INTO _groups (name, description, created_by, created, updated_by, updated, user_id) VALUES
-    ('Інформатики-4', 'Тестова група для перевірки роботи розумного журналу. Пишу багато символів в описі, щоб перевірити, як це буде виглядати на сторінці. Ліміт сиволів - 65535, тому в мене ще є великий запас. Бла-бла-бла...', 'system', CURRENT_TIMESTAMP(3), NULL, NULL, 3),
-    ('Прикладна математика-3', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3),
-    ('Прикладна математика-4', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3),
-    ('Група 2-го викладача', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 5),
-    ('Комп’ютерні науки', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3);
+    /*1*/   ('Інформатики-4', 'Тестова група для перевірки роботи розумного журналу. Пишу багато символів в описі, щоб перевірити, як це буде виглядати на сторінці. Ліміт сиволів - 65535, тому в мене ще є великий запас. Бла-бла-бла...', 'system', CURRENT_TIMESTAMP(3), NULL, NULL, 3),
+    /*2*/   ('Прикладна математика-3', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3),
+    /*3*/   ('Прикладна математика-4', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3),
+    /*4*/   ('Група 2-го викладача', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 5),
+    /*5*/   ('Комп’ютерні науки', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3);
 
 -- subjects
 INSERT INTO subjects (name, description, created_by, created, updated_by, updated, user_id) VALUES
-    ('Комп’ютерні мережі', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3),
-    ('Системне програмування', 'Системне програмування та операційні системи', 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3),
-    ('Предмет 2-го викладача', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 5),
-    ('Математичний аналіз', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3);
+    /*1*/    ('Програмна інженерія', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3),
+    /*2*/    ('Системне програмування', 'Системне програмування та операційні системи', 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3),
+    /*3*/    ('Предмет 2-го викладача', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 5),
+    /*4*/    ('Математичний аналіз', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3);
 
 -- groups_subjects
 INSERT INTO groups_subjects (groups_id, subjects_id) VALUES
@@ -234,61 +234,68 @@ INSERT INTO groups_subjects (groups_id, subjects_id) VALUES
 
 -- boards
 INSERT INTO boards (title, name, description, total_score, created_by, created, updated_by, updated, group_id, subject_id, user_id) VALUES
-    ('Інформатики-4. Комп’ютерні мережі', '1-й семестр', '', 100.0, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1, 1, 3),
-    ('Інформатики-4. Системне програмування', NULL, NULL, 100.0, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1, 2, 3),
-    ('Прикладна математика-3. Комп’ютерні мережі', '2-й семестр', 'Згенерований журнал для групи "Прикладна математика-3" і предмету "Комп’ютерні мережі"', 1000.0, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2, 1, 3),
-    ('Прикладна математика-4. Комп’ютерні мережі', NULL, 'Останній семестр для групи "Прикладна математика-4" з дисципліни "Комп’ютерні мережі"', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3, 1, 3),
-    ('Дошка 2-го викладача', NULL, NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 4, 3, 5);
+    /*1*/    ('Інформатики-4. Програмна інженерія', '1-й семестр', '', 100.0, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1, 1, 3),
+    /*2*/    ('Інформатики-4. Системне програмування', NULL, NULL, 100.0, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1, 2, 3),
+    /*3*/    ('Прикладна математика-3. Програмна інженерія', '2-й семестр', 'Згенерований журнал для групи "Прикладна математика-3" і предмету "Програмна інженерія"', 1000.0, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2, 1, 3),
+    /*4*/    ('Прикладна математика-4. Програмна інженерія', NULL, 'Останній семестр для групи "Прикладна математика-4" з дисципліни "Програмна інженерія"', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3, 1, 3),
+    /*5*/    ('Дошка 2-го викладача', NULL, NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 4, 3, 5);
 
 -- day_types
 INSERT INTO day_types (type, score, name, description, expiry, created_by, created, updated_by, updated, board_id) VALUES
-    ('SIMPLE', 1.0, 'Відвідування', 'Звичайна пара', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1),
-    ('LAB', 5.0, 'Лабараторна робота', NULL, 3, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1),
-    ('MODULE', 10.0, 'Модуль', NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1),
-    ('EXAM', 20.0, 'Екзамен', NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1),
-    ('TEST', 3.0, 'Тест', NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1),
-    ('SIMPLE', 1.5, 'Пара', 'Звичайна пара, відвідування якої оцінюється', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
-    ('LAB', 8.0, 'Лабараторна робота №1. Багатопоточність в прикладних системах', NULL, 5, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
-    ('LAB', 5.0, 'Лабараторна робота №2. Задача про обідаючих філософів', NULL, 5, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
-    ('LAB', 5.0, 'Лабараторна робота №3. XML-парсер', NULL, 5, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
-    ('LAB', 7.0, 'Лабараторна робота №4. Імітатор шедулера операційної системи', NULL, 5, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
-    ('LAB', 10.0, 'Лабараторна робота №5. Генетичні алгоритми', NULL, 5, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
-    ('MODULE', 15.0, 'Підсумковий модуль №1. Багатопоточність', NULL, 5, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
-    ('MODULE', 15.0, 'Підсумковий модуль №2. Прикладні програми в системному програмуванні', NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
-    ('EXAM', 20.0, 'Семестровий екзамен', NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
-    ('SIMPLE', 2.0, 'Пара', 'Звичайна пара, відвідування якої оцінюється', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3),
-    ('SIMPLE', 1.0, 'Пара', 'Звичайна пара, відвідування якої оцінюється', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 4),
-    ('SIMPLE', 0.0, 'Звичайна пара', 'Звичайна пара, відвідування якої НЕ оцінюється', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 5);
+    /*1*/   ('SIMPLE', 1.0, 'Відвідування', 'Звичайна пара', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1),
+    /*2*/   ('LAB', 5.0, 'Лабараторна робота', NULL, 3, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1),
+    /*3*/   ('MODULE', 10.0, 'Модуль', NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1),
+    /*4*/   ('EXAM', 20.0, 'Екзамен', NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1),
+    /*5*/   ('TEST', 3.0, 'Тест', NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 1),
+    --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    /*6*/   ('SIMPLE', 1.5, 'Пара', 'Звичайна пара, відвідування якої оцінюється', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
+    /*7*/   ('LAB', 8.0, 'Лабараторна робота №1. Багатопоточність в прикладних системах', NULL, 5, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
+    /*8*/   ('LAB', 5.0, 'Лабараторна робота №2. Задача про обідаючих філософів', NULL, 5, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
+    /*9*/   ('LAB', 5.0, 'Лабараторна робота №3. XML-парсер', NULL, 5, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
+    /*10*/   ('LAB', 7.0, 'Лабараторна робота №4. Імітатор шедулера операційної системи', NULL, 5, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
+    /*11*/   ('LAB', 10.0, 'Лабараторна робота №5. Генетичні алгоритми', NULL, 5, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
+    /*12*/   ('MODULE', 15.0, 'Підсумковий модуль №1. Багатопоточність', NULL, 5, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
+    /*13*/   ('MODULE', 15.0, 'Підсумковий модуль №2. Прикладні програми в системному програмуванні', NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
+    /*14*/   ('EXAM', 20.0, 'Семестровий екзамен', NULL, NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 2),
+    --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    /*15*/   ('SIMPLE', 2.0, 'Пара', 'Звичайна пара, відвідування якої оцінюється', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 3),
+    --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    /*16*/   ('SIMPLE', 1.0, 'Пара', 'Звичайна пара, відвідування якої оцінюється', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 4),
+    --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    /*17*/   ('SIMPLE', 0.0, 'Звичайна пара', 'Звичайна пара, відвідування якої НЕ оцінюється', NULL, 'system', CURRENT_TIMESTAMP(3), 'system', CURRENT_TIMESTAMP(3), 5);
 
 -- students
 INSERT INTO students (first_name, last_name, middle_name, group_id) VALUES
-    ('Антон', 'Яковенко', 'Сергійович', 1),
-    ('Артем', 'Яковенко', 'Сергійович', 1),
-    ('Джейсон', 'Стетхем', NULL, 1),
-    ('Довге-довге ім’я', 'Довге-довге прізвище', 'Довге-довге ім’я по-батькові', 1),
-    ('Семен', 'Швидкий', 'Вікторович', 1),
-    ('Поліна', 'Іванова', 'Ігорівна', 1),
-    ('Олександра', 'Таращук', 'Олексіївна', 1),
-    ('Катерина', 'Микитюк', 'Борисівна', 1),
-    ('Світлана', 'Шинкаренко', 'Тарасівна', 1),
-    ('Юлія', 'Крамаренко', 'Олександрівна', 1),
-    ('Олександр', 'Антоненко', 'Володимирович', 2),
-    ('Любов', 'Петренко', 'Анатоліївна', 2),
-    ('Адам', 'Іванченко', 'Борисович', 2),
-    ('Діана', 'Лисенко', 'Сергіївна', 2),
-    ('Віталій', 'Петренко', 'Олексійович', 2),
-    ('Ніна', 'Шевченко', 'Андріївна', 2),
-    ('Юрій', 'Романченко', 'Євгенович', 2),
-    ('Оксана', 'Лисенко', 'Михайлівна', 2),
-    ('Оксана', 'Броваренко', 'Петрівна', 3),
-    ('Ольга', 'Мірошниченко', 'Романівна', 3),
-    ('Тетяна', 'Мельниченко', 'Андріївна', 3),
-    ('Дмитро', 'Крамарчук', 'Олексійович', 3),
-    ('Софія', 'Іванченко', 'Петрівна', 3),
-    ('B''ячеслав', 'Сергієнко', 'Петрович', 3),
-    ('Павло', 'Янович', 'Антоненко', 3),
-    ('Валерій', 'Овсієнко', 'Федорович', 3),
-    ('Олексій', 'Трохименко', NULL, 4);
+    /*1*/   ('Антон', 'Яковенко', 'Сергійович', 1),
+    /*2*/   ('Артем', 'Яковенко', 'Сергійович', 1),
+    /*3*/   ('Джейсон', 'Стетхем', NULL, 1),
+    /*4*/   ('Довге-довге ім’я', 'Довге-довге прізвище', 'Довге-довге ім’я по-батькові', 1),
+    /*5*/   ('Семен', 'Швидкий', 'Вікторович', 1),
+    /*6*/   ('Поліна', 'Іванова', 'Ігорівна', 1),
+    /*7*/   ('Олександра', 'Таращук', 'Олексіївна', 1),
+    /*8*/   ('Катерина', 'Микитюк', 'Борисівна', 1),
+    /*9*/   ('Світлана', 'Шинкаренко', 'Тарасівна', 1),
+    /*10*/   ('Юлія', 'Крамаренко', 'Олександрівна', 1),
+    --------------------------------------------------------
+    /*11*/   ('Олександр', 'Антоненко', 'Володимирович', 2),
+    /*12*/   ('Любов', 'Петренко', 'Анатоліївна', 2),
+    /*13*/   ('Адам', 'Іванченко', 'Борисович', 2),
+    /*14*/   ('Діана', 'Лисенко', 'Сергіївна', 2),
+    /*15*/   ('Віталій', 'Петренко', 'Олексійович', 2),
+    /*16*/   ('Ніна', 'Шевченко', 'Андріївна', 2),
+    /*17*/   ('Юрій', 'Романченко', 'Євгенович', 2),
+    /*18*/   ('Оксана', 'Лисенко', 'Михайлівна', 2),
+    --------------------------------------------------------
+    /*19*/   ('Оксана', 'Броваренко', 'Петрівна', 3),
+    /*20*/   ('Ольга', 'Мірошниченко', 'Романівна', 3),
+    /*21*/   ('Тетяна', 'Мельниченко', 'Андріївна', 3),
+    /*22*/   ('Дмитро', 'Крамарчук', 'Олексійович', 3),
+    /*23*/   ('Софія', 'Іванченко', 'Петрівна', 3),
+    /*24*/   ('B''ячеслав', 'Сергієнко', 'Петрович', 3),
+    /*25*/   ('Павло', 'Янович', 'Антоненко', 3),
+    /*26*/   ('Валерій', 'Овсієнко', 'Федорович', 3),
+    --------------------------------------------------------
+    /*27*/   ('Олексій', 'Трохименко', NULL, 4);
 
 -- days (board with id = 1)
 INSERT INTO days (date, result, student_id, day_type_id) VALUES
