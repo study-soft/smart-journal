@@ -1,0 +1,7 @@
+<div *ngFor="let item of items; let i = index" class="alert alert-success" role="alert">
+    {{item}} <span (click)="removeItem(i)" style="cursor: pointer">&times;</span>
+</div>
+<div class="form-group">
+    <input class="form-control" type="text" #ref/>
+</div>
+<button class="btn btn-success" (click)="addItem(ref.value); ref.value = ''">Enter text</button>

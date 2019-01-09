@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
-import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
+import { DATE_FORMAT, DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JhiAlertService } from 'ng-jhipster';
 
 import { Board } from 'app/shared/model/board.model';
@@ -12,6 +12,7 @@ import { Group } from 'app/shared/model/group.model';
 import { BoardService } from 'app/board/board.service';
 import { SubjectService } from 'app/subject';
 import { GroupService } from 'app/group/group.service';
+import { Moment } from 'moment';
 
 @Component({
     selector: 'jhi-board-update',
@@ -27,6 +28,10 @@ export class BoardUpdateComponent implements OnInit {
     created: string;
     updated: string;
 
+    dateFrom: Moment;
+    dateTo: Moment;
+    days: Set<number>;
+
     constructor(
         private jhiAlertService: JhiAlertService,
         private boardService: BoardService,
@@ -37,6 +42,8 @@ export class BoardUpdateComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
+        this.days = new Set();
+
         this.activatedRoute.data.subscribe(({ board }) => {
             this.board = board;
             this.created = this.board.created != null ? this.board.created.format(DATE_TIME_FORMAT) : null;
@@ -78,14 +85,27 @@ export class BoardUpdateComponent implements OnInit {
         window.history.back();
     }
 
+    updateDayOfWeek(target: HTMLInputElement) {
+        const dayNumber = +target.name;
+        if (target.checked) {
+            this.days.add(dayNumber);
+        } else {
+            this.days.delete(dayNumber);
+        }
+
+        console.log('days: ', this.days);
+        console.log('days string: ' + JSON.stringify(Array.from(this.days).join(',')));
+    }
+
     save() {
+        this.board.title = `${this.board.group.name}. ${this.board.subject.name}`;
         this.isSaving = true;
         this.board.created = this.created != null ? moment(this.created, DATE_TIME_FORMAT) : null;
         this.board.updated = this.updated != null ? moment(this.updated, DATE_TIME_FORMAT) : null;
         if (this.board.id !== undefined) {
             this.subscribeToSaveResponse(this.boardService.update(this.board));
         } else {
-            this.subscribeToSaveResponse(this.boardService.create(this.board));
+            this.subscribeToSaveResponse(this.boardService.create(this.board, this.dateFrom, this.dateTo, this.days));
         }
     }
 

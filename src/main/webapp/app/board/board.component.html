@@ -9,8 +9,8 @@
             </span>
         </button>
     </h2>
-    <jhi-alert></jhi-alert>
     <hr/>
+    <jhi-alert></jhi-alert>
     <div *ngIf="boards">
         <div *ngFor="let board of boards; let i = index; trackBy: trackId">
             <div *ngIf="i % 2 === 0" class="row">

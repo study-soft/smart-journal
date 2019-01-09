@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
+import { Moment } from 'moment';
 import { map } from 'rxjs/operators';
 
 import { SERVER_API_URL } from 'app/app.constants';
-import { createRequestOption } from 'app/shared';
+import { createRequestOption, DATE_FORMAT } from 'app/shared';
 import { Board } from 'app/shared/model/board.model';
 import { Day } from 'app/shared/model/day.model';
 import { DayType } from 'app/shared/model/day-type.model';
@@ -24,10 +25,21 @@ export class BoardService {
 
     constructor(private http: HttpClient) {}
 
-    create(board: Board): Observable<BoardResponseType> {
+    create(board: Board, from: Moment, to: Moment, days: Set<number>): Observable<BoardResponseType> {
         const copy = this.convertDateFromClient(board);
+
+        const daysString = Array.from(days).join(',');
+        console.log(daysString);
+        
+        const params = new HttpParams()
+            .set('from', this.convertDateToString(from))
+            .set('to', this.convertDateToString(to))
+            .set('days', daysString);
+
+        console.log(`perform POST ${this.resourceUrl}\n query: ${params.toString()}\n body: ${JSON.stringify(board)}`);
+
         return this.http
-            .post<Board>(this.resourceUrl, copy, { observe: 'response' })
+            .post<Board>(this.resourceUrl, copy, { params, observe: 'response' })
             .pipe(map((res: BoardResponseType) => this.convertDateFromServer(res)));
     }
 
@@ -130,6 +142,10 @@ export class BoardService {
             updated: board.updated != null && board.updated.isValid() ? board.updated.toJSON() : null
         });
         return copy;
+    }
+
+    protected convertDateToString(date: Moment): string {
+        return date != null && date.isValid() ? date.format(DATE_FORMAT) : null;
     }
 
     protected convertDateFromServer(res: BoardResponseType): BoardResponseType {

@@ -21,6 +21,7 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.studysoft.smartjournal.service.util.Constants.*;
 
@@ -251,14 +252,16 @@ public class BoardResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/boards/{id}/days")
-    public ResponseEntity<List<Day>> updateDay(@PathVariable Long id, @Valid @RequestBody Day day) throws URISyntaxException {
+    public ResponseEntity<List<Day>> updateDays(@PathVariable Long id, @Valid @RequestBody Day day) throws URISyntaxException {
         log.debug("REST request to update Day : {}", day);
         if (day.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_DAY, "idnull");
         }
         List<Day> days = boardService.saveDays(id, day);
+        List<Long> ids = days.stream().map(Day::getId).collect(Collectors.toList());
+        System.out.println("ids: " + ids);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_DAY, days.stream().map(Day::getId).toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_DAY, ids.toString()))
             .body(days);
     }
 
