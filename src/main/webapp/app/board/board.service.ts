@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { Moment } from 'moment';
@@ -19,6 +19,20 @@ type DayArrayResponseType = HttpResponse<Day[]>;
 type DayTypeResponseType = HttpResponse<DayType>;
 type DayTypeArrayResponseType = HttpResponse<DayType[]>;
 
+// TODO: remove this type and do JS style
+type requestOptions = {
+    headers?: HttpHeaders | {
+        [header: string]: string | string[];
+    };
+    observe: 'response';
+    params?: HttpParams | {
+        [param: string]: string | string[];
+    };
+    reportProgress?: boolean;
+    responseType?: 'json';
+    withCredentials?: boolean;
+};
+
 @Injectable({ providedIn: 'root' })
 export class BoardService {
     public resourceUrl = SERVER_API_URL + 'api/boards';
@@ -30,16 +44,23 @@ export class BoardService {
 
         const daysString = Array.from(days).join(',');
         console.log(daysString);
-        
-        const params = new HttpParams()
-            .set('from', this.convertDateToString(from))
-            .set('to', this.convertDateToString(to))
-            .set('days', daysString);
 
-        console.log(`perform POST ${this.resourceUrl}\n query: ${params.toString()}\n body: ${JSON.stringify(board)}`);
+        const options: requestOptions = {
+            observe: 'response'
+        };
+        if (from && to && days) {
+            options.params = new HttpParams()
+                .set('from', this.convertDateToString(from))
+                .set('to', this.convertDateToString(to))
+                .set('days', daysString);
+        }
+
+        console.log(`query params: ${options.params ? options.params.toString() : 'null'}`);
+
+        console.log(`perform POST ${this.resourceUrl}\n query: ${options.params ? options.params.toString() : 'null'}\n body: ${JSON.stringify(board)}`);
 
         return this.http
-            .post<Board>(this.resourceUrl, copy, { params, observe: 'response' })
+            .post<Board>(this.resourceUrl, copy, options)
             .pipe(map((res: BoardResponseType) => this.convertDateFromServer(res)));
     }
 

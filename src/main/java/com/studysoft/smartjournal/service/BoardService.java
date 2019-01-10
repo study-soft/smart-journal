@@ -174,6 +174,8 @@ public class BoardService {
         DayType dayType = new DayType() // create default dayType
             .type(Type.SIMPLE)
             .score(1.0)
+            .name(messageSource.getMessage("board.create.dayType.name",
+                null, LocaleContextHolder.getLocale()))
             .description(messageSource.getMessage("board.create.dayType.description",
                 null, LocaleContextHolder.getLocale())) // TODO: i18n
 //            .description("smartjournalApp.board.defaultDescription")

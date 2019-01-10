@@ -7,7 +7,7 @@ export class Board {
     constructor(
         public id?: number,
         public title?: string, // `${group.name}. ${subject.name}` - generated automatically
-        public name?: string,
+        public name?: string, // 1 семестр, 2 семестр тощо
         public description?: string,
         public created?: Moment,
         public updated?: Moment,

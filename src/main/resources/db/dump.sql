@@ -60,7 +60,7 @@ CREATE TABLE day_types (
     id BIGSERIAL PRIMARY KEY,
     type VARCHAR(255) NOT NULL,
     score DOUBLE PRECISION NOT NULL,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(255),
     description VARCHAR(65535),
     expiry INT,
     created_by VARCHAR(50) NOT NULL,

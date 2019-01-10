@@ -36,7 +36,6 @@ public class DayType extends AbstractAuditingEntity implements Serializable {
     @Column(name = "score", nullable = false)
     private Double score;
 
-    @NotNull
     @Column(name = "name", nullable = false)
     private String name;
 
