@@ -13,6 +13,7 @@ import { BoardService } from 'app/board/board.service';
 import { SubjectService } from 'app/subject';
 import { GroupService } from 'app/group/group.service';
 import { Moment } from 'moment';
+import { convertDateToString } from 'app/shared/util/date-util';
 
 @Component({
     selector: 'jhi-board-update',
@@ -20,7 +21,7 @@ import { Moment } from 'moment';
 })
 export class BoardUpdateComponent implements OnInit {
     board: Board;
-    isSaving: boolean;
+    isSaving = false;
 
     groups: Group[];
 
@@ -30,7 +31,7 @@ export class BoardUpdateComponent implements OnInit {
 
     dateFrom: Moment;
     dateTo: Moment;
-    days: Set<number>;
+    days: Set<number> = new Set();
 
     constructor(
         private jhiAlertService: JhiAlertService,
@@ -41,9 +42,6 @@ export class BoardUpdateComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.isSaving = false;
-        this.days = new Set();
-
         this.activatedRoute.data.subscribe(({ board }) => {
             this.board = board;
             this.created = this.board.created != null ? this.board.created.format(DATE_TIME_FORMAT) : null;
@@ -105,7 +103,17 @@ export class BoardUpdateComponent implements OnInit {
         if (this.board.id !== undefined) {
             this.subscribeToSaveResponse(this.boardService.update(this.board));
         } else {
-            this.subscribeToSaveResponse(this.boardService.create(this.board, this.dateFrom, this.dateTo, this.days));
+            const req: any = {};
+            if (this.dateFrom) {
+                req.dateFrom = convertDateToString(this.dateFrom);
+            }
+            if (this.dateTo) {
+                req.dateTo = convertDateToString(this.dateTo);
+            }
+            if (this.days.size !== 0) {
+                req.days = Array.from(this.days).join(',');
+            }
+            this.subscribeToSaveResponse(this.boardService.create(this.board, req));
         }
     }
 

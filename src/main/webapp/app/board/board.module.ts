@@ -35,7 +35,7 @@ const ENTITY_STATES = [...boardRoute, ...boardPopupRoute];
         JournalUpdateComponent,
         DayTypeComponent,
         BoardInformationComponent,
-        // TodoListComponent
+        // TodoListComponent,
     ],
     entryComponents: [BoardComponent, BoardUpdateComponent, BoardDeleteDialogComponent, BoardDeletePopupComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

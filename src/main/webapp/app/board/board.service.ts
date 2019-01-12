@@ -39,28 +39,15 @@ export class BoardService {
 
     constructor(private http: HttpClient) {}
 
-    create(board: Board, from: Moment, to: Moment, days: Set<number>): Observable<BoardResponseType> {
+    create(board: Board, req?: any): Observable<BoardResponseType> {
         const copy = this.convertDateFromClient(board);
+        const options = createRequestOption(req);
 
-        const daysString = Array.from(days).join(',');
-        console.log(daysString);
-
-        const options: requestOptions = {
-            observe: 'response'
-        };
-        if (from && to && days) {
-            options.params = new HttpParams()
-                .set('from', this.convertDateToString(from))
-                .set('to', this.convertDateToString(to))
-                .set('days', daysString);
-        }
-
-        console.log(`query params: ${options.params ? options.params.toString() : 'null'}`);
-
-        console.log(`perform POST ${this.resourceUrl}\n query: ${options.params ? options.params.toString() : 'null'}\n body: ${JSON.stringify(board)}`);
+        console.log(`query params: ${options.toString()}`);
+        console.log(`perform POST ${this.resourceUrl}\n query: ${options.toString()}\n body: ${JSON.stringify(board)}`);
 
         return this.http
-            .post<Board>(this.resourceUrl, copy, options)
+            .post<Board>(this.resourceUrl, copy, {observe: 'response'})
             .pipe(map((res: BoardResponseType) => this.convertDateFromServer(res)));
     }
 
@@ -163,10 +150,6 @@ export class BoardService {
             updated: board.updated != null && board.updated.isValid() ? board.updated.toJSON() : null
         });
         return copy;
-    }
-
-    protected convertDateToString(date: Moment): string {
-        return date != null && date.isValid() ? date.format(DATE_FORMAT) : null;
     }
 
     protected convertDateFromServer(res: BoardResponseType): BoardResponseType {
