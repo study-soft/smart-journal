@@ -64,10 +64,10 @@ public class BoardResource {
      */
     @PostMapping("/boards")
     public ResponseEntity<Board> createBoard(@Valid @RequestBody Board board,
-                                             @RequestParam(name = "from", required = false) LocalDate dateFrom,
-                                             @RequestParam(name = "to", required = false) LocalDate dateTo,
+                                             @RequestParam(name = "dateFrom", required = false) LocalDate dateFrom,
+                                             @RequestParam(name = "dateTo", required = false) LocalDate dateTo,
                                              @RequestParam(name = "days", required = false) List<Integer> days) throws URISyntaxException {
-        log.debug("REST request to save Board : {}", board);
+        log.debug("REST request to save Board : {}, {}, {}, {}", board, dateFrom, dateTo, days);
         if (board.getId() != null) {
             throw new BadRequestAlertException("A new board cannot already have an ID", ENTITY_BOARD, "idexists");
         }

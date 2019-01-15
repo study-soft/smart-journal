@@ -2,7 +2,7 @@
     "smartjournalApp": {
         "subject": {
             "home": {
-                "title": "Subjects",
+                "title": "Предмети",
                 "createLabel": "Створити новий Subject",
                 "createOrEditLabel": "Створити чи редагувати Subject"
             },

@@ -47,7 +47,7 @@ export class BoardService {
         console.log(`perform POST ${this.resourceUrl}\n query: ${options.toString()}\n body: ${JSON.stringify(board)}`);
 
         return this.http
-            .post<Board>(this.resourceUrl, copy, {observe: 'response'})
+            .post<Board>(this.resourceUrl, copy, {observe: 'response', params: options})
             .pipe(map((res: BoardResponseType) => this.convertDateFromServer(res)));
     }
 

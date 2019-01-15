@@ -22,7 +22,7 @@
                 <a class="nav-link" routerLink="/board" (click)="collapseNavbar()">
                     <span>
                         <i class="fas fa-book"></i>
-                        <span>Boards</span>
+                        <span jhiTranslate="smartjournalApp.board.home.title">Boards</span>
                     </span>
                 </a>
             </li>
@@ -30,7 +30,7 @@
                 <a class="nav-link" routerLink="/subject" (click)="collapseNavbar()">
                     <span>
                         <i class="fas fa-university"></i>
-                        <span>Subjects</span>
+                        <span jhiTranslate="smartjournalApp.subject.home.title">Subjects</span>
                     </span>
                 </a>
             </li>
@@ -38,40 +38,40 @@
                 <a class="nav-link" routerLink="/group" (click)="collapseNavbar()">
                     <span>
                         <i class="fas fa-users"></i>
-                        <span>Groups</span>
+                        <span jhiTranslate="smartjournalApp.group.home.title">Groups</span>
                     </span>
                 </a>
             </li>
-            <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
-                    <span>
-                        <fa-icon icon="th-list"></fa-icon>
-                        <span jhiTranslate="global.menu.entities.main">
-                            Entities
-                        </span>
-                    </span>
-                </a>
-                <ul class="dropdown-menu" ngbDropdownMenu>
-                    <li>
-                        <a class="dropdown-item" routerLink="student" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.student">Student</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="day" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.day">Day</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="day-type" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.dayType">Day Type</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+            <!--<li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">-->
+                <!--<a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">-->
+                    <!--<span>-->
+                        <!--<fa-icon icon="th-list"></fa-icon>-->
+                        <!--<span jhiTranslate="global.menu.entities.main">-->
+                            <!--Entities-->
+                        <!--</span>-->
+                    <!--</span>-->
+                <!--</a>-->
+                <!--<ul class="dropdown-menu" ngbDropdownMenu>-->
+                    <!--<li>-->
+                        <!--<a class="dropdown-item" routerLink="student" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">-->
+                            <!--<fa-icon icon="asterisk" fixedWidth="true"></fa-icon>-->
+                            <!--<span jhiTranslate="global.menu.entities.student">Student</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a class="dropdown-item" routerLink="day" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">-->
+                            <!--<fa-icon icon="asterisk" fixedWidth="true"></fa-icon>-->
+                            <!--<span jhiTranslate="global.menu.entities.day">Day</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a class="dropdown-item" routerLink="day-type" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">-->
+                            <!--<fa-icon icon="asterisk" fixedWidth="true"></fa-icon>-->
+                            <!--<span jhiTranslate="global.menu.entities.dayType">Day Type</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</li>-->
             <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu">
                     <span>

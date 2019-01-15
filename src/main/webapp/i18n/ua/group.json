@@ -2,7 +2,7 @@
     "smartjournalApp": {
         "group": {
             "home": {
-                "title": "Groups",
+                "title": "Групи",
                 "createLabel": "Створити нову Групу",
                 "createOrEditLabel": "Створити чи редагувати Групу"
             },
