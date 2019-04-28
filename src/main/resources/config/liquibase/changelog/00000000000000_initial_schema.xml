@@ -1,0 +1,1902 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="User (generated)" id="1556469052200-1">
+        <createTable tableName="_groups">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="_groups_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(65535)"/>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="updated_by" type="VARCHAR(50)"/>
+            <column name="updated" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-2">
+        <createTable tableName="authorities">
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-3">
+        <createTable tableName="boards">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="boards_pkey"/>
+            </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="description" type="VARCHAR(65535)"/>
+            <column name="total_score" type="FLOAT8"/>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="updated_by" type="VARCHAR(50)"/>
+            <column name="updated" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="group_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subject_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-4">
+        <createTable tableName="day_types">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="day_types_pkey"/>
+            </column>
+            <column name="type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="score" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="description" type="VARCHAR(65535)"/>
+            <column name="expiry" type="INT"/>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="updated_by" type="VARCHAR(50)"/>
+            <column name="updated" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="board_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-5">
+        <createTable tableName="days">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="days_pkey"/>
+            </column>
+            <column name="date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="result" type="FLOAT8"/>
+            <column name="student_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="day_type_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-6">
+        <createTable tableName="groups_subjects">
+            <column name="groups_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subjects_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-7">
+        <createTable tableName="students">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="students_pkey"/>
+            </column>
+            <column name="first_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="middle_name" type="VARCHAR(255)"/>
+            <column name="group_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-8">
+        <createTable tableName="subjects">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="subjects_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(65535)"/>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="updated_by" type="VARCHAR(50)"/>
+            <column name="updated" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-9">
+        <createTable tableName="users">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="users_pkey"/>
+            </column>
+            <column name="login" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password_hash" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(50)"/>
+            <column name="last_name" type="VARCHAR(50)"/>
+            <column name="email" type="VARCHAR(254)"/>
+            <column name="image_url" type="VARCHAR(256)"/>
+            <column name="activated" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lang_key" type="VARCHAR(6)"/>
+            <column name="activation_key" type="VARCHAR(20)"/>
+            <column name="reset_key" type="VARCHAR(20)"/>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="reset_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="updated_by" type="VARCHAR(50)"/>
+            <column name="updated" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-10">
+        <createTable tableName="users_authorities">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="authority_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-11">
+        <insert tableName="_groups">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="Інформатики-4"/>
+            <column name="description" value="Тестова група для перевірки роботи розумного журналу. Пишу багато символів в описі, щоб перевірити, як це буде виглядати на сторінці. Ліміт сиволів - 65535, тому в мене ще є великий запас. Бла-бла-бла..."/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by"/>
+            <column name="updated"/>
+            <column name="user_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="_groups">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="Прикладна математика-3"/>
+            <column name="description"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="user_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="_groups">
+            <column name="id" valueNumeric="3"/>
+            <column name="name" value="Прикладна математика-4"/>
+            <column name="description"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="user_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="_groups">
+            <column name="id" valueNumeric="4"/>
+            <column name="name" value="Група 2-го викладача"/>
+            <column name="description"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="user_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="_groups">
+            <column name="id" valueNumeric="5"/>
+            <column name="name" value="Комп’ютерні науки"/>
+            <column name="description"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="user_id" valueNumeric="3"/>
+        </insert>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-12">
+        <insert tableName="authorities">
+            <column name="name" value="ROLE_ADMIN"/>
+        </insert>
+        <insert tableName="authorities">
+            <column name="name" value="ROLE_USER"/>
+        </insert>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-13">
+        <insert tableName="boards">
+            <column name="id" valueNumeric="1"/>
+            <column name="title" value="Інформатики-4. Програмна інженерія"/>
+            <column name="name" value="1-й семестр"/>
+            <column name="description" value=""/>
+            <column name="total_score" valueNumeric="100.0"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="group_id" valueNumeric="1"/>
+            <column name="subject_id" valueNumeric="1"/>
+            <column name="user_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="boards">
+            <column name="id" valueNumeric="2"/>
+            <column name="title" value="Інформатики-4. Системне програмування"/>
+            <column name="name"/>
+            <column name="description"/>
+            <column name="total_score" valueNumeric="100.0"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="group_id" valueNumeric="1"/>
+            <column name="subject_id" valueNumeric="2"/>
+            <column name="user_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="boards">
+            <column name="id" valueNumeric="3"/>
+            <column name="title" value="Прикладна математика-3. Програмна інженерія"/>
+            <column name="name" value="2-й семестр"/>
+            <column name="description" value="Згенерований журнал для групи &quot;Прикладна математика-3&quot; і предмету &quot;Програмна інженерія&quot;"/>
+            <column name="total_score" valueNumeric="1000.0"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="group_id" valueNumeric="2"/>
+            <column name="subject_id" valueNumeric="1"/>
+            <column name="user_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="boards">
+            <column name="id" valueNumeric="4"/>
+            <column name="title" value="Прикладна математика-4. Програмна інженерія"/>
+            <column name="name"/>
+            <column name="description" value="Останній семестр для групи &quot;Прикладна математика-4&quot; з дисципліни &quot;Програмна інженерія&quot;"/>
+            <column name="total_score"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="group_id" valueNumeric="3"/>
+            <column name="subject_id" valueNumeric="1"/>
+            <column name="user_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="boards">
+            <column name="id" valueNumeric="5"/>
+            <column name="title" value="Дошка 2-го викладача"/>
+            <column name="name"/>
+            <column name="description"/>
+            <column name="total_score"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="group_id" valueNumeric="4"/>
+            <column name="subject_id" valueNumeric="3"/>
+            <column name="user_id" valueNumeric="5"/>
+        </insert>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-14">
+        <insert tableName="day_types">
+            <column name="id" valueNumeric="1"/>
+            <column name="type" value="SIMPLE"/>
+            <column name="score" valueNumeric="1.0"/>
+            <column name="name" value="Відвідування"/>
+            <column name="description" value="Звичайна пара"/>
+            <column name="expiry"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="board_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="day_types">
+            <column name="id" valueNumeric="2"/>
+            <column name="type" value="LAB"/>
+            <column name="score" valueNumeric="5.0"/>
+            <column name="name" value="Лабараторна робота"/>
+            <column name="description"/>
+            <column name="expiry" valueNumeric="3"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="board_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="day_types">
+            <column name="id" valueNumeric="3"/>
+            <column name="type" value="MODULE"/>
+            <column name="score" valueNumeric="10.0"/>
+            <column name="name" value="Модуль"/>
+            <column name="description"/>
+            <column name="expiry"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="board_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="day_types">
+            <column name="id" valueNumeric="4"/>
+            <column name="type" value="EXAM"/>
+            <column name="score" valueNumeric="20.0"/>
+            <column name="name" value="Екзамен"/>
+            <column name="description"/>
+            <column name="expiry"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="board_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="day_types">
+            <column name="id" valueNumeric="5"/>
+            <column name="type" value="TEST"/>
+            <column name="score" valueNumeric="3.0"/>
+            <column name="name" value="Тест"/>
+            <column name="description"/>
+            <column name="expiry"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="board_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="day_types">
+            <column name="id" valueNumeric="6"/>
+            <column name="type" value="SIMPLE"/>
+            <column name="score" valueNumeric="1.5"/>
+            <column name="name" value="Пара"/>
+            <column name="description" value="Звичайна пара, відвідування якої оцінюється"/>
+            <column name="expiry"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="board_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="day_types">
+            <column name="id" valueNumeric="7"/>
+            <column name="type" value="LAB"/>
+            <column name="score" valueNumeric="8.0"/>
+            <column name="name" value="Лабараторна робота №1. Багатопоточність в прикладних системах"/>
+            <column name="description"/>
+            <column name="expiry" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="board_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="day_types">
+            <column name="id" valueNumeric="8"/>
+            <column name="type" value="LAB"/>
+            <column name="score" valueNumeric="5.0"/>
+            <column name="name" value="Лабараторна робота №2. Задача про обідаючих філософів"/>
+            <column name="description"/>
+            <column name="expiry" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="board_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="day_types">
+            <column name="id" valueNumeric="9"/>
+            <column name="type" value="LAB"/>
+            <column name="score" valueNumeric="5.0"/>
+            <column name="name" value="Лабараторна робота №3. XML-парсер"/>
+            <column name="description"/>
+            <column name="expiry" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="board_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="day_types">
+            <column name="id" valueNumeric="10"/>
+            <column name="type" value="LAB"/>
+            <column name="score" valueNumeric="7.0"/>
+            <column name="name" value="Лабараторна робота №4. Імітатор шедулера операційної системи"/>
+            <column name="description"/>
+            <column name="expiry" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="board_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="day_types">
+            <column name="id" valueNumeric="11"/>
+            <column name="type" value="LAB"/>
+            <column name="score" valueNumeric="10.0"/>
+            <column name="name" value="Лабараторна робота №5. Генетичні алгоритми"/>
+            <column name="description"/>
+            <column name="expiry" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="board_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="day_types">
+            <column name="id" valueNumeric="12"/>
+            <column name="type" value="MODULE"/>
+            <column name="score" valueNumeric="15.0"/>
+            <column name="name" value="Підсумковий модуль №1. Багатопоточність"/>
+            <column name="description"/>
+            <column name="expiry" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="board_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="day_types">
+            <column name="id" valueNumeric="13"/>
+            <column name="type" value="MODULE"/>
+            <column name="score" valueNumeric="15.0"/>
+            <column name="name" value="Підсумковий модуль №2. Прикладні програми в системному програмуванні"/>
+            <column name="description"/>
+            <column name="expiry"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="board_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="day_types">
+            <column name="id" valueNumeric="14"/>
+            <column name="type" value="EXAM"/>
+            <column name="score" valueNumeric="20.0"/>
+            <column name="name" value="Семестровий екзамен"/>
+            <column name="description"/>
+            <column name="expiry"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="board_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="day_types">
+            <column name="id" valueNumeric="15"/>
+            <column name="type" value="SIMPLE"/>
+            <column name="score" valueNumeric="2.0"/>
+            <column name="name" value="Пара"/>
+            <column name="description" value="Звичайна пара, відвідування якої оцінюється"/>
+            <column name="expiry"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="board_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="day_types">
+            <column name="id" valueNumeric="16"/>
+            <column name="type" value="SIMPLE"/>
+            <column name="score" valueNumeric="1.0"/>
+            <column name="name" value="Пара"/>
+            <column name="description" value="Звичайна пара, відвідування якої оцінюється"/>
+            <column name="expiry"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="board_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="day_types">
+            <column name="id" valueNumeric="17"/>
+            <column name="type" value="SIMPLE"/>
+            <column name="score" valueNumeric="0.0"/>
+            <column name="name" value="Звичайна пара"/>
+            <column name="description" value="Звичайна пара, відвідування якої НЕ оцінюється"/>
+            <column name="expiry"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="board_id" valueNumeric="5"/>
+        </insert>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-15">
+        <insert tableName="days">
+            <column name="id" valueNumeric="1"/>
+            <column name="date" valueDate="2019-03-31"/>
+            <column name="result" valueNumeric="0.0"/>
+            <column name="student_id" valueNumeric="1"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="2"/>
+            <column name="date" valueDate="2019-03-31"/>
+            <column name="result" valueNumeric="1.0"/>
+            <column name="student_id" valueNumeric="2"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="3"/>
+            <column name="date" valueDate="2019-03-31"/>
+            <column name="result" valueNumeric="0.0"/>
+            <column name="student_id" valueNumeric="3"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="4"/>
+            <column name="date" valueDate="2019-03-31"/>
+            <column name="result" valueNumeric="1.0"/>
+            <column name="student_id" valueNumeric="4"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="5"/>
+            <column name="date" valueDate="2019-03-31"/>
+            <column name="result" valueNumeric="1.0"/>
+            <column name="student_id" valueNumeric="5"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="6"/>
+            <column name="date" valueDate="2019-03-31"/>
+            <column name="result" valueNumeric="1.0"/>
+            <column name="student_id" valueNumeric="6"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="7"/>
+            <column name="date" valueDate="2019-03-31"/>
+            <column name="result" valueNumeric="1.0"/>
+            <column name="student_id" valueNumeric="7"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="8"/>
+            <column name="date" valueDate="2019-03-31"/>
+            <column name="result" valueNumeric="1.0"/>
+            <column name="student_id" valueNumeric="8"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="9"/>
+            <column name="date" valueDate="2019-03-31"/>
+            <column name="result" valueNumeric="0.0"/>
+            <column name="student_id" valueNumeric="9"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="10"/>
+            <column name="date" valueDate="2019-03-31"/>
+            <column name="result" valueNumeric="1.0"/>
+            <column name="student_id" valueNumeric="10"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="11"/>
+            <column name="date" valueDate="2019-04-07"/>
+            <column name="result" valueNumeric="1.0"/>
+            <column name="student_id" valueNumeric="1"/>
+            <column name="day_type_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="12"/>
+            <column name="date" valueDate="2019-04-07"/>
+            <column name="result" valueNumeric="2.0"/>
+            <column name="student_id" valueNumeric="2"/>
+            <column name="day_type_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="13"/>
+            <column name="date" valueDate="2019-04-07"/>
+            <column name="result" valueNumeric="3.0"/>
+            <column name="student_id" valueNumeric="3"/>
+            <column name="day_type_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="14"/>
+            <column name="date" valueDate="2019-04-07"/>
+            <column name="result" valueNumeric="4.0"/>
+            <column name="student_id" valueNumeric="4"/>
+            <column name="day_type_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="15"/>
+            <column name="date" valueDate="2019-04-07"/>
+            <column name="result" valueNumeric="0.0"/>
+            <column name="student_id" valueNumeric="5"/>
+            <column name="day_type_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="16"/>
+            <column name="date" valueDate="2019-04-07"/>
+            <column name="result" valueNumeric="4.0"/>
+            <column name="student_id" valueNumeric="6"/>
+            <column name="day_type_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="17"/>
+            <column name="date" valueDate="2019-04-07"/>
+            <column name="result" valueNumeric="5.0"/>
+            <column name="student_id" valueNumeric="7"/>
+            <column name="day_type_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="18"/>
+            <column name="date" valueDate="2019-04-07"/>
+            <column name="result" valueNumeric="5.0"/>
+            <column name="student_id" valueNumeric="8"/>
+            <column name="day_type_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="19"/>
+            <column name="date" valueDate="2019-04-07"/>
+            <column name="result" valueNumeric="0.0"/>
+            <column name="student_id" valueNumeric="9"/>
+            <column name="day_type_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="20"/>
+            <column name="date" valueDate="2019-04-07"/>
+            <column name="result" valueNumeric="2.0"/>
+            <column name="student_id" valueNumeric="10"/>
+            <column name="day_type_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="21"/>
+            <column name="date" valueDate="2019-04-14"/>
+            <column name="result" valueNumeric="0.0"/>
+            <column name="student_id" valueNumeric="1"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="22"/>
+            <column name="date" valueDate="2019-04-14"/>
+            <column name="result" valueNumeric="1.0"/>
+            <column name="student_id" valueNumeric="2"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="23"/>
+            <column name="date" valueDate="2019-04-14"/>
+            <column name="result" valueNumeric="1.0"/>
+            <column name="student_id" valueNumeric="3"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="24"/>
+            <column name="date" valueDate="2019-04-14"/>
+            <column name="result" valueNumeric="0.0"/>
+            <column name="student_id" valueNumeric="4"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="25"/>
+            <column name="date" valueDate="2019-04-14"/>
+            <column name="result" valueNumeric="1.0"/>
+            <column name="student_id" valueNumeric="5"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="26"/>
+            <column name="date" valueDate="2019-04-14"/>
+            <column name="result" valueNumeric="0.0"/>
+            <column name="student_id" valueNumeric="6"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="27"/>
+            <column name="date" valueDate="2019-04-14"/>
+            <column name="result" valueNumeric="0.0"/>
+            <column name="student_id" valueNumeric="7"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="28"/>
+            <column name="date" valueDate="2019-04-14"/>
+            <column name="result" valueNumeric="1.0"/>
+            <column name="student_id" valueNumeric="8"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="29"/>
+            <column name="date" valueDate="2019-04-14"/>
+            <column name="result" valueNumeric="0.0"/>
+            <column name="student_id" valueNumeric="9"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="30"/>
+            <column name="date" valueDate="2019-04-14"/>
+            <column name="result" valueNumeric="0.0"/>
+            <column name="student_id" valueNumeric="10"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="31"/>
+            <column name="date" valueDate="2019-04-21"/>
+            <column name="result" valueNumeric="0.0"/>
+            <column name="student_id" valueNumeric="1"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="32"/>
+            <column name="date" valueDate="2019-04-21"/>
+            <column name="result" valueNumeric="1.0"/>
+            <column name="student_id" valueNumeric="2"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="33"/>
+            <column name="date" valueDate="2019-04-21"/>
+            <column name="result" valueNumeric="1.0"/>
+            <column name="student_id" valueNumeric="3"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="34"/>
+            <column name="date" valueDate="2019-04-21"/>
+            <column name="result" valueNumeric="0.0"/>
+            <column name="student_id" valueNumeric="4"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="35"/>
+            <column name="date" valueDate="2019-04-21"/>
+            <column name="result" valueNumeric="0.0"/>
+            <column name="student_id" valueNumeric="5"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="36"/>
+            <column name="date" valueDate="2019-04-21"/>
+            <column name="result" valueNumeric="1.0"/>
+            <column name="student_id" valueNumeric="6"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="37"/>
+            <column name="date" valueDate="2019-04-21"/>
+            <column name="result" valueNumeric="1.0"/>
+            <column name="student_id" valueNumeric="7"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="38"/>
+            <column name="date" valueDate="2019-04-21"/>
+            <column name="result" valueNumeric="1.0"/>
+            <column name="student_id" valueNumeric="8"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="39"/>
+            <column name="date" valueDate="2019-04-21"/>
+            <column name="result" valueNumeric="1.0"/>
+            <column name="student_id" valueNumeric="9"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="40"/>
+            <column name="date" valueDate="2019-04-21"/>
+            <column name="result" valueNumeric="1.0"/>
+            <column name="student_id" valueNumeric="10"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="41"/>
+            <column name="date" valueDate="2019-04-28"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="1"/>
+            <column name="day_type_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="42"/>
+            <column name="date" valueDate="2019-04-28"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="2"/>
+            <column name="day_type_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="43"/>
+            <column name="date" valueDate="2019-04-28"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="3"/>
+            <column name="day_type_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="44"/>
+            <column name="date" valueDate="2019-04-28"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="4"/>
+            <column name="day_type_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="45"/>
+            <column name="date" valueDate="2019-04-28"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="5"/>
+            <column name="day_type_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="46"/>
+            <column name="date" valueDate="2019-04-28"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="6"/>
+            <column name="day_type_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="47"/>
+            <column name="date" valueDate="2019-04-28"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="7"/>
+            <column name="day_type_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="48"/>
+            <column name="date" valueDate="2019-04-28"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="8"/>
+            <column name="day_type_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="49"/>
+            <column name="date" valueDate="2019-04-28"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="9"/>
+            <column name="day_type_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="50"/>
+            <column name="date" valueDate="2019-04-28"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="10"/>
+            <column name="day_type_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="51"/>
+            <column name="date" valueDate="2019-05-05"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="1"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="52"/>
+            <column name="date" valueDate="2019-05-05"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="2"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="53"/>
+            <column name="date" valueDate="2019-05-05"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="3"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="54"/>
+            <column name="date" valueDate="2019-05-05"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="4"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="55"/>
+            <column name="date" valueDate="2019-05-05"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="5"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="56"/>
+            <column name="date" valueDate="2019-05-05"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="6"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="57"/>
+            <column name="date" valueDate="2019-05-05"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="7"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="58"/>
+            <column name="date" valueDate="2019-05-05"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="8"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="59"/>
+            <column name="date" valueDate="2019-05-05"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="9"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="60"/>
+            <column name="date" valueDate="2019-05-05"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="10"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="61"/>
+            <column name="date" valueDate="2019-05-12"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="1"/>
+            <column name="day_type_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="62"/>
+            <column name="date" valueDate="2019-05-12"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="2"/>
+            <column name="day_type_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="63"/>
+            <column name="date" valueDate="2019-05-12"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="3"/>
+            <column name="day_type_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="64"/>
+            <column name="date" valueDate="2019-05-12"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="4"/>
+            <column name="day_type_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="65"/>
+            <column name="date" valueDate="2019-05-12"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="5"/>
+            <column name="day_type_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="66"/>
+            <column name="date" valueDate="2019-05-12"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="6"/>
+            <column name="day_type_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="67"/>
+            <column name="date" valueDate="2019-05-12"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="7"/>
+            <column name="day_type_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="68"/>
+            <column name="date" valueDate="2019-05-12"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="8"/>
+            <column name="day_type_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="69"/>
+            <column name="date" valueDate="2019-05-12"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="9"/>
+            <column name="day_type_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="70"/>
+            <column name="date" valueDate="2019-05-12"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="10"/>
+            <column name="day_type_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="71"/>
+            <column name="date" valueDate="2019-05-19"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="1"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="72"/>
+            <column name="date" valueDate="2019-05-19"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="2"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="73"/>
+            <column name="date" valueDate="2019-05-19"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="3"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="74"/>
+            <column name="date" valueDate="2019-05-19"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="4"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="75"/>
+            <column name="date" valueDate="2019-05-19"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="5"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="76"/>
+            <column name="date" valueDate="2019-05-19"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="6"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="77"/>
+            <column name="date" valueDate="2019-05-19"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="7"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="78"/>
+            <column name="date" valueDate="2019-05-19"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="8"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="79"/>
+            <column name="date" valueDate="2019-05-19"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="9"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="80"/>
+            <column name="date" valueDate="2019-05-19"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="10"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="81"/>
+            <column name="date" valueDate="2019-05-26"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="1"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="82"/>
+            <column name="date" valueDate="2019-05-26"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="2"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="83"/>
+            <column name="date" valueDate="2019-05-26"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="3"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="84"/>
+            <column name="date" valueDate="2019-05-26"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="4"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="85"/>
+            <column name="date" valueDate="2019-05-26"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="5"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="86"/>
+            <column name="date" valueDate="2019-05-26"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="6"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="87"/>
+            <column name="date" valueDate="2019-05-26"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="7"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="88"/>
+            <column name="date" valueDate="2019-05-26"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="8"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="89"/>
+            <column name="date" valueDate="2019-05-26"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="9"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="90"/>
+            <column name="date" valueDate="2019-05-26"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="10"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="91"/>
+            <column name="date" valueDate="2019-06-02"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="1"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="92"/>
+            <column name="date" valueDate="2019-06-02"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="2"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="93"/>
+            <column name="date" valueDate="2019-06-02"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="3"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="94"/>
+            <column name="date" valueDate="2019-06-02"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="4"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="95"/>
+            <column name="date" valueDate="2019-06-02"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="5"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="96"/>
+            <column name="date" valueDate="2019-06-02"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="6"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="97"/>
+            <column name="date" valueDate="2019-06-02"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="7"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="98"/>
+            <column name="date" valueDate="2019-06-02"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="8"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="99"/>
+            <column name="date" valueDate="2019-06-02"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="9"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="100"/>
+            <column name="date" valueDate="2019-06-02"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="10"/>
+            <column name="day_type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="101"/>
+            <column name="date" valueDate="2019-06-09"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="1"/>
+            <column name="day_type_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="102"/>
+            <column name="date" valueDate="2019-06-09"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="2"/>
+            <column name="day_type_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="103"/>
+            <column name="date" valueDate="2019-06-09"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="3"/>
+            <column name="day_type_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="104"/>
+            <column name="date" valueDate="2019-06-09"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="4"/>
+            <column name="day_type_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="105"/>
+            <column name="date" valueDate="2019-06-09"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="5"/>
+            <column name="day_type_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="106"/>
+            <column name="date" valueDate="2019-06-09"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="6"/>
+            <column name="day_type_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="107"/>
+            <column name="date" valueDate="2019-06-09"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="7"/>
+            <column name="day_type_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="108"/>
+            <column name="date" valueDate="2019-06-09"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="8"/>
+            <column name="day_type_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="109"/>
+            <column name="date" valueDate="2019-06-09"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="9"/>
+            <column name="day_type_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="110"/>
+            <column name="date" valueDate="2019-06-09"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="10"/>
+            <column name="day_type_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="111"/>
+            <column name="date" valueDate="2019-05-05"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="1"/>
+            <column name="day_type_id" valueNumeric="6"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="112"/>
+            <column name="date" valueDate="2019-05-05"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="2"/>
+            <column name="day_type_id" valueNumeric="6"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="113"/>
+            <column name="date" valueDate="2019-05-05"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="3"/>
+            <column name="day_type_id" valueNumeric="6"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="114"/>
+            <column name="date" valueDate="2019-05-05"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="4"/>
+            <column name="day_type_id" valueNumeric="6"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="115"/>
+            <column name="date" valueDate="2019-05-05"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="5"/>
+            <column name="day_type_id" valueNumeric="6"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="116"/>
+            <column name="date" valueDate="2019-05-05"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="6"/>
+            <column name="day_type_id" valueNumeric="6"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="117"/>
+            <column name="date" valueDate="2019-05-05"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="7"/>
+            <column name="day_type_id" valueNumeric="6"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="118"/>
+            <column name="date" valueDate="2019-05-05"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="8"/>
+            <column name="day_type_id" valueNumeric="6"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="119"/>
+            <column name="date" valueDate="2019-05-05"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="9"/>
+            <column name="day_type_id" valueNumeric="6"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="120"/>
+            <column name="date" valueDate="2019-05-05"/>
+            <column name="result"/>
+            <column name="student_id" valueNumeric="10"/>
+            <column name="day_type_id" valueNumeric="6"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="121"/>
+            <column name="date" valueDate="2019-04-21"/>
+            <column name="result" valueNumeric="0.0"/>
+            <column name="student_id" valueNumeric="11"/>
+            <column name="day_type_id" valueNumeric="15"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="122"/>
+            <column name="date" valueDate="2019-04-21"/>
+            <column name="result" valueNumeric="1.0"/>
+            <column name="student_id" valueNumeric="12"/>
+            <column name="day_type_id" valueNumeric="15"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="123"/>
+            <column name="date" valueDate="2019-04-21"/>
+            <column name="result" valueNumeric="2.0"/>
+            <column name="student_id" valueNumeric="13"/>
+            <column name="day_type_id" valueNumeric="15"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="124"/>
+            <column name="date" valueDate="2019-04-21"/>
+            <column name="result" valueNumeric="0.0"/>
+            <column name="student_id" valueNumeric="14"/>
+            <column name="day_type_id" valueNumeric="15"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="125"/>
+            <column name="date" valueDate="2019-04-21"/>
+            <column name="result" valueNumeric="1.0"/>
+            <column name="student_id" valueNumeric="15"/>
+            <column name="day_type_id" valueNumeric="15"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="126"/>
+            <column name="date" valueDate="2019-04-21"/>
+            <column name="result" valueNumeric="2.0"/>
+            <column name="student_id" valueNumeric="16"/>
+            <column name="day_type_id" valueNumeric="15"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="127"/>
+            <column name="date" valueDate="2019-04-21"/>
+            <column name="result" valueNumeric="0.0"/>
+            <column name="student_id" valueNumeric="17"/>
+            <column name="day_type_id" valueNumeric="15"/>
+        </insert>
+        <insert tableName="days">
+            <column name="id" valueNumeric="128"/>
+            <column name="date" valueDate="2019-04-21"/>
+            <column name="result" valueNumeric="1.0"/>
+            <column name="student_id" valueNumeric="18"/>
+            <column name="day_type_id" valueNumeric="15"/>
+        </insert>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-16">
+        <insert tableName="groups_subjects">
+            <column name="groups_id" valueNumeric="1"/>
+            <column name="subjects_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="groups_subjects">
+            <column name="groups_id" valueNumeric="1"/>
+            <column name="subjects_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="groups_subjects">
+            <column name="groups_id" valueNumeric="2"/>
+            <column name="subjects_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="groups_subjects">
+            <column name="groups_id" valueNumeric="3"/>
+            <column name="subjects_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="groups_subjects">
+            <column name="groups_id" valueNumeric="4"/>
+            <column name="subjects_id" valueNumeric="3"/>
+        </insert>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-17">
+        <insert tableName="students">
+            <column name="id" valueNumeric="1"/>
+            <column name="first_name" value="Антон"/>
+            <column name="last_name" value="Яковенко"/>
+            <column name="middle_name" value="Сергійович"/>
+            <column name="group_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="2"/>
+            <column name="first_name" value="Артем"/>
+            <column name="last_name" value="Яковенко"/>
+            <column name="middle_name" value="Сергійович"/>
+            <column name="group_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="3"/>
+            <column name="first_name" value="Джейсон"/>
+            <column name="last_name" value="Стетхем"/>
+            <column name="middle_name"/>
+            <column name="group_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="4"/>
+            <column name="first_name" value="Довге-довге ім’я"/>
+            <column name="last_name" value="Довге-довге прізвище"/>
+            <column name="middle_name" value="Довге-довге ім’я по-батькові"/>
+            <column name="group_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="5"/>
+            <column name="first_name" value="Семен"/>
+            <column name="last_name" value="Швидкий"/>
+            <column name="middle_name" value="Вікторович"/>
+            <column name="group_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="6"/>
+            <column name="first_name" value="Поліна"/>
+            <column name="last_name" value="Іванова"/>
+            <column name="middle_name" value="Ігорівна"/>
+            <column name="group_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="7"/>
+            <column name="first_name" value="Олександра"/>
+            <column name="last_name" value="Таращук"/>
+            <column name="middle_name" value="Олексіївна"/>
+            <column name="group_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="8"/>
+            <column name="first_name" value="Катерина"/>
+            <column name="last_name" value="Микитюк"/>
+            <column name="middle_name" value="Борисівна"/>
+            <column name="group_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="9"/>
+            <column name="first_name" value="Світлана"/>
+            <column name="last_name" value="Шинкаренко"/>
+            <column name="middle_name" value="Тарасівна"/>
+            <column name="group_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="10"/>
+            <column name="first_name" value="Юлія"/>
+            <column name="last_name" value="Крамаренко"/>
+            <column name="middle_name" value="Олександрівна"/>
+            <column name="group_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="11"/>
+            <column name="first_name" value="Олександр"/>
+            <column name="last_name" value="Антоненко"/>
+            <column name="middle_name" value="Володимирович"/>
+            <column name="group_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="12"/>
+            <column name="first_name" value="Любов"/>
+            <column name="last_name" value="Петренко"/>
+            <column name="middle_name" value="Анатоліївна"/>
+            <column name="group_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="13"/>
+            <column name="first_name" value="Адам"/>
+            <column name="last_name" value="Іванченко"/>
+            <column name="middle_name" value="Борисович"/>
+            <column name="group_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="14"/>
+            <column name="first_name" value="Діана"/>
+            <column name="last_name" value="Лисенко"/>
+            <column name="middle_name" value="Сергіївна"/>
+            <column name="group_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="15"/>
+            <column name="first_name" value="Віталій"/>
+            <column name="last_name" value="Петренко"/>
+            <column name="middle_name" value="Олексійович"/>
+            <column name="group_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="16"/>
+            <column name="first_name" value="Ніна"/>
+            <column name="last_name" value="Шевченко"/>
+            <column name="middle_name" value="Андріївна"/>
+            <column name="group_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="17"/>
+            <column name="first_name" value="Юрій"/>
+            <column name="last_name" value="Романченко"/>
+            <column name="middle_name" value="Євгенович"/>
+            <column name="group_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="18"/>
+            <column name="first_name" value="Оксана"/>
+            <column name="last_name" value="Лисенко"/>
+            <column name="middle_name" value="Михайлівна"/>
+            <column name="group_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="19"/>
+            <column name="first_name" value="Оксана"/>
+            <column name="last_name" value="Броваренко"/>
+            <column name="middle_name" value="Петрівна"/>
+            <column name="group_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="20"/>
+            <column name="first_name" value="Ольга"/>
+            <column name="last_name" value="Мірошниченко"/>
+            <column name="middle_name" value="Романівна"/>
+            <column name="group_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="21"/>
+            <column name="first_name" value="Тетяна"/>
+            <column name="last_name" value="Мельниченко"/>
+            <column name="middle_name" value="Андріївна"/>
+            <column name="group_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="22"/>
+            <column name="first_name" value="Дмитро"/>
+            <column name="last_name" value="Крамарчук"/>
+            <column name="middle_name" value="Олексійович"/>
+            <column name="group_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="23"/>
+            <column name="first_name" value="Софія"/>
+            <column name="last_name" value="Іванченко"/>
+            <column name="middle_name" value="Петрівна"/>
+            <column name="group_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="24"/>
+            <column name="first_name" value="B'ячеслав"/>
+            <column name="last_name" value="Сергієнко"/>
+            <column name="middle_name" value="Петрович"/>
+            <column name="group_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="25"/>
+            <column name="first_name" value="Павло"/>
+            <column name="last_name" value="Янович"/>
+            <column name="middle_name" value="Антоненко"/>
+            <column name="group_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="26"/>
+            <column name="first_name" value="Валерій"/>
+            <column name="last_name" value="Овсієнко"/>
+            <column name="middle_name" value="Федорович"/>
+            <column name="group_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="students">
+            <column name="id" valueNumeric="27"/>
+            <column name="first_name" value="Олексій"/>
+            <column name="last_name" value="Трохименко"/>
+            <column name="middle_name"/>
+            <column name="group_id" valueNumeric="4"/>
+        </insert>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-18">
+        <insert tableName="subjects">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="Програмна інженерія"/>
+            <column name="description"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="user_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="subjects">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="Системне програмування"/>
+            <column name="description" value="Системне програмування та операційні системи"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="user_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="subjects">
+            <column name="id" valueNumeric="3"/>
+            <column name="name" value="Предмет 2-го викладача"/>
+            <column name="description"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="user_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="subjects">
+            <column name="id" valueNumeric="4"/>
+            <column name="name" value="Математичний аналіз"/>
+            <column name="description"/>
+            <column name="created_by" value="system"/>
+            <column name="created" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated" valueDate="2019-04-28 16:30:26.153"/>
+            <column name="user_id" valueNumeric="3"/>
+        </insert>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-19">
+        <insert tableName="users">
+            <column name="id" valueNumeric="1"/>
+            <column name="login" value="system"/>
+            <column name="password_hash" value="$2a$10$mE.qmcV0mFU5NcKh73TZx.z4ueI/.bDWbj0T1BYyqP481kGGarKLG"/>
+            <column name="first_name" value="System"/>
+            <column name="last_name" value="System"/>
+            <column name="email" value="system@localhost"/>
+            <column name="image_url" value=""/>
+            <column name="activated" valueBoolean="true"/>
+            <column name="lang_key" value="ua"/>
+            <column name="activation_key"/>
+            <column name="reset_key"/>
+            <column name="created_by" value="system"/>
+            <column name="created"/>
+            <column name="reset_date"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated"/>
+        </insert>
+        <insert tableName="users">
+            <column name="id" valueNumeric="2"/>
+            <column name="login" value="anonymoususer"/>
+            <column name="password_hash" value="$2a$10$j8S5d7Sr7.8VTOYNviDPOeWX8KcYILUVJBsYV83Y5NtECayypx9lO"/>
+            <column name="first_name" value="Anonymous"/>
+            <column name="last_name" value="System"/>
+            <column name="email" value="anonymous@localhost"/>
+            <column name="image_url" value=""/>
+            <column name="activated" valueBoolean="true"/>
+            <column name="lang_key" value="ua"/>
+            <column name="activation_key"/>
+            <column name="reset_key"/>
+            <column name="created_by" value="system"/>
+            <column name="created"/>
+            <column name="reset_date"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated"/>
+        </insert>
+        <insert tableName="users">
+            <column name="id" valueNumeric="3"/>
+            <column name="login" value="admin"/>
+            <column name="password_hash" value="$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC"/>
+            <column name="first_name" value="System"/>
+            <column name="last_name" value="Administrator"/>
+            <column name="email" value="admin@localhost"/>
+            <column name="image_url" value=""/>
+            <column name="activated" valueBoolean="true"/>
+            <column name="lang_key" value="ua"/>
+            <column name="activation_key"/>
+            <column name="reset_key"/>
+            <column name="created_by" value="system"/>
+            <column name="created"/>
+            <column name="reset_date"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated"/>
+        </insert>
+        <insert tableName="users">
+            <column name="id" valueNumeric="4"/>
+            <column name="login" value="user"/>
+            <column name="password_hash" value="$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K"/>
+            <column name="first_name" value="System"/>
+            <column name="last_name" value="User"/>
+            <column name="email" value="user@localhost"/>
+            <column name="image_url" value=""/>
+            <column name="activated" valueBoolean="true"/>
+            <column name="lang_key" value="ua"/>
+            <column name="activation_key"/>
+            <column name="reset_key"/>
+            <column name="created_by" value="system"/>
+            <column name="created"/>
+            <column name="reset_date"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated"/>
+        </insert>
+        <insert tableName="users">
+            <column name="id" valueNumeric="5"/>
+            <column name="login" value="teacher"/>
+            <column name="password_hash" value="$2a$10$ikrj7VVeyrPAcEtX4GAHquITr1EOwQGFsVYNveNIl0HcuoWEriqpa"/>
+            <column name="first_name" value="System"/>
+            <column name="last_name" value="Teacher"/>
+            <column name="email" value="teacher@localhost"/>
+            <column name="image_url" value=""/>
+            <column name="activated" valueBoolean="true"/>
+            <column name="lang_key" value="ua"/>
+            <column name="activation_key"/>
+            <column name="reset_key"/>
+            <column name="created_by" value="system"/>
+            <column name="created"/>
+            <column name="reset_date"/>
+            <column name="updated_by" value="system"/>
+            <column name="updated"/>
+        </insert>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-20">
+        <insert tableName="users_authorities">
+            <column name="user_id" valueNumeric="1"/>
+            <column name="authority_name" value="ROLE_ADMIN"/>
+        </insert>
+        <insert tableName="users_authorities">
+            <column name="user_id" valueNumeric="1"/>
+            <column name="authority_name" value="ROLE_USER"/>
+        </insert>
+        <insert tableName="users_authorities">
+            <column name="user_id" valueNumeric="3"/>
+            <column name="authority_name" value="ROLE_ADMIN"/>
+        </insert>
+        <insert tableName="users_authorities">
+            <column name="user_id" valueNumeric="3"/>
+            <column name="authority_name" value="ROLE_USER"/>
+        </insert>
+        <insert tableName="users_authorities">
+            <column name="user_id" valueNumeric="4"/>
+            <column name="authority_name" value="ROLE_USER"/>
+        </insert>
+        <insert tableName="users_authorities">
+            <column name="user_id" valueNumeric="5"/>
+            <column name="authority_name" value="ROLE_ADMIN"/>
+        </insert>
+        <insert tableName="users_authorities">
+            <column name="user_id" valueNumeric="5"/>
+            <column name="authority_name" value="ROLE_USER"/>
+        </insert>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-21">
+        <addPrimaryKey columnNames="name" constraintName="authorities_pkey" tableName="authorities"/>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-22">
+        <addPrimaryKey columnNames="user_id, authority_name" constraintName="pkey_users_authorities" tableName="users_authorities"/>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-23">
+        <createIndex indexName="pk_groups_subjects" tableName="groups_subjects" unique="true">
+            <column name="subjects_id"/>
+            <column name="groups_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-24">
+        <createIndex indexName="ux_boards_groups_id" tableName="boards">
+            <column name="group_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-25">
+        <createIndex indexName="ux_boards_subjects_id" tableName="boards">
+            <column name="subject_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-26">
+        <createIndex indexName="ux_boards_users_id" tableName="boards">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-27">
+        <createIndex indexName="ux_days_day_types_id" tableName="days">
+            <column name="day_type_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-28">
+        <createIndex indexName="ux_groups_users_id" tableName="_groups">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-29">
+        <createIndex indexName="ux_subjects_users_id" tableName="subjects">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-30">
+        <createIndex indexName="ux_users_email" tableName="users" unique="true">
+            <column name="email"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-31">
+        <createIndex indexName="ux_users_login" tableName="users" unique="true">
+            <column name="login"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-32">
+        <addForeignKeyConstraint baseColumnNames="authority_name" baseTableName="users_authorities" constraintName="fk_authority_name" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="name" referencedTableName="authorities"/>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-33">
+        <addForeignKeyConstraint baseColumnNames="group_id" baseTableName="boards" constraintName="fk_boards_group_id" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="_groups"/>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-34">
+        <addForeignKeyConstraint baseColumnNames="subject_id" baseTableName="boards" constraintName="fk_boards_subject_id" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="subjects"/>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-35">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="boards" constraintName="fk_boards_user_id" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-36">
+        <addForeignKeyConstraint baseColumnNames="board_id" baseTableName="day_types" constraintName="fk_day_types_board_id" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="boards"/>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-37">
+        <addForeignKeyConstraint baseColumnNames="day_type_id" baseTableName="days" constraintName="fk_days_day_type_id" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="day_types"/>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-38">
+        <addForeignKeyConstraint baseColumnNames="student_id" baseTableName="days" constraintName="fk_days_student_id" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="students"/>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-39">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="_groups" constraintName="fk_groups_user_id" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-40">
+        <addForeignKeyConstraint baseColumnNames="group_id" baseTableName="students" constraintName="fk_students_group_id" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="_groups"/>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-41">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="subjects" constraintName="fk_subjects_user_id" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="User (generated)" id="1556469052200-42">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="users_authorities" constraintName="fk_user_id" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
+    </changeSet>
+</databaseChangeLog>

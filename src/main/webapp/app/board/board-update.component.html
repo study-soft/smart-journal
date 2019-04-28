@@ -1,69 +1,74 @@
 <div class="row justify-content-center">
     <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-            <h2 id="jhi-board-heading" jhiTranslate="smartjournalApp.board.home.createOrEditLabel">Create or edit a Board</h2>
-            <div>
-                <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!board.id">
-                    <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id"
-                        [(ngModel)]="board.id" readonly />
-                </div>
-                <div class="form-group">
-                    <label for="field_title">Title</label>
-                    <input type="text" class="form-control" id="field_title" name="title"
-                           [value]="(board.group ? board.group?.name : '') + '. ' + (board.subject ? board.subject?.name : '')" readonly />
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="smartjournalApp.board.name" for="field_name">Name</label>
-                    <input type="text" class="form-control" name="name" id="field_name"
-                        [(ngModel)]="board.name" required/>
-                    <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">
+        <!--<div>editForm.status: {{editForm.status}}</div>-->
+        <!--<div>editForm.controls.days.status: {{editForm.controls.days.status}}</div>-->
+        <!--<div>editForm.controls.days.controls.dateFrom.status: {{editForm.controls.days.controls.dateFrom.status}}</div>-->
+        <form [formGroup]="editForm" (ngSubmit)="save()">
+            <h2 id="jhi-board-heading" jhiTranslate="smartjournalApp.board.home.createOrEditLabel">Create or edit a
+                Board</h2>
+            <jhi-alert-error></jhi-alert-error>
+            <div class="form-group" [hidden]="!board.id">
+                <label for="id" jhiTranslate="global.field.id">ID</label>
+                <input formControlName="id" class="form-control" id="id" readonly/>
+            </div>
+            <div class="form-group">
+                <label for="field_title">Title</label>
+                <input formControlName="title" class="form-control" id="field_title" readonly/>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="smartjournalApp.board.name"
+                       for="field_name">Name</label>
+                <input formControlName="name" class="form-control" id="field_name"/>
+                <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+                    <small class="form-text text-danger"
+                           [hidden]="!editForm.controls.name?.errors?.required"
+                           jhiTranslate="entity.validation.required">
                         This field is required.
-                        </small>
-                    </div>
+                    </small>
                 </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="smartjournalApp.board.description" for="field_description">Description</label>
-                    <input type="text" class="form-control" name="description" id="field_description"
-                        [(ngModel)]="board.description" />
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="smartjournalApp.board.description"
+                       for="field_description">Degscription</label>
+                <input formControlName="description" class="form-control" id="field_description"/>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="smartjournalApp.board.group"
+                       for="field_group">Group</label>
+                <select formControlName="group" class="form-control" id="field_group">
+                    <option [ngValue]="null"></option>
+                    <option [ngValue]="groupOption.id === board.group?.id ? board.group : groupOption"
+                            *ngFor="let groupOption of groups; trackBy: trackGroupById">{{groupOption.id}}</option>
+                </select>
+                <div [hidden]="!(editForm.controls.group?.dirty && editForm.controls.name?.invalid)">
+                    <small class="form-text text-danger"
+                           [hidden]="!editForm.controls.group?.errors?.required"
+                           jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
                 </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="smartjournalApp.board.group" for="field_group">Party</label>
-                    <select class="form-control" id="field_group" name="group" [(ngModel)]="board.group"
-                            required>
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="groupOption.id === board.group?.id ? board.group : groupOption" *ngFor="let groupOption of groups; trackBy: trackGroupById">{{groupOption.id}}</option>
-                    </select>
-                    <div [hidden]="!(editForm.controls.group?.dirty && editForm.controls.name?.invalid)">
-                        <small class="form-text text-danger"
-                               [hidden]="!editForm.controls.group?.errors?.required" jhiTranslate="entity.validation.required" email>
-                            This field is required.
-                        </small>
-                    </div>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="smartjournalApp.board.subject" for="field_subject">Subject</label>
+                <select formControlName="subject" class="form-control" id="field_subject">
+                    <option [ngValue]="null"></option>
+                    <option [ngValue]="subjectOption.id === board.subject?.id ? board.subject : subjectOption"
+                            *ngFor="let subjectOption of subjects; trackBy: trackSubjectById">{{subjectOption.id}}</option>
+                </select>
+                <div [hidden]="!(editForm.controls.subject?.dirty && editForm.controls.name?.invalid)">
+                    <small class="form-text text-danger"
+                           [hidden]="!editForm.controls.subject?.errors?.required"
+                           jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
                 </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="smartjournalApp.board.subject" for="field_subject">Subject</label>
-                    <select class="form-control" id="field_subject" name="subject" [(ngModel)]="board.subject"
-                            required>
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="subjectOption.id === board.subject?.id ? board.subject : subjectOption" *ngFor="let subjectOption of subjects; trackBy: trackSubjectById">{{subjectOption.id}}</option>
-                    </select>
-                    <div [hidden]="!(editForm.controls.subject?.dirty && editForm.controls.name?.invalid)">
-                        <small class="form-text text-danger"
-                               [hidden]="!editForm.controls.subject?.errors?.required" jhiTranslate="entity.validation.required">
-                            This field is required.
-                        </small>
-                    </div>
-                </div>
+            </div>
+            <div formGroupName="days">
                 <div class="form-group">
                     <label class="form-control-label" for="dateFrom">Date from</label>
                     <div class="input-group">
-                        <input class="form-control" id="dateFrom" placeholder="yyyy-mm-dd"
-                               name="dateFrom" [(ngModel)]="dateFrom" ngbDatepicker #dateFromPicker="ngbDatepicker">
+                        <input formControlName="dateFrom" class="form-control" id="dateFrom" placeholder="yyyy-mm-dd"
+                               ngbDatepicker #dateFromPicker="ngbDatepicker">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" (click)="dateFromPicker.toggle()" type="button">
                                 <i class="far fa-calendar-alt"></i>
@@ -75,8 +80,8 @@
                 <div class="form-group">
                     <label class="form-control-label" for="dateTo">Date from</label>
                     <div class="input-group">
-                        <input class="form-control" id="dateTo" placeholder="yyyy-mm-dd"
-                               name="dateTo" [(ngModel)]="dateTo" ngbDatepicker #dateToPicker="ngbDatepicker">
+                        <input formControlName="dateTo" class="form-control" id="dateTo" placeholder="yyyy-mm-dd"
+                               ngbDatepicker #dateToPicker="ngbDatepicker">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" (click)="dateToPicker.toggle()" type="button">
                                 <i class="far fa-calendar-alt"></i>
@@ -85,50 +90,139 @@
                     </div>
                 </div>
                 <div>{{dateTo}}</div>
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="1" id="monday"
-                           (change)="updateDayOfWeek($event.target)">
-                    <label class="custom-control-label" for="monday">Monday</label>
-                </div>
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="2" id="tuesday"
-                           (change)="updateDayOfWeek($event.target)">
-                    <label class="custom-control-label" for="tuesday">Tuesday</label>
-                </div>
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="3" id="wednesday"
-                           (change)="updateDayOfWeek($event.target)">
-                    <label class="custom-control-label" for="wednesday">Wednesday</label>
-                </div>
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="4" id="thursday"
-                           (change)="updateDayOfWeek($event.target)">
-                    <label class="custom-control-label" for="thursday">Thursday</label>
-                </div>
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="5" id="friday"
-                           (change)="updateDayOfWeek($event.target)">
-                    <label class="custom-control-label" for="friday">Friday</label>
-                </div>
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="6" id="saturday"
-                           (change)="updateDayOfWeek($event.target)">
-                    <label class="custom-control-label" for="saturday">Saturday</label>
-                </div>
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="7" id="sunday"
-                           (change)="updateDayOfWeek($event.target)">
-                    <label class="custom-control-label" for="sunday">Sunday</label>
-                </div>
-            </div>
-            <div class="mt-3">
-                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
-                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
-                </button>
-                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
-                </button>
             </div>
         </form>
+        <!--<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">-->
+        <!--<h2 id="jhi-board-heading" jhiTranslate="smartjournalApp.board.home.createOrEditLabel">Create or edit a Board</h2>-->
+        <!--<div>-->
+        <!--<jhi-alert-error></jhi-alert-error>-->
+        <!--<div class="form-group" [hidden]="!board.id">-->
+        <!--<label for="id" jhiTranslate="global.field.id">ID</label>-->
+        <!--<input type="text" class="form-control" id="id" name="id"-->
+        <!--[(ngModel)]="board.id" readonly />-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+        <!--<label for="field_title">Title</label>-->
+        <!--<input type="text" class="form-control" id="field_title" name="title"-->
+        <!--[value]="(board.group ? board.group?.name : '') + '. ' + (board.subject ? board.subject?.name : '')" readonly />-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+        <!--<label class="form-control-label" jhiTranslate="smartjournalApp.board.name" for="field_name">Name</label>-->
+        <!--<input type="text" class="form-control" name="name" id="field_name"-->
+        <!--[(ngModel)]="board.name" required/>-->
+        <!--<div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">-->
+        <!--<small class="form-text text-danger"-->
+        <!--[hidden]="!editForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">-->
+        <!--This field is required.-->
+        <!--</small>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+        <!--<label class="form-control-label" jhiTranslate="smartjournalApp.board.description" for="field_description">Description</label>-->
+        <!--<input type="text" class="form-control" name="description" id="field_description"-->
+        <!--[(ngModel)]="board.description" />-->
+        <!--</div>-->
+
+        <!--<div class="form-group">-->
+        <!--<label class="form-control-label" jhiTranslate="smartjournalApp.board.group" for="field_group">Party</label>-->
+        <!--<select class="form-control" id="field_group" name="group" [(ngModel)]="board.group"-->
+        <!--required>-->
+        <!--<option [ngValue]="null"></option>-->
+        <!--<option [ngValue]="groupOption.id === board.group?.id ? board.group : groupOption" *ngFor="let groupOption of groups; trackBy: trackGroupById">{{groupOption.id}}</option>-->
+        <!--</select>-->
+        <!--<div [hidden]="!(editForm.controls.group?.dirty && editForm.controls.name?.invalid)">-->
+        <!--<small class="form-text text-danger"-->
+        <!--[hidden]="!editForm.controls.group?.errors?.required" jhiTranslate="entity.validation.required" email>-->
+        <!--This field is required.-->
+        <!--</small>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+        <!--<label class="form-control-label" jhiTranslate="smartjournalApp.board.subject" for="field_subject">Subject</label>-->
+        <!--<select class="form-control" id="field_subject" name="subject" [(ngModel)]="board.subject"-->
+        <!--required>-->
+        <!--<option [ngValue]="null"></option>-->
+        <!--<option [ngValue]="subjectOption.id === board.subject?.id ? board.subject : subjectOption" *ngFor="let subjectOption of subjects; trackBy: trackSubjectById">{{subjectOption.id}}</option>-->
+        <!--</select>-->
+        <!--<div [hidden]="!(editForm.controls.subject?.dirty && editForm.controls.name?.invalid)">-->
+        <!--<small class="form-text text-danger"-->
+        <!--[hidden]="!editForm.controls.subject?.errors?.required" jhiTranslate="entity.validation.required">-->
+        <!--This field is required.-->
+        <!--</small>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--ee-->
+        <!--<div class="form-group">-->
+        <!--<label class="form-control-label" for="dateFrom">Date from</label>-->
+        <!--<div class="input-group">-->
+        <!--<input class="form-control" id="dateFrom" placeholder="yyyy-mm-dd"-->
+        <!--name="dateFrom" [(ngModel)]="dateFrom" ngbDatepicker #dateFromPicker="ngbDatepicker">-->
+        <!--<div class="input-group-append">-->
+        <!--<button class="btn btn-outline-secondary" (click)="dateFromPicker.toggle()" type="button">-->
+        <!--<i class="far fa-calendar-alt"></i>-->
+        <!--</button>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div>{{dateFrom}}</div>-->
+        <!--<div class="form-group">-->
+        <!--<label class="form-control-label" for="dateTo">Date from</label>-->
+        <!--<div class="input-group">-->
+        <!--<input class="form-control" id="dateTo" placeholder="yyyy-mm-dd"-->
+        <!--name="dateTo" [(ngModel)]="dateTo" ngbDatepicker #dateToPicker="ngbDatepicker">-->
+        <!--<div class="input-group-append">-->
+        <!--<button class="btn btn-outline-secondary" (click)="dateToPicker.toggle()" type="button">-->
+        <!--<i class="far fa-calendar-alt"></i>-->
+        <!--</button>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div>{{dateTo}}</div>-->
+        <!-- -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+        <!--<div class="custom-control custom-checkbox">-->
+        <!--<input type="checkbox" class="custom-control-input" name="1" id="monday"-->
+        <!--(change)="updateDayOfWeek($event.target)">-->
+        <!--<label class="custom-control-label" for="monday">Monday</label>-->
+        <!--</div>-->
+        <!--<div class="custom-control custom-checkbox">-->
+        <!--<input type="checkbox" class="custom-control-input" name="2" id="tuesday"-->
+        <!--(change)="updateDayOfWeek($event.target)">-->
+        <!--<label class="custom-control-label" for="tuesday">Tuesday</label>-->
+        <!--</div>-->
+        <!--<div class="custom-control custom-checkbox">-->
+        <!--<input type="checkbox" class="custom-control-input" name="3" id="wednesday"-->
+        <!--(change)="updateDayOfWeek($event.target)">-->
+        <!--<label class="custom-control-label" for="wednesday">Wednesday</label>-->
+        <!--</div>-->
+        <!--<div class="custom-control custom-checkbox">-->
+        <!--<input type="checkbox" class="custom-control-input" name="4" id="thursday"-->
+        <!--(change)="updateDayOfWeek($event.target)">-->
+        <!--<label class="custom-control-label" for="thursday">Thursday</label>-->
+        <!--</div>-->
+        <!--<div class="custom-control custom-checkbox">-->
+        <!--<input type="checkbox" class="custom-control-input" name="5" id="friday"-->
+        <!--(change)="updateDayOfWeek($event.target)">-->
+        <!--<label class="custom-control-label" for="friday">Friday</label>-->
+        <!--</div>-->
+        <!--<div class="custom-control custom-checkbox">-->
+        <!--<input type="checkbox" class="custom-control-input" name="6" id="saturday"-->
+        <!--(change)="updateDayOfWeek($event.target)">-->
+        <!--<label class="custom-control-label" for="saturday">Saturday</label>-->
+        <!--</div>-->
+        <!--<div class="custom-control custom-checkbox">-->
+        <!--<input type="checkbox" class="custom-control-input" name="7" id="sunday"-->
+        <!--(change)="updateDayOfWeek($event.target)">-->
+        <!--<label class="custom-control-label" for="sunday">Sunday</label>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="mt-3">-->
+        <!--<button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">-->
+        <!--<fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>-->
+        <!--</button>-->
+        <!--<button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">-->
+        <!--<fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>-->
+        <!--</button>-->
+        <!--</div>-->
+        <!--</form>-->
     </div>
 </div>

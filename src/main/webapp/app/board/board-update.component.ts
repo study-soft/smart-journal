@@ -14,6 +14,7 @@ import { SubjectService } from 'app/subject';
 import { GroupService } from 'app/group/group.service';
 import { Moment } from 'moment';
 import { convertDateToString } from 'app/shared/util/date-util';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'jhi-board-update',
@@ -33,19 +34,37 @@ export class BoardUpdateComponent implements OnInit {
     dateTo: Moment;
     days: Set<number> = new Set();
 
+    editForm: FormGroup;
+
     constructor(
         private jhiAlertService: JhiAlertService,
         private boardService: BoardService,
         private groupService: GroupService,
         private subjectService: SubjectService,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private fb: FormBuilder
     ) {}
 
     ngOnInit() {
+        this.createForm();
+
         this.activatedRoute.data.subscribe(({ board }) => {
             this.board = board;
             this.created = this.board.created != null ? this.board.created.format(DATE_TIME_FORMAT) : null;
             this.updated = this.board.updated != null ? this.board.updated.format(DATE_TIME_FORMAT) : null;
+
+            this.editForm.patchValue({
+                id: this.board.id,
+                title: this.board.title,
+                name: this.board.name,
+                description: this.board.description,
+                group: this.board.group,
+                subject: this.board.subject,
+                days: {
+                    dateFrom: null,
+                    dateTo: null
+                }
+            });
         });
         this.groupService.query({ filter: 'board-is-null' }).subscribe(
             (res: HttpResponse<Group[]>) => {
@@ -81,6 +100,21 @@ export class BoardUpdateComponent implements OnInit {
 
     previousState() {
         window.history.back();
+    }
+
+    createForm() {
+        this.editForm = this.fb.group({
+            id: [undefined],
+            title: [undefined],
+            name: [undefined, Validators.required],
+            description: [undefined],
+            group: [undefined, Validators.required],
+            subject: [undefined, Validators.required],
+            days: this.fb.group({
+                dateFrom: [undefined],
+                dateTo: [undefined]
+            })
+        });
     }
 
     updateDayOfWeek(target: HTMLInputElement) {
